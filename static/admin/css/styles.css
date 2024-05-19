@@ -1,0 +1,43 @@
+
+a{
+    color: black;
+}
+
+
+.titulo-portal{
+    text-transform: uppercase;
+    padding: 20px 0px;
+    font-size: x-large;
+    content: "\f031";
+    font-family: "Font Awesome 5 Free";
+
+}
+
+
+
+.nav-link{
+    font-size: 1.1rem;  
+    transition: all 0.2s ease-in-out; 
+}
+
+.nav-link:hover{
+    font-size: 1.6rem;
+    color: black;
+     
+}
+
+.menu-items a{
+    padding: 10px 30px;
+    font-weight: bold;
+      
+}
+
+
+.menu .container {
+    padding-left: 0px;
+}
+
+
+
+
+
