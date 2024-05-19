@@ -21,8 +21,9 @@ a{
 }
 
 .nav-link:hover{
-    font-size: 1.6rem;
-    color: black;
+    font-size: 1.1em;
+    color: rgb(12, 11, 11);
+    background: rgb(239, 234, 234); 
      
 }
 
@@ -72,6 +73,14 @@ image img{
     font-weight: 600!important;
 }
 
+.section-title{
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.section {
+    border-bottom:1px solid black;
+}
 
 
 
