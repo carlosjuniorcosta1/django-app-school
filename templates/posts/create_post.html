@@ -1,0 +1,51 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'admin/css/styles_create_post.css' %}"> 
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+ 
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+<body>
+
+    <div class="container">
+<h2 class="text-center my-4">Escreva um novo texto</h2>
+
+<form action="" method="POST" class="form-group">
+{% csrf_token %}
+{% for field in form %}
+<div class="form-group-lg">
+{{field.label_tag}} 
+<div>
+{{field}}
+</div>
+</div>
+{% endfor %}
+<input type="submit" value="Enviar" class="btn btn-dark">
+</form>
+
+{% if preview_post %}
+<hr>
+<div>
+    <h4 class="font-title-preview" id="previewTitle">{{preview_post.title}}</h4>
+    <h5 class="font-subtitle-preview" id="previewSubtitle">{{preview_post.subtitle}}</h5>
+    <p class="font-paragraph-preview" id="previewMainText">{{preview_post.main_text}}</p>
+
+</div>
+{% endif %}
+
+
+    <script type="text/javascript" src="{% static 'admin/js/script1.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

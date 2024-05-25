@@ -1,0 +1,7 @@
+<h2>formulario para criação</h2>
+
+<form action="" method="POSt">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Enviar">
+</form>
