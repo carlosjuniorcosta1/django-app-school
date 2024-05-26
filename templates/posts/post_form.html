@@ -1,7 +1,61 @@
-<h2>formulario para criação</h2>
+{% load static %}
+{% load form_tags %}
 
-<form action="" method="POSt">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Enviar">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+<body>
+    <div class="container-fluid">
+    <h2 class="text-center my-4">Postar um texto</h2>
+
+    <form action="" method="POST" class="form-group" id="post-form">
+        {% csrf_token %}
+        <div class="mb-0 container">
+            <label for="id_title">{{form.title.label_tag}}</label>
+            <div>
+            {{form.title|add_class:"form-group form-control-lg"}}
+        </div> 
+        <div>
+            <label for="id_subtitle">{{form.subtitle.label_tag}}</label>
+        </div>
+        <div>
+            {{form.subtitle|add_class:"form-group form-control-lg"}}
+        </div>
+        <div>
+        <label>{{form.main_text.label_tag}}</label>   
+            {{form.main_text|add_attrs:"class=form-control mb-2 rounded border shadow bg-light,id=id_main_text"}}
+        </div> 
+        <input type="submit" value="Enviar" class="btn btn-dark">
+   
+    
+    </form>        
+   
+        
+        <div id="preview-container" class="mt-4">
+            <h3>Preview</h3>
+            <h4 id="preview-title"></h4>
+            <h5 id="preview-subtitle"></h5>
+            <p id="preview-text"></p>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script type="text/javascript" src="{% static 'admin/js/script1.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from . forms import PostForm
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import Post
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def list_posts(request):
     return render(request, 'posts/post_example.html')
@@ -24,15 +25,19 @@ def thank_you(request):
 
 #     return render(request, 'posts/create_post.html', {'form': form})
 
-class PostCreateView(CreateView):
+class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = "__all__"
-    success_url = reverse_lazy("posts:thank_you")
+    fields = ['title', 'subtitle', 'main_text']
+    success_url = reverse_lazy("posts:list_texts")
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class PostListView(ListView):
     model = Post
+    ordering = ['-created']
 
 class PostDetailView(DetailView):
     model = Post
@@ -41,4 +46,10 @@ class PostDetailView(DetailView):
 class PostUpdateView(UpdateView):
     model = Post
     fields = "__all__"
+    
+
+
+
+ 
+        
 

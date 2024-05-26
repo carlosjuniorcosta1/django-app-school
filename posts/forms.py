@@ -9,7 +9,7 @@ class PostForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control-lg mb-2 rounded',
+                'class': 'form-control-lg mb-5 rounded',
                 'placeholder': "Enter the title",   
                 'id': 'idTitle'             
             }), 
