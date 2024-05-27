@@ -1,40 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <title>{% block title %}{% endblock %} - My Webpage</title>
-    {% endblock %}
-</head>
-<body>
-    <h1>list of texts</h1>
+  {% extends 'base.html' %}
+  {% load static %}
 
-<ul>
+  {% block extrahead %}     
+      <link rel="stylesheet" href="{% static 'admin/css/styles_post_list.css' %}"> 
+  {% endblock %}
+  
+
+    {% block content %}
+    
     {% for text in object_list %}
-
-    <li>
-        <a href="{% url 'posts:detail_text' text.id %}">{{text.main_text}}</a>
-
-        <ul>
-            <li>
-                <a href="{% url 'posts:update_post' text.id %}">Editar texto</a>
-
-            </li>
-        </ul>
-    </li>
-
-
-
-        
-    {% endfor %}
-</ul>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+ 
+     <li>
+         <a class="list-elements" href="{% url 'posts:detail_text' text.id %}">{{text.main_text|slice:":100"}}</a>
+         <small>por {{text.user}}</small>
+     </li>
+ 
+ 
+         {% if user.is_authenticated and user == text.user %}
+         <ul>
+             <li>
+                 <a href="{% url 'posts:update_post' text.id %}">Editar texto</a>
+ 
+             </li>
+         </ul>
+         {% endif %}    
+         
+     {% endfor %} 
+ 
+     {% endblock %}
+ 
+ 
 
 
+  
+  
+  

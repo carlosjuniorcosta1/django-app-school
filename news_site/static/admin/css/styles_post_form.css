@@ -1,0 +1,20 @@
+.font-title-preview {
+    font-family: 'Merriweather', serif;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.font-subtitle-preview {
+    font-family: 'Merriweather', serif;
+    font-size: 22px;
+    font-style: italic;
+
+    
+}
+
+.font-paragraph-preview {
+    font-size: 19px;
+    font-family: 'Merriweather', serif;
+    text-align: justify;
+}

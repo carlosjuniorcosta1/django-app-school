@@ -27,12 +27,21 @@ def thank_you(request):
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = ['title', 'subtitle', 'main_text']
+    fields = ['title', 'subtitle', 'main_text', 'textual_genre']
     success_url = reverse_lazy("posts:list_texts")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['username'] = user.username
+        context['first_name'] = user.first_name
+        context['last_name'] = user.last_name     
+
+        return context
 
 
 class PostListView(ListView):

@@ -7,20 +7,20 @@
 
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#"> Textos <span class="sr-only">(current)</span></a>
-        </li> 
+          <a class="nav-link" href="{% url 'posts:list_texts' %}">Ler e editar</a>
+        </li>
+          
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'posts:create_post' %}">Publicar</a>
+        </li>
+     
         <li class="nav-item active">
           <a class="nav-link" href="#"> Enem <span class="sr-only">(current)</span></a>
         </li> 
         <li class="nav-item active">
           <a class="nav-link" href="#"> Sobre <span class="sr-only">(current)</span></a>
         </li>  
-        <li class="nav-item active">
-          <a href="{% url 'posts:list_texts' %}">Listar textos</a>
-        </li>
-        <li class="nav-item active">
-          <a href="{% url 'posts:create_post' %}">criar textos</a>
-        </li>
+  
    
       </ul>
       <ul class="navbar-nav ml-auto">
