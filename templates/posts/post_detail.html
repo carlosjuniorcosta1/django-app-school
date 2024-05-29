@@ -1,19 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <title>{% block title %}{% endblock %} - My Webpage</title>
-    {% endblock %}
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-    <h1>Lista de publicações</h1>
-    {{post.main_text}}
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_post_form.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'admin/css/styles_post_detail.css' %}" type="text/css">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h1 class="font-title-preview">{{post.title}}</h1>
+    <p class="font-subtitle-preview">{{post.subtitle}}</p>
+    <small>por {{post.user}} em {{post.created}}</small> 
+
+<div class="font-paragraph-preview">{{ post.main_text|linebreaks}}</div>
+
+{% if user.is_authenticated and user == post.user %}
+<a href="{% url 'posts:delete_post' pk=post.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
+</div>
+
+
+{% endblock %}

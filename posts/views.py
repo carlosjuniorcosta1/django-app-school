@@ -1,34 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from .models import Post
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-def list_posts(request):
-    return render(request, 'posts/post_example.html')
 
-def thank_you(request):
-    return render(request,'posts/thank_you.html' )
-
-
-# def create_post(request):
-#     if request.method == "POST":
-#         form = PostForm(request.POST)
-#         if form.is_valid():
-#             print(form.cleaned_data)
-#             new_post = form.save()
-        
-#             return render(request, "posts/create_post.html",  {'form': form, 'preview_post': new_post})
-#     else:
-#         form = PostForm()
-
-#     return render(request, 'posts/create_post.html', {'form': form})
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
     fields = ['title', 'subtitle', 'main_text', 'textual_genre']
-    success_url = reverse_lazy("posts:list_texts")
+    success_url = reverse_lazy("posts:detail_text")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -39,23 +21,43 @@ class PostCreateView(CreateView, LoginRequiredMixin):
         user = self.request.user
         context['username'] = user.username
         context['first_name'] = user.first_name
-        context['last_name'] = user.last_name     
-
+        context['last_name'] = user.last_name   
         return context
+    def get_success_url(self):
+        return reverse('posts:detail_text', kwargs={'pk': self.object.pk})
 
 
 class PostListView(ListView):
     model = Post
     ordering = ['-created']
+    paginate_by = 10
 
 class PostDetailView(DetailView):
     model = Post
+    def get_object(self):
+        post = super().get_object()
+        post.post_views += 1
+        post.save()
+        return post 
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = "__all__"
+    fields =  ['title', 'subtitle', 'main_text', 'textual_genre']
+
     
+    def get_success_url(self):
+        print(f"Post updated with ID:{ self.object.pk}")  
+
+        return reverse('posts:detail_text', kwargs={'pk': self.object.pk})
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('posts:list_texts')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
 
 
 

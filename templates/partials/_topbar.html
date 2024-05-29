@@ -1,29 +1,38 @@
 {% load static %}
 <section id="top-bar" class="p-3">
   <div class="container">
-      <div class="row justify-content-between">  
+      <div class="row justify-content-between align-items-center">  
           <div class="col-md-6">
-              <span class="titulo-portal">Portal do estudante</span>
+            <ul class="list-inline">
+                <li class="titulo-portal list-inline-item"><span>Portal</span>  </li>
+            </ul>       
           </div>
-          <div class="col-md-4">
-              <div class="social text-right">
-                  <a href="#">
-                      <i class="fab fa-twitter"></i>
-                  </a>
-                  <a href="#">
-                      <i class="fab fa-facebook"></i>
-                  </a>
-                  <a href="#">
-                      <i class="fab fa-linkedin"></i>
-                  </a>
-                  <a href="#">
-                      <i class="fab fa-instagram"></i>
-                  </a>
-                  <a href="#">
-                      <i class="fab fa-pinterest"></i>
-                  </a>
-              </div>
+          <div class="col-md-6">
+            <ul class="list-inline text-right navbar-nav ml-auto">
+
+            {% if user.is_authenticated %}
+            {% csrf_token %}   
+                    <li class="list-inline-item">
+                      <a href="{% url 'dashboard' %}" class="nav-link d-inline">Olá, {{user.username}}</a>
+                       <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link fas fa-sign-out-alt d-inline" title="Sair">
+                          </a>
+                          <form action="{% url 'logout' %}" method="POST" id="logout">
+                            {% csrf_token %}
+                            <input type="hidden">
+                          </form>
+                    </li>              
+                {% else %}
+                <li class="list-inline-item font-weight-bold">
+                    <a href="{% url 'register' %}" class="nav-link d-inline p-1">Registrar</a>
+                    <a href="{% url 'login' %}" class="nav-link d-inline p-1">Login</a>
+                </li>
+
+                {% endif %}
+            </ul>
+
+
           </div>
+       
       </div>
   </div>
 </section>

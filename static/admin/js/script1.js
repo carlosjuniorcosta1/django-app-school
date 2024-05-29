@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function updatePreviewMainText() {
-        const paragraphs = mainTextInput.value.split('\n');
-        previewMainText.innerHTML = paragraphs.map(paragraph => `<p class="mb-1">${paragraph}</p>`).join('');
+        previewMainText.innerHTML = mainTextInput.value;
     }
 
     function insertParagraph() {
         const cursorPosition = mainTextInput.selectionStart;
         const textBefore = mainTextInput.value.substring(0, cursorPosition);
         const textAfter = mainTextInput.value.substring(cursorPosition);
-        mainTextInput.value = textBefore + '\n\n' + textAfter;
-        mainTextInput.selectionStart = cursorPosition + 2;
-        mainTextInput.selectionEnd = cursorPosition + 2;
+        const newText = textBefore + '<p class="mb-1"></p>' + textAfter;
+        mainTextInput.value = newText;
+        mainTextInput.selectionStart = cursorPosition + 16; // Move cursor inside the new <p> tag
+        mainTextInput.selectionEnd = cursorPosition + 16;
         updatePreviewMainText();
     }
 

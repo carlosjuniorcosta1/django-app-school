@@ -1,37 +1,73 @@
-  {% extends 'base.html' %}
-  {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
-  {% block extrahead %}     
-      <link rel="stylesheet" href="{% static 'admin/css/styles_post_list.css' %}"> 
-  {% endblock %}
-  
+{% block extrahead %}    
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/styles_post_list.css' %}"> 
+{% endblock %}
 
-    {% block content %}
-    
+{% block content %}
     {% for text in object_list %}
- 
-     <li>
-         <a class="list-elements" href="{% url 'posts:detail_text' text.id %}">{{text.main_text|slice:":100"}}</a>
-         <small>por {{text.user}}</small>
-     </li>
- 
- 
-         {% if user.is_authenticated and user == text.user %}
-         <ul>
-             <li>
-                 <a href="{% url 'posts:update_post' text.id %}">Editar texto</a>
- 
-             </li>
-         </ul>
-         {% endif %}    
-         
-     {% endfor %} 
- 
-     {% endblock %}
- 
- 
+        <div class="card mb-1">
+            <div class="card-header">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a class="font-weight-bold font-card-header" href="{% url 'posts:detail_text' text.id %}">{{ text.title|slice:":100" }} [...]</a>
+                        <br> <small class="font-italic">por {{ text.user }}</small>
+                    </li>
+                    <li class="list-elements list-group-item">
+                        <a  class="font-main-text" href="">{{text.main_text|slice:":190"}} [...]</a>       
 
 
-  
-  
-  
+                    {% if user.is_authenticated and user == text.user %}
+                           <a class="fas fa-edit mr-2 ml-2" href="{% url 'posts:update_post' text.id %}" title="Editar">
+                            </a>
+                            {% endif %}
+                            <a class="fas fa-eye ml-1 icon-effects" href="{% url 'posts:detail_text' text.id %}" title="Visualizações"></a>
+                            <span class="font-count-views">{{text.post_views}}</span>
+                             <span class="font-span-genre">#{{text.textual_genre}}</span>
+                             <span class="font-span-date ml-auto">{{text.created|date:"d/m/Y - H:i"}}</span>
+
+                        </li> 
+                
+
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+    <nav>
+        <ul class="pagination justify-content-center page-form">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link page-form" href="?page=1" aria-label="Primeira">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+                <span>Primeira</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link page-form" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                <span aria-hidden="true">&laquo;</span>
+                <span>Anterior</span>
+              </a>
+            </li>
+          {% endif %}
+    
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                <span aria-hidden="true">&raquo;</span>
+                <span>Próxima</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                <span aria-hidden="true">&raquo;&raquo;</span>
+                <span >Última</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    
+
+{% endblock %}

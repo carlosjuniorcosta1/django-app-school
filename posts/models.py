@@ -1,13 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User 
+from django.utils.html import format_html
+
 
   
 class Genre(models.Model):
     genre_choices = [
         ('reportagem', 'Reportagem'),
         ('noticia', 'Notícia'),
-        ('artigo_opiniao', 'Artigo de opinião'),
-        ('fanfic', 'Fanfic') 
+        ('artigo', 'Artigo de opinião'),
+        ('fanfic', 'Fanfic'),
+        ('conto', 'Conto'),
+        ('resenha', 'Resenha'),
+        ('receitas', 'Receitas'),
+        ('resumo', 'Resumo')
+
       ]
     textual_genre = models.CharField(max_length=30, choices=genre_choices)
     
@@ -22,9 +29,12 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now=True)
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
+    post_views = models.IntegerField(default=0)
     
     def __str__(self):
         return f"{self.user.username} {self.textual_genre}-{self.created}"
+    
+    
     
 
     

@@ -7,12 +7,14 @@
 
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'posts:list_texts' %}">Ler e editar</a>
+          <a class="nav-link" href="{% url 'posts:list_texts' %}">Publicações</a>
         </li>
           
+        {% if user.is_authenticated %}
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'posts:create_post' %}">Publicar</a>
         </li>
+        {% endif %}
      
         <li class="nav-item active">
           <a class="nav-link" href="#"> Enem <span class="sr-only">(current)</span></a>
@@ -22,34 +24,7 @@
         </li>  
   
    
-      </ul>
-      <ul class="navbar-nav ml-auto">
-     {% if user.is_authenticated %}
-     {% csrf_token %}   
-
-
-<li class="nav-item"> 
-  <a href="{% url 'dashboard' %}" class="nav-link">Olá, {{user.username}}</a>
-</li>
-<li class="nav-item mr-3">
-  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
-    <i class="fas fa-sign-out-alt"></i> Logout
-  </a>
-  <form action="{% url 'logout' %}" method="POST" id="logout">
-    {% csrf_token %}
-    <input type="hidden">
-  </form>
-</li>
-
-     {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">Registrar</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
-      {% endif %}
-      </ul>
+   
  
     </div>
   </nav>
