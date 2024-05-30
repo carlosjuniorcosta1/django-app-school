@@ -21,6 +21,8 @@ class Genre(models.Model):
     def __str__(self):
         return self.textual_genre
     
+    
+    
 class Post(models.Model):
     title = models.CharField(max_length=80)
     subtitle = models.CharField(max_length=80)
@@ -30,6 +32,8 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     post_views = models.IntegerField(default=0)
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    
     
     def __str__(self):
         return f"{self.user.username} {self.textual_genre}-{self.created}"

@@ -54,13 +54,13 @@
     
           {% if page_obj.has_next %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+              <a class="page-link page-form" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
                 <span aria-hidden="true">&raquo;</span>
                 <span>Próxima</span>
               </a>
             </li>
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+              <a class="page-link page-form" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
                 <span aria-hidden="true">&raquo;&raquo;</span>
                 <span >Última</span>
               </a>

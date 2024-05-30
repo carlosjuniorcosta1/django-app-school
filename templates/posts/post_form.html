@@ -19,7 +19,7 @@
     <div class="container-fluid">
     <h2 class="text-center my-4">Postar um texto</h2>
 
-    <form action="" method="POST" class="form-group" id="post-form">
+    <form action="" method="POST" class="form-group" id="post-form" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-0 container">
             <label for="id_title">Título</label>
@@ -39,8 +39,16 @@
         <label>Digite seu texto</label>   
             {{form.main_text|add_attrs:"class=form-control mb-2 rounded border shadow bg-light,id=id_main_text"}}
         </div> 
+        <div class="custom-file">
+            <label for="id_image" class="btn btn-outline-dark">Escolher imagem</label>
+            {{form.image|add_attrs:"class=custom-file-input,id=id_image"}}
+            <h5 id="image-filename" class="mt-2"></h5> 
 
+
+        </div>
+<div class="text-right">
         <input type="submit" value="Enviar" class="btn btn-dark">  
+    </div>
     </form>     
 
    
@@ -50,6 +58,9 @@
             <h5 class="font-subtitle-preview" id="preview-subtitle"></h5>
             <small>por {{first_name|title}} {{last_name|title}}</small>
             <p class="font-paragraph-preview" id="preview-text"></p>
+            <img id="preview-image" src="#" alt="Preview da imagem" style="display: none; max-width: 100%; height: auto;">
+
+
         </div>
     </div>
 

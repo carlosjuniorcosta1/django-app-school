@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const titleInput = document.getElementById('id_title');
     const subtitleInput = document.getElementById('id_subtitle');
     const mainTextInput = document.getElementById('id_main_text');
+    const imageInput = document.getElementById('id_image');
+    const previewImage = document.getElementById('preview-image');
+    const imageFilename = document.getElementById('image-filename');
 
     const previewTitle = document.getElementById('preview-title');
     const previewSubtitle = document.getElementById('preview-subtitle');
@@ -21,8 +24,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     mainTextInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); 
+            event.preventDefault();
             insertParagraph();
+        }
+    });
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+            imageFilename.textContent = file.name; 
+        } else {
+            previewImage.src = '#';
+            previewImage.style.display = 'none';
+            imageFilename.textContent = ''; 
         }
     });
 

@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = ['title', 'subtitle', 'main_text', 'textual_genre']
+    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image']
     success_url = reverse_lazy("posts:detail_text")
 
     def form_valid(self, form):
