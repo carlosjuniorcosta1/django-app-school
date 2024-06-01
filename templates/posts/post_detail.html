@@ -8,12 +8,23 @@
 {% block content %}
 
 <div class="container">
-    {% if post.image %}
-    <img src="{{ post.image.url }}" alt="Imagem do post">
-    {% endif %}
-  <h1 class="font-title-preview">{{post.title}}</h1>
+    <h1 class="font-title-preview">{{post.title}}</h1>
     <p class="font-subtitle-preview">{{post.subtitle}}</p>
     <small>por {{post.user}} em {{post.created}}</small> 
+    {% if post.image %}
+    <div class="text-center">
+        <figure>
+            <img src="{{ post.image.url }}" alt="Imagem do post">
+            <figcaption>{{ post.image.name }}</figcaption>
+        </figure>
+    </div>
+
+    {% endif %}
+  
+
+
+
+
 
 
 <div class="font-paragraph-preview">{{ post.main_text|linebreaks}}</div>

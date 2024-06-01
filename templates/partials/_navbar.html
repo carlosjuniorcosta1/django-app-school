@@ -1,30 +1,54 @@
 <nav class="navbar navbar-expand-lg bg-light menu-items">
       
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+      <ul class="navbar-nav mx-auto justify-content-center">
+        <li class="nav-item active nav-item-divider">
           <a class="nav-link" href="{% url 'index' %}">Início</a>
 
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'posts:list_texts' %}">Publicações</a>
+        <li class="nav-item active nav-item-divider">
+          <a class="nav-link" href="{% url 'posts:list_texts' %}">Últimas</a>
         </li>
           
         {% if user.is_authenticated %}
-        <li class="nav-item active">
+        <li class="nav-item active nav-item-divider">
           <a class="nav-link" href="{% url 'posts:create_post' %}">Publicar</a>
         </li>
-        {% endif %}
-     
-        <li class="nav-item active">
-          <a class="nav-link" href="#"> Enem <span class="sr-only">(current)</span></a>
-        </li> 
-        <li class="nav-item active">
-          <a class="nav-link" href="#"> Sobre <span class="sr-only">(current)</span></a>
-        </li>  
+      {% endif %}
   
-   
-   
- 
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'posts:index_opinion' %}">Opinião</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Brasil</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Mundo</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Gastronomia</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Cultura e lazer</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Esportes</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Enem</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="">Professor</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'about' %}"> Sobre <span class="sr-only">(current)</span></a>
+      </li> 
+
     </div>
   </nav>
+
+
+   
+ 
+ 
+  

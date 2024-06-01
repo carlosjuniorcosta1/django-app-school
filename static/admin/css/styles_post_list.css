@@ -12,6 +12,12 @@
 
 }
 
+.font-card-header:hover{
+    background: none;
+    color: black;
+    text-decoration: none;
+}
+
 
 .font-span-genre {
     font-size: 14px;
@@ -21,6 +27,7 @@
 
 .font-main-text:hover {
 text-decoration: none;
+color: black; 
 }
 
 .font-count-views{
@@ -41,3 +48,17 @@ text-decoration: none;
     text-decoration: none;
 
 }
+
+.page-form{
+    color:black;
+
+}
+
+nav a:hover,
+.pagination a:hover {
+    text-decoration: none; 
+    color: inherit; 
+    background-color: rgb(239, 234, 234); 
+}
+
+

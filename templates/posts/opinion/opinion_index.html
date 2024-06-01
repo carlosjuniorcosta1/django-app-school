@@ -1,0 +1,20 @@
+
+{% extends 'base_opinion.html' %}
+{% load static %}
+
+{% block extrahead %} 
+
+{% endblock %}
+
+{% block content %}
+    
+    {% for opinion in opinion_posts %}
+
+    <h1>{{opinion.title}}</h1>
+    <h1>{{opinion.subtitle}}</h1>
+    <p>{{opinion.main_text}}</p>
+
+        
+    {% endfor %}
+
+    {% endblock %}

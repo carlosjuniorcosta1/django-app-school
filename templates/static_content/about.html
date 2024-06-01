@@ -1,5 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_about.css' %}">
 
+{% endblock %}
 {% block content %}
-    <h5>this is about</h5>
+
+    <div class="jumbotron text-right">
+    <div class="row">
+        <div class="col-md-8 text-left">
+            <h5>Objetivo do site</h5>
+            <p class="paragraph-about">Este site é um espaço para leitura e publicação de diversos gêneros textuais produzidos por alunos
+                e professores, além de outros profissionais de alguma forma relacionados à educação e ao ensino. 
+                Neste momento, estâo em desenvolvimento:  </p>  
+                <p>
+                    <ul>
+               <li> a) gerador de questões do ENEM e de concursos.</li>
+               <li>b) espaço para consultar 
+                as habilidades da BNCC e montar planos de aula para professores.</li> 
+            </p>               
+            </ul>
+            <h5>Quem é José Costa</h5>
+            <p class="paragraph-about">Sou doutor em Linguística pela Universidade Federal de Minas Gerais e
+                formando em Análise e Desenvolvimento de Sistemas pela PUC-MG. Trabalho como professor de português,
+                inglês e espanhol.                      
+            </p>
+            <p class="paragraph-about">Interesses: pesquisas que contemplem computação e educação; aplicações dirigidas a professores e alunos;
+                análise de dados com pandas e Python; aplicações em Django e Flask; desenvolvimento de apis; aplicações 
+                em Flutter. 
+            </p>
+
+    </div>
+    <div class="col-md-4 text-right">
+        <img src="{% static 'admin/img/minha_foto.jpg' %}" alt="" class="custom-image">
+        <ul class="list-inline d-flex justify-content-center mt-3">
+            <li class="list-inline-item"><a href="https://www.linkedin.com/in/jos%C3%A9-costa-9b86b22a9/" class="fab fa-linkedin fa-2x" target="_blank"></a></li>
+            <li class="list-inline-item"><a href="https://github.com/carlosjuniorcosta1" class="fab fa-github fa-2x" target="_blank"></a></li>
+            <li class="list-inline-item"><a href="" class="fas fa-envelope fa-2x" target="_blank"></a></li>
+
+        </ul>
+
+    </div>
+</div>
+</div>
 {% endblock %}

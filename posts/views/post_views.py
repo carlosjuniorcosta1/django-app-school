@@ -1,15 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from .models import Post
+from ..models import Post
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.utils import timezone
 
 
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image']
+    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']
     success_url = reverse_lazy("posts:detail_text")
 
     def form_valid(self, form):
@@ -31,6 +31,13 @@ class PostListView(ListView):
     model = Post
     ordering = ['-created']
     paginate_by = 10
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for post in context['object_list']:
+            print(f"titulo do post '{post.title}': {post.section_name}")
+        return context
+
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -43,13 +50,19 @@ class PostDetailView(DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields =  ['title', 'subtitle', 'main_text', 'textual_genre']
+    fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']
 
     
     def get_success_url(self):
         print(f"Post updated with ID:{ self.object.pk}")  
 
         return reverse('posts:detail_text', kwargs={'pk': self.object.pk})
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False) 
+        self.object.updated = timezone.now()  
+        self.object.save()
+        return super().form_valid(form)
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post

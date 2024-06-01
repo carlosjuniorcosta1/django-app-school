@@ -81,4 +81,14 @@ image img{
 }
 
 
+.nav-item-divider:not(:last-child) {
+    border-right: 1px solid #ddd;
+
+  }
+  
+  .nav-item-divider:last-child {
+    padding-right: 0;
+    margin-right: 0;
+  }
+
 

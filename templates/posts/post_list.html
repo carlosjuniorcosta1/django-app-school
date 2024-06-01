@@ -10,26 +10,81 @@
     {% for text in object_list %}
         <div class="card mb-1">
             <div class="card-header">
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush list-inline">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <a class="font-weight-bold font-card-header" href="{% url 'posts:detail_text' text.id %}">{{ text.title|slice:":100" }} [...]</a>
                         <br> <small class="font-italic">por {{ text.user }}</small>
                     </li>
-                    <li class="list-elements list-group-item">
-                        <a  class="font-main-text" href="">{{text.main_text|slice:":190"}} [...]</a>       
+                    <li class="list-elements d-flex align-items-center justify-content-between">
+                        <a  class="font-main-text" href="">{{text.main_text|slice:":150"}} [...]</a>       
 
 
                     {% if user.is_authenticated and user == text.user %}
                            <a class="fas fa-edit mr-2 ml-2" href="{% url 'posts:update_post' text.id %}" title="Editar">
                             </a>
                             {% endif %}
+
                             <a class="fas fa-eye ml-1 icon-effects" href="{% url 'posts:detail_text' text.id %}" title="Visualizações"></a>
-                            <span class="font-count-views">{{text.post_views}}</span>
-                             <span class="font-span-genre">#{{text.textual_genre}}</span>
-                             <span class="font-span-date ml-auto">{{text.created|date:"d/m/Y - H:i"}}</span>
+                            <span class="font-count-views m-1">{{text.post_views}}</span>
+                             {% if text.updated %}
+                             <span class="font-span-date ml-auto mr-3">Atualizado em:{{text.updated|date:"d/m/Y - H:i"}}</span>  
+                            {% else %}
+                             <span class="font-span-date ml-auto mr-3">Publicado em:{{text.created|date:"d/m/Y - H:i"}}</span> 
+                             {% endif %} 
+
+                            {% if text.section_name.section_name == "saude" %}
+
+                             <a class="fas fa-heartbeat"></a>
+                              <a href="" class="ml-1">Saúde</a>
+
+                             {% elif text.section_name.section_name == "cultura_lazer" %}
+
+                             <a class="fas fa-book mr-1"></a>
+
+                             <a class="fas fa-gamepad"></a>
+
+                             <a href="" class="ml-1">Cultura e lazer</a>
+
+                             {% elif text.section_name.section_name == "opiniao" %}
+
+                             <a class="fas fa-lightbulb"></a>
+                             <a href="{% url 'posts:index_opinion' %}" class="ml-1"> Opinião</a>
+
+                             {% elif text.section_name.section_name == "mundo" %}
+
+                             <a class="fas fa-globe"></a>
+                             <a href="" class="ml-1">Mundo</a>
+
+                             {% elif text.section_name.section_name == "brasil" %}
+
+                             <a class="fas fa-globe"></a>
+                             <a href="" class="ml-1">Brasil</a>
+
+                             {% elif text.section_name.section_name == "gastronomia" %}
+                             <a class="fas fa-utensils"></a>
+                             <a href="" class="ml-1">Gastronomia</a>
+
+
+                             {% elif text.section_name.section_name == "esportes" %}
+
+                             <a class="fas fa-running" href=""></a>
+                             <a href="" class="ml-1">Esportes</a>
+
+                             {% elif text.section_name.section_name == "enem" %}
+                             <a class="fas fa-graduation-cap" href=""></a>
+                             <a href="" class="ml-1">Enem</a>
+
+                             {% elif text.section_name.section_name == "professor" %}
+
+                             <a class="fas fa-chalkboard-teacher" href=""></a>
+                             <a href="" class="ml-1">Professor</a>
+
+
+                             {% endif %}
+
+
 
                         </li> 
-                
 
                 </ul>
             </div>
