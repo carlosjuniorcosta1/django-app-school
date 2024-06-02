@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User 
-
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
+import os
  
 class Genre(models.Model):
     genre_choices = [
@@ -50,12 +52,21 @@ class Post(models.Model):
     updated = models.DateTimeField(null=True, blank=True)
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     post_views = models.IntegerField(default=0)
-    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    image = models.ImageField(null=True, blank=True, upload_to="images/", 
+                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
+)
     section_name = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
     
     
     def __str__(self):
         return f"{self.user.username} {self.textual_genre}-{self.created}"
+  
+    def clean(self):
+      super().clean()
+      if self.image:
+        max_size = 2 * 1024 * 1024  
+        if self.image.size > max_size:
+            raise ValidationError("A imagem não pode ser maior que 2MB")
     
     
     

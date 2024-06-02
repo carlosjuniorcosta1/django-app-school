@@ -1,0 +1,13 @@
+.img-headline {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.paragraph-no-image {
+text-align: justify;
+}
+
+.title-no-image {
+text-align: justify;
+}

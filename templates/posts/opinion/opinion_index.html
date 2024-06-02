@@ -3,18 +3,43 @@
 {% load static %}
 
 {% block extrahead %} 
-
+<link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
 {% endblock %}
 
-{% block content %}
-    
-    {% for opinion in opinion_posts %}
+{% block content %}    
 
-    <h1>{{opinion.title}}</h1>
-    <h1>{{opinion.subtitle}}</h1>
-    <p>{{opinion.main_text}}</p>
+    <div class="row">
+        <div class="col-12 col-md-6">
 
-        
-    {% endfor %}
+            {% for opinion in opinion_posts %}
+            {% if forloop.counter0 < 2 %}       
+            {% if opinion.image %}
+            <div class="position-relative">
+            <img src="{{ opinion.image.url }}" alt="" class="img-fluid img-headline">
+            <div class="text-center text-white bg-dark bg-opacity-75 p-2">
+            <h2 class="">{{opinion.title}}</h2>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}  
 
+    <div class="row">
+        <div class="container">
+
+{% for opinion in opinion_posts %}
+{% if not opinion.image %}
+    <div class="col-md-6">
+        <div class="control-titles">
+            <h2 class="p-1 mt-1 title-no-image">{{opinion.title}}</h2>
+            <p class="paragraph-no-image">{{opinion.subtitle}}</p>
+        </div>
+    </div>
+   
+
+{% endif %}
+{% endfor %}
+</div>
+</div>
     {% endblock %}

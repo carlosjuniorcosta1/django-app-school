@@ -21,10 +21,13 @@
 
     <form action="" method="POST" class="form-group" id="post-form" enctype="multipart/form-data">
         {% csrf_token %}
+
         <div class="mb-0 container">
             <label for="id_title">Título</label>
             <div>
             {{form.title|add_class:"form-group form-control-lg"}}
+
+
         </div> 
         <div>
             <label for="id_subtitle">Subtítulo</label>
