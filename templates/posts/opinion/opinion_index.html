@@ -17,29 +17,47 @@
             <div class="position-relative">
             <img src="{{ opinion.image.url }}" alt="" class="img-fluid img-headline">
             <div class="text-center text-white bg-dark bg-opacity-75 p-2">
-            <h2 class="">{{opinion.title}}</h2>
+            <h2 class="">{{opinion.title|slice:":30"}}[...]</h2>
+            <small>Por {{opinion.user.first_name}} {{opinion.user.last_name}}</small>
         </div>
+
     </div>
+    <hr>
     </div>
     {% endif %}
     {% endif %}
     {% endfor %}  
 
     <div class="row">
-        <div class="container">
+            <div class="col-md-6 border-right">
 
 {% for opinion in opinion_posts %}
 {% if not opinion.image %}
-    <div class="col-md-6">
         <div class="control-titles">
             <h2 class="p-1 mt-1 title-no-image">{{opinion.title}}</h2>
             <p class="paragraph-no-image">{{opinion.subtitle}}</p>
         </div>
-    </div>
-   
 
 {% endif %}
 {% endfor %}
 </div>
+<div class="col-md-6"> 
+    <div class="control-titles">
+        <h2>Opinião</h2>
+        <hr>
+        <ul class="list-inline d-flex align-items-stretch" >
+        <li class="list-inline-item"><img src="{% static 'admin\img\my_picture.png' %}" alt="" class="img-avatar-column"></li>
+        <li class="list-inline-item">
+            <h4>Editorial<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
+            <p class="font-italic">O que tenho a dizer é que você se dedique até quando puder.</p>
+            <small>Professor, Doutor em Linguística, Programador</small>
+            </li>        
+             
+    </ul>
+    </div>
+</div>
+
+
+
 </div>
     {% endblock %}

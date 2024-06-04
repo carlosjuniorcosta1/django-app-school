@@ -53,9 +53,9 @@ class Post(models.Model):
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     post_views = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True, upload_to="images/", 
-                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])]
-)
+                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
     section_name = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
+
     
     
     def __str__(self):
@@ -67,7 +67,7 @@ class Post(models.Model):
         max_size = 2 * 1024 * 1024  
         if self.image.size > max_size:
             raise ValidationError("A imagem não pode ser maior que 2MB")
-    
+ 
     
     
 

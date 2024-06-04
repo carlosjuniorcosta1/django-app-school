@@ -41,11 +41,11 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    def get_object(self):
-        post = super().get_object()
-        post.post_views += 1
-        post.save()
-        return post 
+    # def get_object(self):
+    #     post = super().get_object()
+    #     post.post_views += 1
+    #     post.save()
+    #     return post 
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):

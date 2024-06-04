@@ -25,7 +25,7 @@
                             {% endif %}
 
                             <a class="fas fa-eye ml-1 icon-effects" href="{% url 'posts:detail_text' text.id %}" title="Visualizações"></a>
-                            <span class="font-count-views m-1">{{text.post_views}}</span>
+                            <span class="font-count-views m-1"></span>
                              {% if text.updated %}
                              <span class="font-span-date ml-auto mr-3">Atualizado em:{{text.updated|date:"d/m/Y - H:i"}}</span>  
                             {% else %}
