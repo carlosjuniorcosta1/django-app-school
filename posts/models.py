@@ -1,25 +1,34 @@
 from django.db import models
-from django.contrib.auth.models import User 
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 import os
+from accounts.models import CustomUser as User
  
 class Genre(models.Model):
     genre_choices = [
         ('reportagem', 'Reportagem'),
         ('noticia', 'Notícia'),
-        ('artigo', 'Artigo de opinião'),
+        ('artigo', 'Artigo'),
         ('fanfic', 'Fanfic'),
         ('conto', 'Conto'),
         ('resenha', 'Resenha'),
-        ('receitas', 'Receitas'),
-        ('resumo', 'Resumo')
-
+        ('receita', 'Receita'),
+        ('resumo', 'Resumo'),
+        ('tirinha', 'Tirinha'),
+        ('charge', 'Charge')
+        
       ]
     textual_genre = models.CharField(max_length=30, choices=genre_choices, blank=True, null=True)
-    
+
     def __str__(self):
-         return self.textual_genre
+      return self.get_textual_genre_display()
+    
+    def get_textual_genre_names (self):
+      return self.textual_genre
+
+    
+    
+
     
 class Section(models.Model):
     section_choices = [
@@ -27,7 +36,7 @@ class Section(models.Model):
             ('opiniao', 'Opinião'),
             ('mundo', 'Mundo'),
             ('brasil', 'Brasil'),
-            ('gastronomia', 'Gastronomia'),
+            ('culinaria', 'Culinária'),
             ('cultura_lazer', 'Cultura e Lazer'),
             ('esportes', 'Esportes'),
             ('enem', 'Enem'), 
@@ -38,7 +47,10 @@ class Section(models.Model):
     section_name = models.CharField(max_length=50, choices=section_choices)
 
     def __str__(self):
-        return self.section_name
+        return self.get_section_name_display() 
+    
+    def get_section_names(self):
+       return self.section_name
        
 
 

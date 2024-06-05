@@ -35,7 +35,7 @@
                             {% if text.section_name.section_name == "saude" %}
 
                              <a class="fas fa-heartbeat"></a>
-                              <a href="" class="ml-1">Saúde</a>
+                              <a href="" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "cultura_lazer" %}
 
@@ -43,26 +43,26 @@
 
                              <a class="fas fa-gamepad"></a>
 
-                             <a href="" class="ml-1">Cultura e lazer</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
-                             {% elif text.section_name.section_name == "opiniao" %}
+                             {% elif text.section_name.section_name == "opiniao" %}  
 
                              <a class="fas fa-lightbulb"></a>
-                             <a href="{% url 'posts:index_opinion' %}" class="ml-1"> Opinião</a>
+                             <a href="{% url 'posts:index_opinion' %}" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "mundo" %}
 
                              <a class="fas fa-globe"></a>
-                             <a href="" class="ml-1">Mundo</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "brasil" %}
 
                              <a class="fas fa-globe"></a>
-                             <a href="" class="ml-1">Brasil</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
-                             {% elif text.section_name.section_name == "gastronomia" %}
+                             {% elif text.section_name.section_name == "culinaria" %}
                              <a class="fas fa-utensils"></a>
-                             <a href="" class="ml-1">Gastronomia</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
 
                              {% elif text.section_name.section_name == "esportes" %}
@@ -72,12 +72,12 @@
 
                              {% elif text.section_name.section_name == "enem" %}
                              <a class="fas fa-graduation-cap" href=""></a>
-                             <a href="" class="ml-1">Enem</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "professor" %}
 
                              <a class="fas fa-chalkboard-teacher" href=""></a>
-                             <a href="" class="ml-1">Professor</a>
+                             <a href="" class="ml-1">{{text.section_name}}</a>
 
 
                              {% endif %}

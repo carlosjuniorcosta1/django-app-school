@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 
 
-
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
     fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']

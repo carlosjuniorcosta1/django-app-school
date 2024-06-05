@@ -6,58 +6,60 @@
 <link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
 {% endblock %}
 
-{% block content %}    
-
-    <div class="row">
-        <div class="col-12 col-md-6">
-
-            {% for opinion in opinion_posts %}
-            {% if forloop.counter0 < 2 %}       
-            {% if opinion.image %}
-            <div class="position-relative">
-            <img src="{{ opinion.image.url }}" alt="" class="img-fluid img-headline">
-            <div class="text-center text-white bg-dark bg-opacity-75 p-2">
-            <h2 class="">{{opinion.title|slice:":30"}}[...]</h2>
-            <small>Por {{opinion.user.first_name}} {{opinion.user.last_name}}</small>
-        </div>
-
-    </div>
-    <hr>
-    </div>
-    {% endif %}
-    {% endif %}
-    {% endfor %}  
-
-    <div class="row">
-            <div class="col-md-6 border-right">
+{% block content %} 
+<h2 class="font-weight-bold mt-3">Opinião</h2>
+<hr>
 
 {% for opinion in opinion_posts %}
-{% if not opinion.image %}
-        <div class="control-titles">
-            <h2 class="p-1 mt-1 title-no-image">{{opinion.title}}</h2>
-            <p class="paragraph-no-image">{{opinion.subtitle}}</p>
-        </div>
 
-{% endif %}
-{% endfor %}
-</div>
+<div class="row">
 <div class="col-md-6"> 
     <div class="control-titles">
-        <h2>Opinião</h2>
-        <hr>
-        <ul class="list-inline d-flex align-items-stretch" >
+        <ul class="list-inline d-flex align-items-stretch link-head-opinion" >
         <li class="list-inline-item"><img src="{% static 'admin\img\my_picture.png' %}" alt="" class="img-avatar-column"></li>
-        <li class="list-inline-item">
-            <h4>Editorial<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
-            <p class="font-italic">O que tenho a dizer é que você se dedique até quando puder.</p>
-            <small>Professor, Doutor em Linguística, Programador</small>
-            </li>        
-             
+        <a href="{% url 'posts:detail_text' opinion.id %}" class="link-head-opinion">
+            <li class="list-inline-item">
+            <h4>{{ opinion.title }}<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
+
+            <p class="font-italic">{{opinion.subtitle|slice:":100"}}</p>
+            <small>Professor, Doutor em Linguística e graduando em Análise e Desenvolvimento de Sistemas</small>
+            <small>| {{opinion.textual_genre}}</small> 
+            {% if opinion.updated %}
+            <small>| atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
+            {% else %}
+            <small>| em {{opinion.created|date:"d/m/Y - H:i"}}</small>
+            {% endif %}
+            </li> 
+            <hr>
+
+               </a>              
     </ul>
+ 
+</div>
+
+</div>
+
+<div class="col-md-6">
+    <ul class="list-inline d-flex align-items-stretch">
+        <li class="list-inline-item">
+            <div class="card">
+                <div class="card-body card-blockquote">
+            <blockquote class="blockquote">
+                <p class="mt-2 p-1 font-italic">"{{opinion.main_text}}"</p>
+            </blockquote>
+        </div>
     </div>
+
+        </li>
+
+    </ul>
 </div>
 
-
-
 </div>
+
+  
+
+{% endfor %}
+
+
     {% endblock %}

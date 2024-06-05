@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
-from django.contrib.auth.models import User 
-
+from .models import CustomUser as User 
 def register(request):
     if request.method == "POST":
         first_name = request.POST.get('first-name')

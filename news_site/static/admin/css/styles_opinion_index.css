@@ -21,7 +21,26 @@ text-align: justify;
    
 }
 
+.link-head-opinion:hover {
+    text-decoration: none;
+    
+}
+
+
+
 .font-span-identity{
     font-size: 16px;
 
+}
+
+.card-blockquote {
+    padding: 20px;
+    border-left: 5px solid #a8dadc;
+    background-color: #f1faee;
+
+}
+
+.card-blockquote p {
+    font-size: 1.4em;
+    color: #333;
 }
