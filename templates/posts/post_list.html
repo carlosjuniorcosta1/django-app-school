@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
+
 
 {% block extrahead %}    
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
@@ -7,7 +9,26 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <form action="{% url 'posts:list_texts' %}" method="GET" class="form-group">
+      <div class="form-row align-items-center">
+        <div class="col">
+          {{form.filter_by|add_class:"form-control"}}
+        </div>
+        <div class="col">
+          {{form.search_term|add_class:"form-control"}}
+        </div>
+        <div class="col-auto">
+          <input type="submit" value="Filtrar" class="btn btn-success">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
     {% for text in object_list %}
+
         <div class="card mb-1">
             <div class="card-header">
                 <ul class="list-group list-group-flush list-inline">

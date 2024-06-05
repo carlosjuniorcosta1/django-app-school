@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from ..models import Post
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
+from posts.forms import PostFilterForm
+from django.shortcuts import render
+from django.db.models import Q
 
 
 class PostCreateView(CreateView, LoginRequiredMixin):
@@ -30,11 +32,39 @@ class PostListView(ListView):
     model = Post
     ordering = ['-created']
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        search_term = self.request.GET.get('search_term')
+        filter_by = self.request.GET.get('filter_by')
+
+        if search_term and filter_by:
+            if filter_by == 'title':
+                queryset = queryset.filter(title__icontains=search_term)
+         
+            elif filter_by == 'textual_genre':
+                queryset = queryset.filter(textual_genre__textual_genre__icontains=search_term)
+            elif filter_by == 'section_name':
+                queryset = queryset.filter(section_name__section_name__icontains=search_term)
+            elif filter_by == 'main_text':
+                queryset = queryset.filter(main_text__icontains=search_term)
+
+       
+
+        return queryset
+
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for post in context['object_list']:
-            print(f"titulo do post '{post.title}': {post.section_name}")
-        return context
+        context['form'] = PostFilterForm(self.request.GET)
+        return context 
+    
+
+
+
+ 
+       
 
 
 
@@ -72,7 +102,14 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return queryset.filter(user=self.request.user)
 
 
-
+def index_test(request):
+    title = request.GET.get('title')
+    posts = Post.objects.all()
+    if title:
+        posts = posts.filter(title__icontains=title)
+    context = {'form': PostFilterForm(),
+                'posts': posts}
+    return render(request, 'posts/post_list.html', context)
  
         
 
