@@ -1,0 +1,52 @@
+{% extends 'base_opinion.html' %}
+
+{% load static %}
+{% block extrahead %} 
+<link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2 class="font-weight-bold mt-3">Opinião dos alunos</h2>
+<hr>
+{% for opinion in opinion_students %}
+<div class="row mt-2">
+    <div  class="col-md-6">
+                    <ul class="list-inline d-flex align-items-lg-stretch format-ul-students">
+                <a href="{% url 'posts:detail_text' opinion.id %}" class="link-head-opinion"><li class="list-inline-item">
+                    <h4>{{opinion.title}} <span class="font-span-identity">- por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
+                    <p>{{opinion.subtitle|slice:":100"}}</p>
+                    <small>{{opinion.user.presentation}}</small> 
+                    {% if opinion.updated %}
+                    <small>| atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
+                    {% else %}
+                    <small>| em {{opinion.created|date:"d/m/Y - H:i"}}</small>
+                    {% endif %} 
+                    <small>{{opinion.textual_genre}}</small>                
+                    
+                </li> </a>
+            </ul>
+        </div> 
+    <div class="col-md-6 d-flex justify-content-center">
+        <ul class="list-inline d-flex align-content-stretch">
+            <li class="list-inline-item">
+                <div class="card">
+                    <div class="card-body card-blockquote">
+                        <blockquote class="blockquote">
+                            <p class="mt-2 p-1 font-italic">"{{opinion.main_text|slice:":100"}}"[...]</p>
+                        </blockquote>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+    
+{% endfor %}
+
+
+
+
+{% endblock %}

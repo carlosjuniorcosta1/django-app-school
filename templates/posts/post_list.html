@@ -10,14 +10,14 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-4 col-sm-12">
     <form action="{% url 'posts:list_texts' %}" method="GET" class="form-group">
       <div class="form-row align-items-center">
         <div class="col">
-          {{form.filter_by|add_class:"form-control"}}
+          {{form.filter_by|add_attrs:"class=form-control"}}
         </div>
         <div class="col">
-          {{form.search_term|add_class:"form-control"}}
+          {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
         </div>
         <div class="col-auto">
           <input type="submit" value="Filtrar" class="btn btn-success">
@@ -46,7 +46,9 @@
                             {% endif %}
 
                             <a class="fas fa-eye ml-1 icon-effects" href="{% url 'posts:detail_text' text.id %}" title="Visualizações"></a>
-                            <span class="font-count-views m-1"></span>
+                            <span class="font-count-views m-1">{{text.textual_genre}}</span>
+
+
                              {% if text.updated %}
                              <span class="font-span-date ml-auto mr-3">Atualizado em:{{text.updated|date:"d/m/Y - H:i"}}</span>  
                             {% else %}

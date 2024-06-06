@@ -51,3 +51,8 @@ text-align: justify;
     font-size: 1.4em;
     color: #333;
 }
+
+.format-ul-students {
+    border-bottom: solid rgb(211, 207, 207) 1px;
+}
+

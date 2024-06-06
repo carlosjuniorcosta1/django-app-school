@@ -10,7 +10,7 @@
 <div class="container">
     <h1 class="font-title-preview">{{post.title}}</h1>
     <p class="font-subtitle-preview">{{post.subtitle}}</p>
-    <small>por {{post.user}} em {{post.created}}</small> 
+    <small>por {{post.user}} em {{post.created}}</small>  <small class="font-count-views">{{post.textual_genre}}</small>
     {% if post.image %}
     <div class="text-center">
         <figure>

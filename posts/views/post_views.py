@@ -41,16 +41,15 @@ class PostListView(ListView):
 
         if search_term and filter_by:
             if filter_by == 'title':
-                queryset = queryset.filter(title__icontains=search_term)
-         
+                queryset = queryset.filter(title__icontains=search_term)         
             elif filter_by == 'textual_genre':
                 queryset = queryset.filter(textual_genre__textual_genre__icontains=search_term)
             elif filter_by == 'section_name':
                 queryset = queryset.filter(section_name__section_name__icontains=search_term)
             elif filter_by == 'main_text':
                 queryset = queryset.filter(main_text__icontains=search_term)
-
-       
+            elif filter_by == 'user':
+                queryset = queryset.filter(user__first_name__icontains=search_term)
 
         return queryset
 
@@ -102,14 +101,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return queryset.filter(user=self.request.user)
 
 
-def index_test(request):
-    title = request.GET.get('title')
-    posts = Post.objects.all()
-    if title:
-        posts = posts.filter(title__icontains=title)
-    context = {'form': PostFilterForm(),
-                'posts': posts}
-    return render(request, 'posts/post_list.html', context)
+
  
         
 

@@ -8,7 +8,11 @@
 
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="">Opinião</a>
+          <a class="nav-link" href="{% url 'posts:index_opinion' %}">Opinião</a>
+        </li>
+
+        <li class="nav-item active">
+          <a href="{% url 'posts:list_opinion_students' %}" class="nav-link">Artigos dos alunos</a>
         </li>
 
       </ul>
