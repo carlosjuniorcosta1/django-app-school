@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from accounts.models import CustomUser as User
-from posts.forms import PostOpinionForm, PostOpinionStudentsForm
+from posts.forms.opinion_form import PostOpinionForm, PostOpinionStudentsForm
 
 
 
@@ -51,11 +51,11 @@ class OpinionStudentsListView(ListView):
 
         if search_term and filter_by:
             if filter_by == 'title':
-                queryset = queryset.filter_by(title__icontains=search_term)
+                queryset = queryset.filter(title__icontains=search_term)
             elif filter_by == "main_text":
-                queryset = queryset.filter_by(main_text__icontains=search_term)
+                queryset = queryset.filter(main_text__icontains=search_term)
             elif filter_by == "user":
-                queryset = queryset.filter_by(user__first_name__icontains=search_term)
+                queryset = queryset.filter(user__first_name__icontains=search_term)
 
         return queryset 
     

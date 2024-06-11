@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_brazil.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row d-flex align-items-lg-stretch mt-3">
+    {% for post in brazil_posts %}
+        {% if forloop.counter <= 2 %}
+            <div class="col-md-6 d-flex flex-column format-head justify-content-center align-items-center position-relative">
+                <div class="position-relative img-container">
+                    {% if post.image %}
+                        <img src="{{post.image.url}}" alt="" class="mt-1 mb-2 img-fluid img-headline">
+                        <h1 class="position-absolute text-white img-title">{{post.title}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+            
+        {% endif %}
+    {% endfor %}
+
+
+<div class="row d-flex mt-3">
+    {% for post in brazil_posts %}
+        {% if forloop.counter > 2 %}
+            <div class="col-md-7 d-flex flex-column format-head">
+                <h2>{{post.title}}</h1>
+                <p>{{post.subtitle}}</p>
+                    <div class="d-flex flex-column align-items-end text-right mt-auto">
+                <span class="align-self-end">por {{post.user.first_name}} {{post.user.last_name}}</span>
+           
+                {% if post.updated %}
+                <span class="">Atualizado em: {{post.updated|date:"d/m/Y - H:i" }} <span class="format-textual-genre">{{post.textual_genre}}</span></span>
+
+                {% else %}
+
+                <span class="align-self-end"> Há {{post.created|timesince}} <span class="format-textual-genre">{{post.textual_genre}}</span></span>
+
+                {% endif %}
+
+            </div>
+          
+            </div>
+            {% if post.image %}
+            <div class="col-md-5 mb-2 mt-2">
+            <img src="{{post.image.url}}" alt="" class="img-fluid img-after-headline">
+        
+        </div>
+
+
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

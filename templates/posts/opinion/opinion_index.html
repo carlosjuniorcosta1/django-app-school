@@ -4,10 +4,11 @@
 
 {% block extrahead %} 
 <link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %} 
-<h2 class="font-weight-bold mt-3">Opinião</h2>
+<h2 class="font-weight-bold mt-3 font-news">Opinião</h2>
 <hr>
 <div class="row">
     <div class="col-md-4 col-sm-12">
@@ -36,15 +37,14 @@
         <li class="list-inline-item"><img src="{% static 'admin\img\my_picture.png' %}" alt="" class="img-avatar-column"></li>
         <a href="{% url 'posts:detail_text' opinion.id %}" class="link-head-opinion">
             <li class="list-inline-item">
-            <h4>{{ opinion.title }}<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
+            <h4 class="font-news">{{ opinion.title}}<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
 
-            <p class="font-italic">{{opinion.subtitle|slice:":100"}}</p>
-            <small>{{opinion.user.presentation}}</small>
-            <small>| {{opinion.textual_genre}}</small> 
+            <p>{{opinion.user.presentation}}</p>
+            <small class="format-textual-genre"> {{opinion.textual_genre}}</small> 
             {% if opinion.updated %}
-            <small>| atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
+            <small>atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
             {% else %}
-            <small>| em {{opinion.created|date:"d/m/Y - H:i"}}</small>
+            <small>Há {{opinion.created|timesince}}</small>
             {% endif %}
             </li> 
             <hr>
@@ -62,7 +62,7 @@
             <div class="card">
                 <div class="card-body card-blockquote">
             <blockquote class="blockquote">
-                <p class="mt-2 p-1 font-italic">"{{opinion.main_text}}"</p>
+                <p class="mt-2 p-1 font-italic font-news">"{{opinion.main_text}}"</p>
             </blockquote>
         </div>
     </div>

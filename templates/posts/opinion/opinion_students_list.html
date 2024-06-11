@@ -1,12 +1,35 @@
 {% extends 'base_opinion.html' %}
 
 {% load static %}
+{% load form_tags %}
 {% block extrahead %} 
 <link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2 class="font-weight-bold mt-3">Opinião dos alunos</h2>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <form action="" method="GET" class="form-group">
+            <div class="form-row align-content-center">
+                <div class="col">
+                    {{form.filter_by|add_attrs:"class=form-control"}}
+                </div>
+                <div class="col">
+                    {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+                </div>
+            <div class="col-auto">
+                <input type="submit" value="Filtrar" class="btn btn-success">
+            </div>
+        </div>            
+        </form>
+
+    </div>
+</div>
+
+
+
+<h2 class="font-weight-bold mt-3 font-news">Opinião dos alunos</h2>
 <hr>
 {% for opinion in opinion_students %}
 <div class="row mt-2">
@@ -21,9 +44,9 @@
                     {% else %}
                     <small>| em {{opinion.created|date:"d/m/Y - H:i"}}</small>
                     {% endif %} 
-                    <small>{{opinion.textual_genre}}</small>                
-                    
-                </li> </a>
+                    <small class="format-textual-genre">{{opinion.textual_genre}}</small>            
+
+                    </li> </a>
             </ul>
         </div> 
     <div class="col-md-6 d-flex justify-content-center">
@@ -32,7 +55,7 @@
                 <div class="card">
                     <div class="card-body card-blockquote">
                         <blockquote class="blockquote">
-                            <p class="mt-2 p-1 font-italic">"{{opinion.main_text|slice:":100"}}"[...]</p>
+                            <p class="p-1 font-italic">"{{opinion.main_text|slice:":100"}}"[...]</p>
                         </blockquote>
                     </div>
                 </div>

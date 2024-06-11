@@ -3,7 +3,7 @@ from ..models import Post
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
-from posts.forms import PostFilterForm
+from posts.forms.post_form import PostFilterForm
 from django.shortcuts import render
 from django.db.models import Q
 

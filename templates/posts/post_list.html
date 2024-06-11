@@ -50,9 +50,9 @@
 
 
                              {% if text.updated %}
-                             <span class="font-span-date ml-auto mr-3">Atualizado em:{{text.updated|date:"d/m/Y - H:i"}}</span>  
+                             <span class="font-span-date ml-auto mr-3">Atualizado em: {{text.updated|date:"d/m/Y - H:i"}}</span>  
                             {% else %}
-                             <span class="font-span-date ml-auto mr-3">Publicado em:{{text.created|date:"d/m/Y - H:i"}}</span> 
+                             <span class="font-span-date ml-auto mr-3">Publicado em: {{text.created|date:"d/m/Y - H:i"}}</span> 
                              {% endif %} 
 
                             {% if text.section_name.section_name == "saude" %}

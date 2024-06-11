@@ -54,5 +54,31 @@ text-align: justify;
 
 .format-ul-students {
     border-bottom: solid rgb(211, 207, 207) 1px;
+    padding-bottom: 5px;
 }
+
+.font-news {
+    font-family: 'Merriweather', serif;
+
+}
+
+.format-textual-genre {
+   
+    font-size: 12px;
+    color: #0e0503; 
+    background-color: #f0f0f0; 
+    padding: 2px 5px; 
+    border-radius: 3px;
+}
+
+.nav-item-divider:not(:last-child) {
+    border-right: 1px solid #ddd;
+
+  }
+  
+  .nav-item-divider:last-child {
+    padding-right: 0;
+    margin-right: 0;
+  }
+
 
