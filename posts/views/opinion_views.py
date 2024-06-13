@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from ..models import Post
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from accounts.models import CustomUser as User
 from posts.forms.opinion_form import PostOpinionForm, PostOpinionStudentsForm
+from django.db.models import Q
 
 
 
@@ -17,17 +16,20 @@ class OpinionListView(ListView):
     
     def get_queryset(self):
         queryset = Post.objects.filter(section_name__section_name="opiniao", user__is_columnist=True ).order_by('-created')  
+        form = PostOpinionForm(self.request.GET)
 
-        search_term = self.request.GET.get('search_term')
-        filter_by = self.request.GET.get('filter_by')
+        if form.is_valid():
+            filter_by = form.cleaned_data.get('filter_by')
+            search_term = form.cleaned_data.get('search_term')
 
-        if search_term and filter_by:
             if filter_by == 'title':
                 queryset = queryset.filter(title__icontains=search_term)
             elif filter_by == 'user':
                 queryset = queryset.filter(user__first_name__icontains=search_term)
-            elif filter_by == 'main_text':
-                queryset = queryset.filter(main_text__icontains=search_term)
+            elif filter_by == 'title_main_text':
+                queryset = queryset.filter(
+                    Q(title__icontains=search_term) |
+                    Q(main_text__icontains=search_term)                )
 
         return queryset
     
@@ -45,15 +47,19 @@ class OpinionStudentsListView(ListView):
 
     def get_queryset(self):
         queryset = Post.objects.filter(section_name__section_name='opiniao', user__is_columnist=False).order_by('-created')
+        form = PostOpinionForm(self.request.GET)     
+        if form.is_valid():
+            search_term = form.cleaned_data.get('search_term')
+            filter_by = form.cleaned_data.get('filter_by')
 
-        search_term = self.request.GET.get('search_term')
-        filter_by = self.request.GET.get('filter_by')
-
-        if search_term and filter_by:
             if filter_by == 'title':
                 queryset = queryset.filter(title__icontains=search_term)
-            elif filter_by == "main_text":
-                queryset = queryset.filter(main_text__icontains=search_term)
+            
+            elif filter_by == 'title_main_text':
+                queryset = queryset.filter(
+                    Q(title__icontains=search_term) |
+                    Q(main_text__icontains=search_term)
+                )       
             elif filter_by == "user":
                 queryset = queryset.filter(user__first_name__icontains=search_term)
 

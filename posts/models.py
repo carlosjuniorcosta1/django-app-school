@@ -26,10 +26,7 @@ class Genre(models.Model):
     def get_textual_genre_names (self):
       return self.textual_genre
 
-    
-    
-
-    
+ 
 class Section(models.Model):
     section_choices = [
             ('saude', 'Saúde'),

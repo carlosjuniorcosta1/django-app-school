@@ -3,6 +3,7 @@ from posts.views import post_views
 from .views.post_views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
 from .views.opinion_views import OpinionListView, OpinionStudentsListView
 from .views.brazil_views import BrazilListView
+from .views.world_views import WorldListView
 
 app_name = 'posts'
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('delete_post_main/<int:pk>/', PostDeleteView.as_view(), name='delete_post'),
     path('opinion/', OpinionListView.as_view(), name = "index_opinion"),
     path('opinion_students/', OpinionStudentsListView.as_view(), name='list_opinion_students'),
-    path('brazil_news/', BrazilListView.as_view(), name= "index_brazil")
+    path('brazil_news/', BrazilListView.as_view(), name= "index_brazil"),
+    path('world_news/', WorldListView.as_view(), name="index_world")
 
 ]

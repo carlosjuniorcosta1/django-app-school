@@ -2,6 +2,7 @@
     width: 50%;
     height: 500px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .font-count-views{

@@ -17,17 +17,19 @@
 </head>
 <body>
     <div class="container-fluid">
-    <h2 class="text-center my-4">Postar um texto</h2>
+        {% if 'update_post_main' in request.path %}
+        <h2 class="text-center my-4">Editar seu texto</h2>
+    {% else %}
+        <h2 class="text-center my-4">Postar um texto</h2>
+    {% endif %}
+    
 
     <form action="" method="POST" class="form-group" id="post-form" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div class="mb-0 container">
             <label for="id_title">Título</label>
             <div>
             {{form.title|add_class:"form-group form-control-lg"}}
-
-
         </div> 
         <div>
             <label for="id_subtitle">Subtítulo</label>
@@ -44,6 +46,7 @@
         <label>Digite seu texto</label>   
             {{form.main_text|add_attrs:"class=form-control mb-2 rounded border shadow bg-light,id=id_main_text"}}
         </div> 
+        
         <div class="custom-file">
             <label for="id_image" class="btn btn-outline-dark">Escolher imagem</label>
             {{form.image|add_attrs:"class=custom-file-input,id=id_image"}}
@@ -54,6 +57,7 @@
 <div class="text-right">
         <input type="submit" value="Enviar" class="btn btn-dark">  
     </div>
+
     </form>     
 
    

@@ -37,17 +37,16 @@
                         <br> <small class="font-italic">por {{ text.user }}</small>
                     </li>
                     <li class="list-elements d-flex align-items-center justify-content-between">
-                        <a  class="font-main-text" href="">{{text.main_text|slice:":150"}} [...]</a>       
+                        <a  class="font-main-text" href="{% url 'posts:detail_text' text.id %}">{{text.main_text|slice:":150"}} [...]</a>       
 
 
                     {% if user.is_authenticated and user == text.user %}
+
                            <a class="fas fa-edit mr-2 ml-2" href="{% url 'posts:update_post' text.id %}" title="Editar">
                             </a>
                             {% endif %}
 
-                            <a class="fas fa-eye ml-1 icon-effects" href="{% url 'posts:detail_text' text.id %}" title="Visualizações"></a>
-                            <span class="font-count-views m-1">{{text.textual_genre}}</span>
-
+                            <span class="font-count-views ml-2 mr-2">{{text.textual_genre}}</span>
 
                              {% if text.updated %}
                              <span class="font-span-date ml-auto mr-3">Atualizado em: {{text.updated|date:"d/m/Y - H:i"}}</span>  

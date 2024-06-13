@@ -8,13 +8,13 @@
 {% block content %}
 
 <div class="container">
-    <h1 class="font-title-preview">{{post.title}}</h1>
+    <h1 class="font-title-preview mt-3">{{post.title}}</h1>
     <p class="font-subtitle-preview">{{post.subtitle}}</p>
     <small>por {{post.user}} em {{post.created}}</small>  <small class="font-count-views">{{post.textual_genre}}</small>
     {% if post.image %}
     <div class="text-center">
         <figure>
-            <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline">
+            <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-3">
             <figcaption>{{ post.image.name }}</figcaption>
         </figure>
     </div>

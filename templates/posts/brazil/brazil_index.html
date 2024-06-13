@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_brazil.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="row mt-2">
+    <div class="col-md-4 col-sm-12">
+      <form action="{% url 'posts:index_brazil' %}" method="GET" class="form-group">
+        <div class="form-row align-items-center">
+          <div class="col">
+            {{form.filter_by|add_attrs:"class=form-control"}}
+          </div>
+          <div class="col">
+            {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-success">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
 <div class="row d-flex align-items-lg-stretch mt-3">
     {% for post in brazil_posts %}
@@ -13,8 +31,9 @@
             <div class="col-md-6 d-flex flex-column format-head justify-content-center align-items-center position-relative">
                 <div class="position-relative img-container">
                     {% if post.image %}
-                        <img src="{{post.image.url}}" alt="" class="mt-1 mb-2 img-fluid img-headline">
-                        <h1 class="position-absolute text-white img-title">{{post.title}}</h1>
+                        <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="mt-1 mb-2 img-fluid img-headline"></a>
+                        <a href="{% url 'posts:detail_text' post.id %}"><h1 class="position-absolute text-white img-title">{{post.title}}</h1></a>
+
                     {% endif %}
                 </div>
             </div>
@@ -26,9 +45,9 @@
 <div class="row d-flex mt-3">
     {% for post in brazil_posts %}
         {% if forloop.counter > 2 %}
-            <div class="col-md-7 d-flex flex-column format-head">
-                <h2>{{post.title}}</h1>
-                <p>{{post.subtitle}}</p>
+            <div class="col-md-7 d-flex flex-column format-head p-1 font-news">
+               <a href="{% url 'posts:detail_text' post.id %}" class=""> <h2>{{post.title}}</h1> 
+                <p>{{post.subtitle}}</p></a>
                     <div class="d-flex flex-column align-items-end text-right mt-auto">
                 <span class="align-self-end">por {{post.user.first_name}} {{post.user.last_name}}</span>
            
@@ -40,16 +59,13 @@
                 <span class="align-self-end"> Há {{post.created|timesince}} <span class="format-textual-genre">{{post.textual_genre}}</span></span>
 
                 {% endif %}
-
-            </div>
-          
+            </div>          
             </div>
             {% if post.image %}
             <div class="col-md-5 mb-2 mt-2">
-            <img src="{{post.image.url}}" alt="" class="img-fluid img-after-headline">
+           <a href="{% url 'posts:detail_text' post.id %}"> <img src="{{post.image.url}}" alt="" class="img-fluid img-after-headline"></a>
         
-        </div>
-
+        </div> 
 
             {% endif %}
         {% endif %}

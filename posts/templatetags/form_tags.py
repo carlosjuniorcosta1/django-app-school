@@ -13,3 +13,10 @@ def add_attrs(field, args):
         key, value = arg.split('=')
         attrs[key] = value
     return field.as_widget(attrs=attrs)
+
+@register.filter
+def to_float(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return value 

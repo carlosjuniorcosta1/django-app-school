@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <ul class="list-group">
+        <li>
+            {% for item in api_awesome %}
+            {% if item.code == "USD" %}
+            {% if item.pctChange|to_float < 0 %}
+
+            <i class="fas fa-dollar-sign"></i>
+            <i class="fas fa-arrow-down"></i>
+
+
+            {% endif %}
+            {% endif %}
+
+            {% if item.code == "USD" %}
+            {% if item.pctChange|to_float > 0 %}
+
+            <div>
+
+            <i class="fas fa-dollar-sign"></i><i class="fas fa-arrow-up"></i>
+
+            <i class="fas fa-euro-sign"></i>
+            <i class="fab fa-bitcoin"></i>
+
+
+            variação {{item.pctChange|to_float }}
+
+        </div>
+
+            {% endif %}
+            {% endif %}
+               
+
+                
+            {% endfor %}
+        </li>
+
+    </ul>
+  </div>
+</div>
+{% endblock %}
