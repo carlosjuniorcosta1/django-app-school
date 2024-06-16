@@ -21,7 +21,7 @@ class ApiBncc(models.Model):
     thema_unities = models.CharField(max_length=90, null=True, blank=True)    
     k_obj = models.CharField(max_length=500, null=True, blank=True)
     whole_skill = models.CharField(max_length=1600, null=True)
-    code_skill = models.CharField(max_length=10, null=True)
+    cod_skill = models.CharField(max_length=10, null=True)
     skill = models.CharField(max_length=1610)
     field_act = models.CharField(max_length=40, null=True, blank=True)
     lang_prac = models.CharField(max_length=150, null=True, blank=True)
