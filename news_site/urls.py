@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/',include('accounts.urls') ),
     path('', include('static_content.urls')),
     path('post/', include('posts.urls')),
-    path('api_awesome/', include('api_awesome.urls'))
+    path('api_awesome/', include('api_awesome.urls')),
+    path('api_bncc/', include('api_bncc.urls'))
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

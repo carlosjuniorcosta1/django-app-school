@@ -13,3 +13,7 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     background-color: rgb(29, 26, 26);
 }
+
+.img-world {
+    border-radius: 10px;
+}

@@ -1,0 +1,30 @@
+
+.img-caro-main {
+    border-radius: 10px;
+    object-fit:fill;
+    width: 775px;
+    height: 500px;
+    
+}
+
+.carousel-caption-2 {
+    position: absolute;
+    bottom: 60px; 
+    left: 0;
+    width: 100%;
+    text-align: justify;
+    padding: 10px;
+    color: white;
+}
+
+.carousel-text {
+    text-align: center;
+    margin-top: 20px; 
+    color: black; 
+}
+
+.img-second-row {
+    width: 300px;
+    height: 175px;
+    border-radius: 3px;
+}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+{% load static %}
+
+{% block styles %}
+    <!-- Adicione o link para o arquivo CSS do Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="row mt-2">
+    <div class="col-md-4">
+        <form action="{% url 'api_bncc:list_bncc' %}" method="GET" class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    {{form.filter_by|add_attrs:"class=form-control"}}
+                </div>
+                <div class="col">
+                    {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Filtrar" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if api_bncc %}
+<div class="row mt-2">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Matéria</th>
+                        <th scope="col">Objeto do Conhecimento</th>
+                        <th scope="col">Habilidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in api_bncc %}
+                    <tr>
+                        <td>{{ post.get_cur_comp_display}}</td>
+                        <td>{{ post.k_obj }}</td>
+                        <td>{{ post.skill }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info mt-3" role="alert">
+    <h3>Clique no filtrar para consultar a BNCC!</h3>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <!-- Adicione o link para o arquivo JS do Bootstrap -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+{% endblock %}

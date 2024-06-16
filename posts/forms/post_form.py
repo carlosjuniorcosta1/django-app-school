@@ -1,6 +1,5 @@
 from django import forms
 
-
 class PostFilterForm(forms.Form):
     filter_choices = [
         ('main_text', 'Palavra'),

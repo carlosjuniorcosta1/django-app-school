@@ -75,7 +75,7 @@
                              {% elif text.section_name.section_name == "mundo" %}
 
                              <a class="fas fa-globe"></a>
-                             <a href="" class="ml-1">{{text.section_name}}</a>
+                             <a href="{% url 'posts:index_world' %}" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "brasil" %}
 
@@ -84,7 +84,7 @@
 
                              {% elif text.section_name.section_name == "culinaria" %}
                              <a class="fas fa-utensils"></a>
-                             <a href="" class="ml-1">{{text.section_name}}</a>
+                             <a href="{% url 'posts:index_cuisine' %}" class="ml-1">{{text.section_name}}</a>
 
 
                              {% elif text.section_name.section_name == "esportes" %}

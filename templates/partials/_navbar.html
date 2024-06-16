@@ -26,7 +26,7 @@
         <a class="nav-link" href="{% url 'posts:index_world' %}">Mundo</a>
       </li>
       <li class="nav-item active nav-item-divider">
-        <a class="nav-link" href="">Culinária</a>
+        <a class="nav-link" href="{% url 'posts:index_cuisine' %}">Culinária</a>
       </li>
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="">Cultura e lazer</a>
@@ -38,7 +38,7 @@
         <a class="nav-link" href="">Enem</a>
       </li>
       <li class="nav-item active nav-item-divider">
-        <a class="nav-link" href="">Professor</a>
+        <a class="nav-link" href="{% url 'api_bncc:list_bncc' %}">Professor</a>
       </li>
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'about' %}"> Sobre <span class="sr-only">(current)</span></a>
