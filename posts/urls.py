@@ -6,6 +6,7 @@ from .views.brazil_views import BrazilListView
 from .views.world_views import WorldListView
 from .views.cuisine_views import CuisineListView
 from .views.sport_views import SportListView
+
 app_name = 'posts'
 
 urlpatterns = [

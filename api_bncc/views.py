@@ -6,7 +6,7 @@ from api_bncc.forms.list_bncc_form import ListBnccForm
 
 class ApiBnccListView(ListView):
     model = ApiBncc
-    fields = ['cur_comp', 'k_obj', 'skill']
+    fields = ['cur_comp', 'k_obj', 'whole_skill']
     template_name = 'api/api_bncc/bncc_list.html'
 
     def get_queryset(self):
@@ -22,7 +22,7 @@ class ApiBnccListView(ListView):
                 queryset = queryset.filter(cur_comp__icontains=search_term)
             elif filter_by == 'k_obj':
                 queryset = queryset.filter(k_obj__icontains=search_term)
-            elif filter_by == 'skill':
+            elif filter_by == 'whole_skill':
                 queryset = queryset.filter(skill__icontains=search_term)
             
             return queryset

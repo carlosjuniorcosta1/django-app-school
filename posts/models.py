@@ -50,8 +50,6 @@ class Section(models.Model):
        return self.section_name
        
 
-
-    
 class Post(models.Model):
     title = models.CharField(max_length=80)
     subtitle = models.CharField(max_length=80)

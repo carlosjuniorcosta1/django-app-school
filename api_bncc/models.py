@@ -14,13 +14,13 @@ class ApiBncc(models.Model):
         ('educacao_fisica', 'Educação Física'),
         ('ciencias', 'Ciências'),
         ('ensino_religioso', 'Ensino Religioso'),
-        ('matematica', 'Matemática')     
-       
+        ('matematica', 'Matemática')   
+      
     ]
     cur_comp = models.CharField(max_length=40, choices=cur_comp_choices, blank=True, null=True)
     thema_unities = models.CharField(max_length=90, null=True, blank=True)    
-    k_obj = models.CharField(max_length=500, null=True, blank=True)
-    whole_skill = models.CharField(max_length=1600, null=True)
+    k_obj = models.CharField(max_length=510, null=True, blank=True)
+    whole_skill = models.CharField(max_length=1610, null=True)
     cod_skill = models.CharField(max_length=10, null=True)
     skill = models.CharField(max_length=1610)
     field_act = models.CharField(max_length=40, null=True, blank=True)
@@ -34,18 +34,17 @@ class ApiBncc(models.Model):
     es6 = models.BooleanField()
     es7 = models.BooleanField()
     es8 = models.BooleanField()
-    es9 = models.BooleanField()  
-   
-   
-    
+    es9 = models.BooleanField()    
+       
     def __str__(self):
         return self.get_cur_comp_display()
     
     def get_cur_comp_db(self):
-        return self.cur_comp
+       return self.cur_comp
+        
     
 
-
+  
 
 
 
