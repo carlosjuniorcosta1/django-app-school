@@ -1,0 +1,15 @@
+.img-headline {
+    width: 50%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.font-count-views{
+    font-size: 12px;
+    font-weight: bold; 
+    color: #0e0503; 
+    background-color: #f0f0f0; 
+    padding: 2px 5px; 
+    border-radius: 3px;
+}

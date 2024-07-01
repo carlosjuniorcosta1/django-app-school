@@ -21,7 +21,7 @@ a{
 .nav-link:hover{
     font-size: 1.1em;
     color: rgb(12, 11, 11);
-    background: rgb(239, 234, 234); 
+    background:rgb(239, 234, 234); 
      
 }
 
@@ -80,5 +80,15 @@ image img{
     border-bottom:1px solid black;
 }
 
+
+.nav-item-divider:not(:last-child) {
+    border-right: 1px solid #ddd;
+
+  }
+  
+  .nav-item-divider:last-child {
+    padding-right: 0;
+    margin-right: 0;
+  }
 
 

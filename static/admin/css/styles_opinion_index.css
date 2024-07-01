@@ -1,0 +1,84 @@
+.img-headline {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.paragraph-no-image {
+text-align: justify;
+}
+
+.title-no-image {
+text-align: justify;
+}
+
+.img-avatar-column {
+    height: 100px;
+    width: 100px;
+    filter: grayscale(100%);
+    object-fit: cover;
+    border-radius: 45%;
+   
+}
+
+.link-head-opinion {
+    text-decoration: none;
+    color: inherit;
+
+}
+
+.link-head-opinion:hover {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+
+
+.font-span-identity{
+    font-size: 16px;
+
+}
+
+.card-blockquote {
+    padding: 20px;
+    border-left: 5px solid #a8dadc;
+    background-color: #f1faee;
+
+}
+
+.card-blockquote p {
+    font-size: 1.4em;
+    color: #333;
+}
+
+.format-ul-students {
+    border-bottom: solid rgb(211, 207, 207) 1px;
+    padding-bottom: 5px;
+}
+
+.font-news {
+    font-family: 'Merriweather', serif;
+
+}
+
+.format-textual-genre {
+   
+    font-size: 12px;
+    color: #0e0503; 
+    background-color: #f0f0f0; 
+    padding: 2px 5px; 
+    border-radius: 3px;
+}
+
+.nav-item-divider:not(:last-child) {
+    border-right: 1px solid #ddd;
+
+  }
+  
+  .nav-item-divider:last-child {
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+

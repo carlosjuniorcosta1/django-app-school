@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('static_content.urls')),
     path('post/', include('posts.urls')),
     path('api_awesome/', include('api_awesome.urls')),
-    path('api_bncc/', include('api_bncc.urls'))
+    path('api_bncc/', include('api_bncc.urls')),
+    path('quizes/', include('quizes.urls', namespace='quizes'))
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

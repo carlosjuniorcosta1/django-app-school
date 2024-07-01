@@ -3,29 +3,29 @@
 {% load static %}
 
 {% block styles %}
-    <!-- Adicione o link para o arquivo CSS do Bootstrap -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 
-<div class="row mt-2">
-    <div class="col-md-4">
-        <form action="{% url 'api_bncc:list_bncc' %}" method="GET" class="form-group">
-            <div class="form-row">
-                <div class="col">
-                    {{form.filter_by|add_attrs:"class=form-control"}}
+<form method="get" action="{% url 'api_bncc:list_bncc' %}">
+    <div class="form-group">
+        <label>{{ form.filter_by.label }}</label>
+        <div>
+            {% for item in form.filter_by %}
+                <div class="form-check">
+                    {{ item.tag }} {{ item.choice_label }}
+                </div>           
+                          {% endfor %}
+                          
                 </div>
-                <div class="col">
-                    {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
-                </div>
-                <div class="col-auto">
-                    <input type="submit" value="Filtrar" class="btn btn-success">
-                </div>
-            </div>
-        </form>
     </div>
-</div>
+       <div class="form-group">
+        <label>{{ form.search_term.label }}</label>
+        {{ form.search_term }}
+    </div>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
 
 {% if api_bncc %}
 <div class="row mt-2">
