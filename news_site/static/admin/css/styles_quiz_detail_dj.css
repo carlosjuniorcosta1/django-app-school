@@ -1,0 +1,7 @@
+.correct-answer-color {
+    background-color: rgb(187, 247, 195);
+}
+
+.wrong-answer-color {
+    background-color: tomato; 
+}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Quiz
+from quizes.models import Quiz
 from questions.models import Question, Answer
 
 from django.views.generic import ListView

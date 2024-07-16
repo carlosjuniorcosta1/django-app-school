@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
+{% endblock %}
+{% block script_js %}
+<script src="{% static 'admin\js\quiz_dj.js' %}"></script>
+{% endblock %} 
+
+{% block content %}
+
+
+<form id="quiz-form" action="" method="POST">
+    <button id="clearButton" class="btn btn-secondary float-right">
+        <i class="fas fa-broom"></i> Limpar
+    </button>
+    {% csrf_token %}
+    {% for question in questions %}
+        <p>{{ forloop.counter }}. {{ question.text }}</p>
+        {% for answer in question.get_answers %}
+            <div class="quiz-question">
+                <input type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.correct %}true{% else %}false{% endif %}">
+                <label class="" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {{ answer.correct }}     {% if answer.correct %}
+                    <span class="correct-answer-indicator" id="correct-answer-indicator">(Correct answer)</span>
+                {% endif %}</label>
+            
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <button id="buttonSubmit" class="btn btn-primary" type="submit">Submit Quiz</button>
+</form>
+
+
+
+
+{% endblock %}
