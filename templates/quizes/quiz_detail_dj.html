@@ -9,26 +9,41 @@
 {% endblock %} 
 
 {% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h2 class="display-4 font-weight-bold text-secondary border-bottom border-light pb-2 mb-4">
+                {{ quiz.quiz_subject_hum }}
+            </h2>
+            <button id="clearButton" class="btn btn-secondary">
+                <i class="fas fa-broom"></i> Limpar
+            </button>
+        </div>
+    </div>
 
-
-<form id="quiz-form" action="" method="POST">
-    <button id="clearButton" class="btn btn-secondary float-right">
+<form id="quiz-form" action="" method="POST"> 
+    {% csrf_token %}
+    
+    {% for question in questions %}
+    <div class="mb-1 text-question">
+        <p>{{ forloop.counter }}. {{ question.context }}</p>
+        <p>{{question.question}}</p>
+        {% for answer in question.get_answers %}
+            <div class="quiz-question form-check">
+                <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
+                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {{answer.is_correct}}  {% if answer.is_correct %}
+                    <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
+                {% endif %}</label>             
+            </div> 
+        {% endfor %}
+        <hr>
+    </div>
+    {% endfor %}
+  
+    <button id="buttonSubmit" class="btn btn-primary" type="submit">Submit Quiz</button>
+    <button id="clearButton" class="btn btn-secondary float-center">
         <i class="fas fa-broom"></i> Limpar
     </button>
-    {% csrf_token %}
-    {% for question in questions %}
-        <p>{{ forloop.counter }}. {{ question.text }}</p>
-        {% for answer in question.get_answers %}
-            <div class="quiz-question">
-                <input type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.correct %}true{% else %}false{% endif %}">
-                <label class="" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {{ answer.correct }}     {% if answer.correct %}
-                    <span class="correct-answer-indicator" id="correct-answer-indicator">(Correct answer)</span>
-                {% endif %}</label>
-            
-            </div>
-        {% endfor %}
-    {% endfor %}
-    <button id="buttonSubmit" class="btn btn-primary" type="submit">Submit Quiz</button>
 </form>
 
 

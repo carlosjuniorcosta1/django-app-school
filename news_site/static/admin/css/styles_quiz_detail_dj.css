@@ -3,5 +3,9 @@
 }
 
 .wrong-answer-color {
-    background-color: tomato; 
+    background-color: rgb(248, 179, 166); 
+}
+
+.text-question {
+    text-align: justify;
 }

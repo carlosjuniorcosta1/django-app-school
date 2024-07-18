@@ -7,18 +7,17 @@ class Question(models.Model):
     quiz_subject = models.ForeignKey(QuizSubject, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f" {self.quiz_subject}, {self.context}"
+        return f" Questão {self.id}({self.quiz_subject}): {self.context[:200]}"
     
-    # def get_answers(self):
-    #     return self.answer_set.all()
+    def get_answers(self):
+        return self.answer_set.all()
 
 class Answer(models.Model):
     text = models.CharField(max_length=1500)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
-    is_correct = models.BooleanField(null=True, blank=True)
-    
+    is_correct = models.BooleanField(null=True, blank=True)    
 
     def __str__(self):
-        return f"question: answer {self.text}"
+        return f"question: answer {self.text[:150]}"
     
 

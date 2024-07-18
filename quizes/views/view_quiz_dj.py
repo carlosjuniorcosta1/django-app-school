@@ -3,20 +3,30 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from ..models import QuizSubject
 from questions.models import Question, Answer
+from django.core.paginator import Paginator
+
 
 class QuizListViewDj(ListView):
     model = QuizSubject
-    fields = ['name', 'topic', 'number_of_questions', 'time', 'required_score_to_pass', 'difficulty']
+    fields = ['quiz_subject']
     template_name = "quizes/main_quiz_dj.html"
 
 class QuizDetailDj(DetailView):
     model = QuizSubject
-    template_name = "quizes/quiz_detail_dj.html"
+    template_name = "quizes/quiz_detail_dj.html" 
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         quiz = self.get_object()
-        context['questions'] = quiz.question_set.all()
+        
+        questions = quiz.question_set.all()      
+      
+        paginator = Paginator(questions, 5)  
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)        
+      
+        context['questions'] = page_obj
+        context['quiz'] = quiz
         return context
     
     def post(self, request, *args, **kwargs):
@@ -33,7 +43,7 @@ class QuizDetailDj(DetailView):
                     'selected': selected_answer.text,
                     'correct': selected_answer.correct
                 }
-                print(f"Pergunta: {question.text} - Resposta Selecionada: {selected_answer.text} - Correta: {selected_answer.correct}")
+                print(f"Pergunta: {question.context} - Resposta Selecionada: {selected_answer.text} - Correta: {selected_answer.is_correct}")
 
         context = self.get_context_data()
         context['submitted_answers'] = submitted_answers
