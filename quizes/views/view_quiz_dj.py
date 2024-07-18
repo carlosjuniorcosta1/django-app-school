@@ -1,16 +1,16 @@
 from typing import Any
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from ..models import Quiz
+from ..models import QuizSubject
 from questions.models import Question, Answer
 
 class QuizListViewDj(ListView):
-    model = Quiz
+    model = QuizSubject
     fields = ['name', 'topic', 'number_of_questions', 'time', 'required_score_to_pass', 'difficulty']
     template_name = "quizes/main_quiz_dj.html"
 
 class QuizDetailDj(DetailView):
-    model = Quiz
+    model = QuizSubject
     template_name = "quizes/quiz_detail_dj.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:

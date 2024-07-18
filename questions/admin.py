@@ -3,7 +3,7 @@ from .models import Question, Answer
 
 
 class AnswerInLine(admin.TabularInline):
-    model = Answer
+     model = Answer
 
 
 class QuestionAdmin(admin.ModelAdmin):

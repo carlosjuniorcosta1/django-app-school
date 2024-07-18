@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Quiz
+from .models import QuizSubject
 
-admin.site.register(Quiz)
+admin.site.register(QuizSubject)
 
