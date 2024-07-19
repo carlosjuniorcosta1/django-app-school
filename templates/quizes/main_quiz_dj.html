@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
+{% endblock %}
 
 {% block content %}
 
 {% for item in object_list %}
 
-<ul>
-    <li>
-        <a href="{% url 'quizes:detail-quiz-dj' item.id %}">{{item.quiz_subject}}</a>
-    </li>
-</ul>
+<div class="container mt-2">
+    <div class="card custom-card">
+        <a href="{% url 'quizes:detail-quiz-dj' item.id %}"><div class="card-body d-flex align-items-center">
+            <img src="https://via.placeholder.com/60" class="list-image" alt="Imagem 1">
+            <div>
+                <h5 class="card-title">{{item.quiz_subject_hum}}</h5>
+                <p class="card-text">Descrição do primeiro item da lista.</p>
+            </div>
+        </div>
+    </a>
+    </div>
+</div>
 
-{% endfor %}
+  {% endfor %}
+
+
+
 {% endblock %}
