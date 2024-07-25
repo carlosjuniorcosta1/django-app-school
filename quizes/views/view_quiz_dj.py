@@ -21,7 +21,7 @@ class QuizDetailDj(DetailView):
         
         questions = quiz.question_set.all()      
       
-        paginator = Paginator(questions, 10)  
+        paginator = Paginator(questions, 4)  
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)        
       
@@ -39,9 +39,9 @@ class QuizDetailDj(DetailView):
             selected_answer_id = request.POST.get(f"question{question.id}", None)
             if selected_answer_id:
                 selected_answer = Answer.objects.get(id=selected_answer_id)
-                submitted_answers[question.text] = {
+                submitted_answers[question.context] = {
                     'selected': selected_answer.text,
-                    'correct': selected_answer.correct
+                    'correct': selected_answer.is_correct
                 }
                 print(f"Pergunta: {question.context} - Resposta Selecionada: {selected_answer.text} - Correta: {selected_answer.is_correct}")
 

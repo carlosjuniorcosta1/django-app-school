@@ -1,0 +1,30 @@
+.font-quiz-card {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 35px;
+    
+}
+
+.img-avatar-column {
+    height: 125px;
+    width: 125px;
+    object-fit: cover;
+   
+}
+
+.img-avatar-column-languages {
+    height: 125px;
+    width: 175px;
+    object-fit: cover;
+   
+}
+
+a:hover{
+    text-decoration-line: none;
+    text-decoration: none;
+    color: black;
+}
+
+
+format-card {
+    box-shadow: inset;
+}
