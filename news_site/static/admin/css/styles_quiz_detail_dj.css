@@ -1,10 +1,26 @@
+
 .correct-answer-color {
     background-color: rgb(187, 247, 195);
+    border: 2px dotted rgb(34, 139, 34);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .wrong-answer-color {
-    background-color: rgb(248, 179, 166); 
+    background-color: rgb(248, 179, 166);
+    border: 2px dotted rgb(220, 20, 60);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
+
+
+
+
+
 
 .text-question {
     text-align: justify;

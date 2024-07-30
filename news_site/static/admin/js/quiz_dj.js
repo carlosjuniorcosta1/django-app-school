@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (selectedAnswer) {
                 let isCorrectAnswer = selectedAnswer.dataset.isCorrect === 'true';
                 let wrongAnswer = selectedAnswer.dataset.isCorrect === 'false';
-                let labelElement = selectedAnswer.nextElementSibling;
+                let labelElement = selectedAnswer.parentElement;
+                
 
                 if (isCorrectAnswer) {
                     labelElement.classList.remove('wrong-answer-color');
@@ -27,10 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
             questions.forEach(function(question) {
                 let selectedAnswer = question.querySelector("input[type='radio']:checked");
                 if (selectedAnswer) {
-                    let labelElement = selectedAnswer.nextElementSibling;
+                    let labelElement = selectedAnswer.parentElement;
                     labelElement.classList.remove('correct-answer-color', 'wrong-answer-color');
                 }
             });
-        }, 2000);
+        }, 10000);
     });
 });

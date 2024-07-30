@@ -28,7 +28,6 @@
         <p>{{ forloop.counter }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
         {% if question.has_image %} 
         <img src="{{question.question_image}}" alt="" class="img-fluid">
-
         {% endif %}
         <p>{{question.question}}</p>
      
@@ -36,8 +35,16 @@
         {% for answer in question.get_answers %}
             <div class="quiz-question form-check">
                 <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
-                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {% if answer.is_correct %}
-                    <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
+                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">
+                    {% if answer.has_image_alt %}
+                    <img src="{{answer.text}}" alt="">
+                    
+                    {% else %}
+                    
+                    {{ answer.text }} 
+                    {% endif %}
+                    {% if answer.is_correct %}
+                <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
                 {% endif %}</label>             
             </div> 
            
