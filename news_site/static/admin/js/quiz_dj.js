@@ -31,6 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     labelElement.classList.remove('correct-answer-color', 'wrong-answer-color');
                 }
             });
-        }, 50000);
+        }, 2000);
     });
 });

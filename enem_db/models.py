@@ -10,7 +10,7 @@ class EnemDb(models.Model):
     alt_d = models.CharField(max_length=1500, null=True, blank=True)
     alt_e = models.CharField(max_length=1500, null=True, blank=True)
     correct = models.CharField(max_length=1, null=True, blank=True)
-    context_images = models.CharField(max_length=500, null=True, blank=True)
+    question_image = models.CharField(max_length=1500, blank=True, null=True)
     subject = models.CharField(max_length=10, null=True, blank=True)
     subject_code = models.IntegerField(null=True, blank=True)
     year = models.IntegerField()

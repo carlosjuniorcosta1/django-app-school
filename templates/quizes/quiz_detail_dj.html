@@ -25,12 +25,14 @@
     {% for question in questions %}
     <div class="mb-1 text-question card">
         <div class="card-body format-questions">
-        <p>{{ forloop.counter }}. {{question.context}}</p>
+        <p>{{ forloop.counter }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
         <p>{{question.question}}</p>
+            <p>{{question.question_image}}</p>
+ 
         {% for answer in question.get_answers %}
             <div class="quiz-question form-check">
                 <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
-                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {{answer.is_correct}}  {% if answer.is_correct %}
+                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">{{ answer.text }} {% if answer.is_correct %}
                     <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
                 {% endif %}</label>             
             </div> 

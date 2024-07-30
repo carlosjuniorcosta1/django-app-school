@@ -21,7 +21,7 @@ class QuizDetailDj(DetailView):
         
         questions = quiz.question_set.all()      
       
-        paginator = Paginator(questions, 4)  
+        paginator = Paginator(questions, 20)  
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)        
       

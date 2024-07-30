@@ -5,8 +5,10 @@ class Question(models.Model):
     context = models.CharField(max_length=5000, null=True, blank=True)
     question = models.CharField(max_length=1700, null=True, blank=True)
     quiz_subject = models.ForeignKey(QuizSubject, on_delete=models.CASCADE, null=True, blank=True)
-    question_image = models.CharField(max_length=1000, blank=True, null=True)
+    question_image = models.CharField(max_length=1500, blank=True, null=True)
     year= models.IntegerField(blank=True, null=True)
+    number = models.IntegerField(blank=True, null=True)
+    has_image = models.BooleanField(blank=True, default=0, null=True)
 
     def __str__(self):
         return f" Questão {self.id}, ano: {self.year}, ({self.quiz_subject}): {self.context[:500]}  {self.question}"
