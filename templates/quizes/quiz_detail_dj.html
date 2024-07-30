@@ -26,8 +26,12 @@
     <div class="mb-1 text-question card">
         <div class="card-body format-questions">
         <p>{{ forloop.counter }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+        {% if question.has_image %} 
+        <img src="{{question.question_image}}" alt="" class="img-fluid">
+
+        {% endif %}
         <p>{{question.question}}</p>
-            <p>{{question.question_image}}</p>
+     
  
         {% for answer in question.get_answers %}
             <div class="quiz-question form-check">

@@ -3,7 +3,7 @@ from quizes.models import QuizSubject
 
 class Question(models.Model):
     context = models.CharField(max_length=5000, null=True, blank=True)
-    question = models.CharField(max_length=1700, null=True, blank=True)
+    question = models.CharField(max_length=1705, null=True, blank=True)
     quiz_subject = models.ForeignKey(QuizSubject, on_delete=models.CASCADE, null=True, blank=True)
     question_image = models.CharField(max_length=1500, blank=True, null=True)
     year= models.IntegerField(blank=True, null=True)
