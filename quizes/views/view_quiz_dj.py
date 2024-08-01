@@ -4,12 +4,9 @@ from django.views.generic import ListView, DetailView
 from ..models import QuizSubject
 from questions.models import Question, Answer
 from django.core.paginator import Paginator
+from quizes.forms.quiz_detail_question_form import QuestionForm
 
 
-class QuizListViewDj(ListView):
-    model = QuizSubject
-    fields = ['quiz_subject']
-    template_name = "quizes/main_quiz_dj.html"
 
 class QuizDetailDj(DetailView):
     model = QuizSubject
@@ -21,7 +18,7 @@ class QuizDetailDj(DetailView):
         
         questions = quiz.question_set.all()      
       
-        paginator = Paginator(questions, 5)  
+        paginator = Paginator(questions, 100)  
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)        
       

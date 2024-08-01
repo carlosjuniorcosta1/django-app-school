@@ -5,7 +5,9 @@ from django.urls import path
 #     quiz_data_view,
 #     save_quiz_view
 # )
-from .views.view_quiz_dj import QuizListViewDj, QuizDetailDj
+from .views.view_quiz_dj import  QuizDetailDj
+from .views.view_quiz_list import QuizListViewDj
+
 
 app_name = 'quizes'
 

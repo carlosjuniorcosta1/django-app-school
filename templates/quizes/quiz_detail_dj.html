@@ -19,6 +19,8 @@
         </div>
     </div>
 
+
+
 <form id="quiz-form" action="" method="POST"> 
     {% csrf_token %}
     
@@ -26,8 +28,11 @@
     <div class="mb-1 text-question card">
         <div class="card-body format-questions">
         <p>{{ forloop.counter }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
-        {% if question.has_image %} 
-        <img src="{{question.question_image}}" alt="" class="img-fluid">
+        {% if question.has_image %}
+        {% for img_url in question.get_image_urls %}
+            <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
+        {% endfor %}
+      
         {% endif %}
         <p>{{question.question}}</p>
      
