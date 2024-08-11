@@ -1,29 +1,30 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 from ..models import QuizSubject
 from questions.models import Question, Answer
-from django.core.paginator import Paginator
-from quizes.forms.quiz_detail_question_form import QuestionForm
+from quizes.forms.enem_quiz_question_form import QuestionForm
 
-
-
-class QuizDetailDj(DetailView):
+class QuestionListView(ListView):
     model = QuizSubject
-    template_name = "quizes/quiz_detail_dj.html" 
+    template_name = "quizes/question_list.html"
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Question.objects.all()
+        form = QuestionForm(self.request.GET)
+        if form.is_valid():
+            filter_by = form.cleaned_data.get('filter_by')
+            search_term = form.cleaned_data.get('search_term')
+
+            if filter_by == "year":
+                queryset = queryset.filter(year__icontains=search_term)
+        return queryset
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        quiz = self.get_object()
-        
-        questions = quiz.question_set.all()      
-      
-        paginator = Paginator(questions, 100)  
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)        
-      
-        context['questions'] = page_obj
-        context['quiz'] = quiz
+        context['questions'] = self.get_queryset()
+        context['form'] = QuestionForm(self.request.GET)  
         return context
     
     def post(self, request, *args, **kwargs):

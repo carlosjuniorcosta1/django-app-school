@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
+{% endblock %}
+{% block script_js %}
+<script src="{% static 'admin\js\quiz_dj.js' %}"></script>
+{% endblock %} 
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+      <form action="{% url 'quizes:enem-natural-sciences-quiz' %}" method="GET" class="form-group">
+        <div class="form-row align-items-center">
+          <div class="col">
+            {{form.filter_by|add_attrs:"class=form-control"}}
+          </div>
+          <div class="col">
+            {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-success">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h2 class="display-4 font-weight-bold text-secondary border-bottom pb-2 mb-4">
+                Ciências da Natureza
+            </h2>
+         
+        </div>
+    </div>
+
+
+
+<form id="quiz-form" action="" method="POST"> 
+    {% csrf_token %}
+    
+    {% for question in questions %}
+    <div class="mb-1 text-question card">
+        <div class="card-body format-questions">
+        <p>{{ question.id }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+        {% if question.has_image %}
+        {% for img_url in question.get_image_urls %}
+            <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
+        {% endfor %}
+      
+        {% endif %}
+        <p>{{question.question}}</p>
+     
+ 
+        {% for answer in question.get_answers %}
+            <div class="quiz-question form-check">
+                <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
+                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">
+                    {% if answer.has_image_alt %}
+                    <img src="{{answer.text}}" alt="">
+                    
+                    {% else %}
+                    
+                    {{ answer.text }} 
+                    {% endif %}
+                    {% if answer.is_correct %}
+                <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
+                {% endif %}</label>             
+            </div> 
+           
+        {% endfor %}
+       
+    </div>
+</div>
+ 
+
+    {% endfor %}
+  
+    <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
+  
+</form>
+<div class="pagination mt-4 d-flex justify-content-center align-items-center">
+  {% if questions.has_previous %}
+  <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-2">&laquo; Anterior</a>
+  {% endif %}
+
+  <span class="mx-3">Página {{ questions.number }} de {{ questions.paginator.num_pages }}</span>
+
+  {% if questions.has_next %}
+  <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-2">Próxima &raquo;</a>
+  {% endif %}
+</div>
+
+
+
+
+{% endblock %}

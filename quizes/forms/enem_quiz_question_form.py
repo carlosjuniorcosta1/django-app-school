@@ -2,7 +2,9 @@ from django import forms
 
 class QuestionForm(forms.Form):
     filter_choices = [
-        ('year', 'Ano'),
+        ('year', 'Ano'), 
+        ('word', 'Palavra'),
+        ('id', 'Número')
     ]
 
     filter_by = forms.ChoiceField(choices=filter_choices, label="Filtrar", initial="")

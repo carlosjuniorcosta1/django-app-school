@@ -6,7 +6,10 @@ from questions.models import Question, Answer
 from django.core.paginator import Paginator
 
 
-class QuizListViewDj(ListView):
+class QuizListView(ListView):
     model = QuizSubject
     fields = ['quiz_subject']
-    template_name = "quizes/main_quiz_dj.html"
+    template_name = "quizes/enem/main_quiz.html"
+
+
+

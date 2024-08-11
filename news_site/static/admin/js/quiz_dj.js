@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 let isCorrectAnswer = selectedAnswer.dataset.isCorrect === 'true';
                 let wrongAnswer = selectedAnswer.dataset.isCorrect === 'false';
                 let labelElement = selectedAnswer.parentElement;
-                
 
                 if (isCorrectAnswer) {
                     labelElement.classList.remove('wrong-answer-color');
@@ -32,6 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     labelElement.classList.remove('correct-answer-color', 'wrong-answer-color');
                 }
             });
-        }, 10000);
+        }, 5000);
     });
 });

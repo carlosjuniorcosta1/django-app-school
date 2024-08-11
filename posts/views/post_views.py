@@ -59,11 +59,7 @@ class PostListView(ListView):
         context['form'] = PostFilterForm(self.request.GET)
         return context 
     
-
-
-
- 
-       
+  
 
 
 
