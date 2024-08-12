@@ -22,10 +22,12 @@ class Question(models.Model):
         return []
 
 class Answer(models.Model):
-    text = models.CharField(max_length=2500)    
+    text = models.CharField(max_length=2501)    
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
     is_correct = models.BooleanField(null=True, blank=True)
     has_image_alt = models.BooleanField(blank=True, null=True)   
+    alternative = models.CharField(max_length=1, blank=True, null=True)
+
 
     def __str__(self):
         return f"question: answer {self.text[:200]}"

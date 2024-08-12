@@ -27,6 +27,8 @@ urlpatterns = [
         path('list/questions/math', EnemMathQuizListView.as_view(), name="enem-math-quiz"),
         path('list/questions/human_sciences', EnemHumanSciencesQuizListView.as_view(), name="enem-human-sciences-quiz"),
         path('list/questions/natural_sciences', EnemNaturalSciencesQuizListView.as_view(), name="enem-natural-sciences-quiz"),
+        path('enem_csv', EnemHumanSciencesQuizListView.as_view(), name="enem-csv" ),
+        path('enem_csv', EnemHumanSciencesQuizListView.as_view(), name="enem-csv" )
 
 
 

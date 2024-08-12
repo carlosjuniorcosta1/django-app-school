@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemLanguageQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_language_quiz.html"
-    paginate_by = 5
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=1)
@@ -27,6 +27,9 @@ class EnemLanguageQuizListView(ListView):
                     Q(context__icontains=search_term) |
                     Q(question__icontains=search_term)
                 )
+            elif filter_by == "id":
+                queryset = queryset.filter(id=search_term )
+
         return queryset
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:

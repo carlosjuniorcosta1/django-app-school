@@ -15,7 +15,7 @@ class EnemNaturalSciencesQuizListView(ListView):
 
     
     def get_queryset(self) -> QuerySet:
-        queryset = Question.objects.filter(quiz_subject=3)
+        queryset = Question.objects.filter(quiz_subject=4)
         form = QuestionForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')

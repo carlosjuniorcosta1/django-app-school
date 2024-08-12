@@ -91,19 +91,46 @@
     <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
   
 </form>
-
 <div class="pagination mt-4 d-flex justify-content-center align-items-center">
   {% if questions.has_previous %}
-  <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-2">&laquo; Anterior</a>
+  <a href="?page=1" class="btn btn-outline-secondary mx-1" title="Primeira Página">&laquo;&laquo;</a>
+  {% else %}
+  <span class="btn btn-outline-secondary mx-1 disabled" title="Primeira Página">&laquo;&laquo;</span>
   {% endif %}
 
-  <span class="mx-3">Página {{ questions.number }} de {{ questions.paginator.num_pages }}</span>
+  {% if questions.has_previous %}
+  <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1" title="Página Anterior">&laquo;</a>
+  {% else %}
+  <span class="btn btn-outline-secondary mx-1 disabled" title="Página Anterior">&laquo;</span>
+  {% endif %}
+
+  {% with current_page=questions.number %}
+  {% for num in questions.paginator.page_range %}
+      {% if num > current_page|add:"-3" and num < current_page|add:"+3" or num == 1 or num == questions.paginator.num_pages %}
+          {% if num == current_page %}
+          <span class="btn btn-outline-primary mx-1">{{ num }}</span>
+          {% else %}
+          <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1">{{ num }}</a>
+          {% endif %}
+      {% elif num == current_page|add:"-4" or num == current_page|add:"+4" %}
+          <span class="btn btn-outline-secondary mx-1 disabled">...</span>
+      {% endif %}
+  {% endfor %}
+  {% endwith %}
 
   {% if questions.has_next %}
-  <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-2">Próxima &raquo;</a>
+  <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1" title="Próxima Página">&raquo;</a>
+  {% else %}
+  <span class="btn btn-outline-secondary mx-1 disabled" title="Próxima Página">&raquo;</span>
+  {% endif %}
+
+  {% if questions.has_next %}
+  <a href="?page={{ questions.paginator.num_pages }}" class="btn btn-outline-secondary mx-1" title="Última Página">&raquo;&raquo;</a>
+  {% else %}
+  <span class="btn btn-outline-secondary mx-1 disabled" title="Última Página">&raquo;&raquo;</span>
   {% endif %}
 </div>
-
+</div>
 
 
 {% endblock %}
