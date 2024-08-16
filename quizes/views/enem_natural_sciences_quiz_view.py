@@ -11,9 +11,7 @@ from django.db.models import Q
 class EnemNaturalSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_natural_sciences_quiz.html"
-    paginate_by = 20
-
-    
+    paginate_by = 1    
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=4)
         form = QuestionForm(self.request.GET)
@@ -28,6 +26,9 @@ class EnemNaturalSciencesQuizListView(ListView):
                     Q(context__icontains=search_term) |
                     Q(question__icontains=search_term)
                 )
+            elif filter_by == "id":
+                queryset = queryset.filter(id=search_term )
+
       
         return queryset
 
@@ -69,3 +70,5 @@ class EnemNaturalSciencesQuizListView(ListView):
         context['submitted_answers'] = submitted_answers
 
         return render(request, self.template_name, context)
+
+

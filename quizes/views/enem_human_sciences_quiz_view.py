@@ -10,25 +10,15 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-import csv 
-from django.http import FileResponse
-import io 
-from reportlab.pdfgen import canvas 
-from reportlab.lib.units import inch 
-from reportlab.lib.pagesizes import letter 
-
-
 
 class EnemHumanSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_human_sciences_quiz.html"
     quiz_subject_id = 3
-    paginate_by = 10
-
-
+    paginate_by = 1
 
     def get_queryset(self) -> QuerySet:
-        queryset = Question.objects.filter(quiz_subject=3)
+        queryset = Question.objects.filter(quiz_subject=self.quiz_subject_id)
         form = QuestionForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')

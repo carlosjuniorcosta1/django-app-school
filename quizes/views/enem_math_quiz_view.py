@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 class EnemMathQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_math_quiz.html"
-    paginate_by = 20
+    paginate_by = 1
 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=2)

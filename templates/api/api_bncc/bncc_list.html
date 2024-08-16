@@ -1,31 +1,38 @@
 {% extends 'base.html' %}
 {% load form_tags %}
 {% load static %}
-
 {% block styles %}
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 
-<form method="get" action="{% url 'api_bncc:list_bncc' %}">
-    <div class="form-group">
-        <label>{{ form.filter_by.label }}</label>
-        <div>
-            {% for item in form.filter_by %}
-                <div class="form-check">
-                    {{ item.tag }} {{ item.choice_label }}
-                </div>           
-                          {% endfor %}
-                          
-                </div>
-    </div>
-       <div class="form-group">
-        <label>{{ form.search_term.label }}</label>
-        {{ form.search_term }}
-    </div>
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-</form>
+<label for="materias">Escolha uma matéria:</label>
+<select id="materias" name="materia">
+  <option value="portugues" {% if request.GET.materia == 'portugues' %} selected {% endif %}>Língua Portuguesa</option>
+  <option value="ingles" {% if request.GET.materia == 'ingles' %} selected {% endif %}>Língua Inglesa</option>
+  <option value="matematica" {% if request.GET.materia == 'matematica' %} selected {% endif %}>Matemática</option>
+  <option value="geografia" {% if request.GET.materia == 'geografia' %} selected {% endif %}>Geografia</option>
+  <option value="historia" {% if request.GET.materia == 'historia' %} selected {% endif %}>História</option>
+  <option value="educacao_fisica" {% if request.GET.materia == 'educacao_fisica' %} selected {% endif %}>Educação Física</option>
+  <option value="ensino_religioso" {% if request.GET.materia == 'ensino_religioso' %} selected {% endif %}>Ensino Religioso</option>
+</select>
+
+<label for="anos">Escolha um ano:</label>
+<select id="anos" name="ano">
+  <option value="1" {% if request.GET.ano == '1' %} selected {% endif %}>1º Ano</option>
+  <option value="2" {% if request.GET.ano == '2' %} selected {% endif %}>2º Ano</option>
+  <option value="3" {% if request.GET.ano == '3' %} selected {% endif %}>3º Ano</option>
+  <option value="4" {% if request.GET.ano == '4' %} selected {% endif %}>4º Ano</option>
+  <option value="5" {% if request.GET.ano == '5' %} selected {% endif %}>5º Ano</option>
+  <option value="6" {% if request.GET.ano == '6' %} selected {% endif %}>6º Ano</option>
+  <option value="7" {% if request.GET.ano == '7' %} selected {% endif %}>7º Ano</option>
+  <option value="8" {% if request.GET.ano == '8' %} selected {% endif %}>8º Ano</option>
+  <option value="9" {% if request.GET.ano == '9' %} selected {% endif %}>9º Ano</option>
+</select>
+<button id="filtrar" class="btn btn-primary">Filtrar</button>
+
+
 
 {% if api_bncc %}
 <div class="row mt-2">
@@ -37,6 +44,17 @@
                         <th scope="col">Matéria</th>
                         <th scope="col">Objeto do Conhecimento</th>
                         <th scope="col">Habilidade</th>
+                        {% if not show_columns_port %}
+                        <th scope="col">Unidade temática</th>
+                        {% endif %}
+                        {% if show_columns_english %}
+                        <th scope="col">Eixo</th>
+                        {% endif %}
+                        {% if show_columns_port %}
+                        <th scope="col">Prática de linguagem</th>
+                        <th scope="col">Campo de ação</th>
+                        {% endif %}
+
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +63,16 @@
                         <td>{{ post.get_cur_comp_display}}</td>
                         <td>{{ post.k_obj }}</td>
                         <td>{{ post.whole_skill }}</td>
+                        {% if not show_columns_port %}
+                        <td>{{post.thema_unities}}</td>
+                        {% endif %}
+                        {% if show_columns_english %}
+                        <td>{{post.axis}}</td>
+                        {% endif %}
+                        {% if show_columns_port %}
+                        <td>{{post.lang_prac}}</td>
+                        <td>{{post.field_act}}</td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -54,13 +82,16 @@
 </div>
 {% else %}
 <div class="alert alert-info mt-3" role="alert">
+
     <h3>Clique no filtrar para consultar a BNCC!</h3>
 </div>
+
+
 {% endif %}
 
-{% endblock %}
 
-{% block scripts %}
-    <!-- Adicione o link para o arquivo JS do Bootstrap -->
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+{% block script_js %}
+<script src="{% static 'admin\js\api_bncc.js' %}"></script>
+{% endblock %} 
+
 {% endblock %}

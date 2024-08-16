@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 import os
 from accounts.models import CustomUser as User
-
 class ApiBncc(models.Model):
     cur_comp_choices = [
         ('arte', 'Arte'),
@@ -14,9 +13,7 @@ class ApiBncc(models.Model):
         ('educacao_fisica', 'Educação Física'),
         ('ciencias', 'Ciências'),
         ('ensino_religioso', 'Ensino Religioso'),
-        ('matematica', 'Matemática')   
-      
-    ]
+        ('matematica', 'Matemática')]
     cur_comp = models.CharField(max_length=40, choices=cur_comp_choices, blank=True, null=True)
     thema_unities = models.CharField(max_length=90, null=True, blank=True)    
     k_obj = models.CharField(max_length=510, null=True, blank=True)

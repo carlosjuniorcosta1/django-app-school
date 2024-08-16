@@ -8,6 +8,6 @@ class ListBnccForm(forms.Form):
         ('whole_skill', 'Habilidade')
     ]
 
-    filter_by = forms.ChoiceField(choices=filter_choices, label="Filtrar", initial='', widget=forms.RadioSelect)
+    filter_by = forms.ChoiceField(choices=filter_choices, label="Filtrar", initial='')
     search_term = forms.CharField(required=False, label="Buscar")
 
