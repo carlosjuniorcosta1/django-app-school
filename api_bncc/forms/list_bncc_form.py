@@ -1,7 +1,7 @@
 from django import forms
 
 
-class ListBnccForm(forms.Form):
+class ListBnccFormElSchool(forms.Form):
     filter_choices = [
         ('cur_comp', 'Matéria'),
         ('k_obj', 'Objeto do conhecimento'),

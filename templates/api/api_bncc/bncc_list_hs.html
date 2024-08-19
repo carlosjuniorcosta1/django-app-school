@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_bncc_hs.css' %}">
+    
+{% endblock extrahead %}
+    
+
+{% block content %}
+
+<div class="container mt-3">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link mb-2" id="fundamental-tab" data-bs-toggle="tab" href="{% url 'api_bncc:list-bncc-el-school' %}" role="tab" aria-controls="fundamental" aria-selected="true">Ensino Fundamental</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active fw-bold" id="medio-tab" data-bs-toggle="tab" href="{% url 'api_bncc:list-bncc-hs-school' %}" role="tab" aria-controls="medio" aria-selected="false">Ensino Médio</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="fundamental" role="tabpanel" aria-labelledby="fundamental-tab">
+           
+            <label class="form-label" for="materias">Componente curricular</label>
+            <select class="form-select" id="materias" name="materia">
+                <option value="" disabled selected>Todos</option>
+              <option value="lingua_portuguesa" {% if request.GET.materia == 'lingua_portuguesa' %} selected {% endif %}>Língua Portuguesa</option>
+              <option value="linguagens" {% if request.GET.materia == 'linguagens' %} selected {% endif %}>Linguagens</option>
+              <option value="matematica" {% if request.GET.materia == 'matematica' %} selected {% endif %}>Matemática</option>
+              <option value="ciencias_humanas" {% if request.GET.materia == 'ciencias_humanas' %} selected {% endif %}>Ciências Humanas</option>
+              <option value="ciencias_da_natureza" {% if request.GET.materia == 'ciencias_da_natureza' %} selected {% endif %}>Ciências da Natureza</option>
+            </select>
+
+            <button id="filtrar" class="btn btn-success">Filtrar</button>
+
+
+            {% if api_bncc_hs %}
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Componente curricular</th>
+                                    <th scope="col">Habilidades</th>                                  
+            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for post in api_bncc_hs %}
+                                <tr>
+                                    <td>{{post.get_cur_comp_display}}</td>
+                                    <td><span class="copiable-text">({{post.cod_skill}}) </span>
+                                        <span>{{post.skill}}</span>
+                                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info mt-3" role="alert">
+            
+                <h3>Clique no filtrar para consultar a BNCC!</h3>
+            </div>
+            
+            
+            {% endif %}
+
+{% block script_js %}
+<script src="{% static 'admin\js\api_bncc_hs.js' %}"></script>
+{% endblock %} 
+</div>
+
+{% endblock %}

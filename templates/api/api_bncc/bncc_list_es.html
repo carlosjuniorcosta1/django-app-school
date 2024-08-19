@@ -1,25 +1,43 @@
 {% extends 'base.html' %}
 {% load form_tags %}
 {% load static %}
-{% block styles %}
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-{% endblock %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_bncc_hs.css' %}">
+    
+{% endblock extrahead %}
+    
 
 {% block content %}
 
-<label for="materias">Escolha uma matéria:</label>
-<select id="materias" name="materia">
+<div class="container mt-3">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active  mb-2" id="fundamental-tab" data-bs-toggle="tab" href="{% url 'api_bncc:list-bncc-el-school' %}" role="tab" aria-controls="fundamental" aria-selected="true">Ensino Fundamental</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="medio-tab" data-bs-toggle="tab" href="{% url 'api_bncc:list-bncc-hs-school' %}" role="tab" aria-controls="medio" aria-selected="false">Ensino Médio</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="fundamental" role="tabpanel" aria-labelledby="fundamental-tab">
+           
+
+<label class="form-label" for="materias">Escolha uma matéria:</label>
+<select class="form-select" id="materias" name="materia">
+    <option value="" disabled selected>Todas as matérias</option>
   <option value="portugues" {% if request.GET.materia == 'portugues' %} selected {% endif %}>Língua Portuguesa</option>
   <option value="ingles" {% if request.GET.materia == 'ingles' %} selected {% endif %}>Língua Inglesa</option>
   <option value="matematica" {% if request.GET.materia == 'matematica' %} selected {% endif %}>Matemática</option>
+  <option value="ciencias" {% if request.GET.materia == 'ciencias' %} selected {% endif %}>Ciências</option>
+
   <option value="geografia" {% if request.GET.materia == 'geografia' %} selected {% endif %}>Geografia</option>
   <option value="historia" {% if request.GET.materia == 'historia' %} selected {% endif %}>História</option>
   <option value="educacao_fisica" {% if request.GET.materia == 'educacao_fisica' %} selected {% endif %}>Educação Física</option>
   <option value="ensino_religioso" {% if request.GET.materia == 'ensino_religioso' %} selected {% endif %}>Ensino Religioso</option>
 </select>
 
-<label for="anos">Escolha um ano:</label>
-<select id="anos" name="ano">
+<label class="form-label" for="anos">Escolha um ano:</label>
+<select class="form-select" id="anos" name="ano">
   <option value="1" {% if request.GET.ano == '1' %} selected {% endif %}>1º Ano</option>
   <option value="2" {% if request.GET.ano == '2' %} selected {% endif %}>2º Ano</option>
   <option value="3" {% if request.GET.ano == '3' %} selected {% endif %}>3º Ano</option>
@@ -30,8 +48,8 @@
   <option value="8" {% if request.GET.ano == '8' %} selected {% endif %}>8º Ano</option>
   <option value="9" {% if request.GET.ano == '9' %} selected {% endif %}>9º Ano</option>
 </select>
-<button id="filtrar" class="btn btn-primary">Filtrar</button>
 
+<button id="filtrar" class="btn btn-success">Filtrar</button>
 
 
 {% if api_bncc %}
@@ -43,7 +61,7 @@
                     <tr>
                         <th scope="col">Matéria</th>
                         <th scope="col">Objeto do Conhecimento</th>
-                        <th scope="col">Habilidade</th>
+                        <th scope="col">Habilidades</th>
                         {% if not show_columns_port %}
                         <th scope="col">Unidade temática</th>
                         {% endif %}
@@ -61,8 +79,14 @@
                     {% for post in api_bncc %}
                     <tr>
                         <td>{{ post.get_cur_comp_display}}</td>
-                        <td>{{ post.k_obj }}</td>
-                        <td>{{ post.whole_skill }}</td>
+                        <td><span class="copiable-text">{{ post.k_obj }}</span>                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
+                        </td>
+
+                        <td>
+                            <span class="copiable-text">({{post.cod_skill}}) </span>
+                            <span>{{post.skill}}</span>
+                            <i class="fa fa-copy copy-icon" title="Copiar"></i>
+                        </td>
                         {% if not show_columns_port %}
                         <td>{{post.thema_unities}}</td>
                         {% endif %}
@@ -70,7 +94,9 @@
                         <td>{{post.axis}}</td>
                         {% endif %}
                         {% if show_columns_port %}
-                        <td>{{post.lang_prac}}</td>
+                        <td><span class="copiable-text-lang">{{post.lang_prac}}</span>
+                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
+                        </td>
                         <td>{{post.field_act}}</td>
                         {% endif %}
                     </tr>
@@ -91,7 +117,8 @@
 
 
 {% block script_js %}
-<script src="{% static 'admin\js\api_bncc.js' %}"></script>
+<script src="{% static 'admin\js\api_bncc_es.js' %}"></script>
 {% endblock %} 
+</div>
 
 {% endblock %}

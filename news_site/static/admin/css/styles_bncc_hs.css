@@ -1,0 +1,43 @@
+.nav-tabs .nav-link.active {
+    background-color: #343a40; 
+    color: #ffffff; 
+    font-weight: bold; 
+    border: 2px solid #343a40; 
+    border-bottom-color: transparent;
+}
+.copy-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #030c16;
+    display: none; 
+}
+td:hover .copy-icon {
+    display: inline;
+}
+
+
+.copied-msg {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: bold;
+    opacity: 0.9;
+    position: relative;
+    animation: fadeOut 2s forwards;
+}
+
+.copied-msg::before {
+    content: "\2713";
+    margin-right: 5px;
+    color: #4CAF50;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    
