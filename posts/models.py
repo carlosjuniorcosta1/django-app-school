@@ -35,7 +35,6 @@ class Section(models.Model):
             ('brasil', 'Brasil'),
             ('culinaria', 'Culinária'),
             ('cultura_lazer', 'Cultura e Lazer'),
-            ('esportes', 'Esportes'),
             ('enem', 'Enem'), 
             ('professor', 'Professor')
 

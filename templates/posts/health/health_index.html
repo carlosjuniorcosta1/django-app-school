@@ -2,14 +2,14 @@
 {% load form_tags %}
 {% load static %}
 {% block extrahead %} 
-<link rel="stylesheet" href="{% static 'admin/css/styles_world.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/styles_health.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="row">
   <div class="col-md-4 col-sm-12">
-    <form action="{% url 'posts:index_world' %}" method="GET" class="form-group">
+    <form action="{% url 'posts:index_health' %}" method="GET" class="form-group">
       <div class="form-row align-items-center">
 
         <div class="col">
@@ -65,7 +65,7 @@
       </a>
 </div>
 {% for post in world_posts %}
-{% if forloop.counter > 3  and forloop.counter <= 4 %}
+{% if forloop.counter > 3  and forloop.counter <= 4%}
 <div class="col-md-3 mt-3">
     <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world">
     <h5>{{post.title}}</h5>  </a>

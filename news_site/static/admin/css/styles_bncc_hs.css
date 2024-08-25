@@ -15,7 +15,6 @@ td:hover .copy-icon {
     display: inline;
 }
 
-
 .copied-msg {
     display: inline-block;
     margin-left: 10px;
@@ -40,4 +39,8 @@ td:hover .copy-icon {
 @keyframes fadeOut {
     0% { opacity: 1; }
     80% { opacity: 1; }
-    
+}
+
+.justify-text-skill {
+    text-align: justify;
+}

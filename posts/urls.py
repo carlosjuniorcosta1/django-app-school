@@ -5,7 +5,7 @@ from .views.opinion_views import OpinionListView, OpinionStudentsListView
 from .views.brazil_views import BrazilListView
 from .views.world_views import WorldListView
 from .views.cuisine_views import CuisineListView
-from .views.sport_views import SportListView
+from .views.health_views import HealthListView
 
 app_name = 'posts'
 
@@ -20,6 +20,6 @@ urlpatterns = [
     path('brazil_news/', BrazilListView.as_view(), name= "index_brazil"),
     path('world_news/', WorldListView.as_view(), name="index_world"),
     path('cuisine_news/', CuisineListView.as_view(), name="index_cuisine"),
-    path('sports_news', SportListView.as_view(), name="index_sport")
+    path('health_news/', HealthListView.as_view(), name="index_health")
 
 ]

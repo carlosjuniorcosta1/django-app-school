@@ -1,6 +1,6 @@
 from django import forms 
 
-class SportForm(forms.Form):
+class HealthForm(forms.Form):
     filter_choices = [
         ('title_main_text', 'Palavra'),
         ('user', 'Autor'),

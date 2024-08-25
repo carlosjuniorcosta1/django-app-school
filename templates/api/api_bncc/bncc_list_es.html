@@ -61,7 +61,7 @@
                     <tr>
                         <th scope="col">Matéria</th>
                         <th scope="col">Objeto do Conhecimento</th>
-                        <th scope="col">Habilidades</th>
+                        <th class="" scope="col">Habilidades</th>
                         {% if not show_columns_port %}
                         <th scope="col">Unidade temática</th>
                         {% endif %}
@@ -82,7 +82,7 @@
                         <td><span class="copiable-text">{{ post.k_obj }}</span>                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
                         </td>
 
-                        <td>
+                        <td class="justify-text-skill">
                             <span class="copiable-text">({{post.cod_skill}}) </span>
                             <span>{{post.skill}}</span>
                             <i class="fa fa-copy copy-icon" title="Copiar"></i>
