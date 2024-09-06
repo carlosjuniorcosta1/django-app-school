@@ -1,0 +1,49 @@
+.img-carro {
+    width: 600px;
+    height: 400px;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: rgb(29, 26, 26);
+}
+
+.img-world {
+    border-radius: 10px;
+}
+.img-last-row {
+    border-radius: 10px;
+    max-height: 500px;
+}
+
+.format-textual-genre {
+   
+    font-size: 12px;
+    color: #0e0503; 
+    background-color: #f0f0f0; 
+    padding: 2px 5px; 
+    border-radius: 3px;
+}
+
+.border-card-health {
+    border: 2px solid #010d04;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.font-journal {
+        font-family: 'Merriweather', serif;
+    
+    }
+
+
+.font-span-date {
+        font-size: 11px;
+    }

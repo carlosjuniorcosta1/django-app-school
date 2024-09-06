@@ -33,7 +33,7 @@ class HealthListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['world_posts'] = self.get_queryset()
+        context['health_posts'] = self.get_queryset()
         context['form'] = HealthForm(self.request.GET)
         return context 
 

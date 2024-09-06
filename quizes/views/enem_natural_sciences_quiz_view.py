@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemNaturalSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_natural_sciences_quiz.html"
-    paginate_by = 1    
+    paginate_by = 30   
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=4)
         form = QuestionForm(self.request.GET)

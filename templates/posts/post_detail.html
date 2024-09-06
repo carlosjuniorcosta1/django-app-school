@@ -30,7 +30,7 @@
 <div class="font-paragraph-preview">{{ post.main_text|linebreaks}}</div>
 
 {% if user.is_authenticated and user == post.user %}
-<a href="{% url 'posts:delete_post' pk=post.pk %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'posts:delete_post' pk=post.pk %}" class="btn btn-danger">Deletar</a>
 {% endif %}
 </div>
 

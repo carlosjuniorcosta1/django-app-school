@@ -1,6 +1,6 @@
 from django import forms
 
-class CuisineForm(forms.Form):
+class CultureForm(forms.Form):
     filter_choices = [
         ('title_main_text', 'Palavra'),
         ('user', 'Autor'),

@@ -3,7 +3,7 @@
 {% load form_tags %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'admin/css/styles_brazil.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/styles_world.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -25,51 +25,102 @@
     </div>
   </div>
 
-<div class="row d-flex align-items-lg-stretch mt-3">
-    {% for post in brazil_posts %}
-        {% if forloop.counter <= 2 %}
-            <div class="col-md-6 d-flex flex-column format-head justify-content-center align-items-center position-relative">
-                <div class="position-relative img-container">
-                    {% if post.image %}
-                        <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="mt-1 mb-2 img-fluid img-headline"></a>
-                        <a href="{% url 'posts:detail_text' post.id %}"><h1 class="position-absolute text-white img-title">{{post.title}}</h1></a>
-
-                    {% endif %}
-                </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          {% for post in brazil_posts %}
+          {% if forloop.counter <= 3 %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{% url 'posts:detail_text' post.id %}">
+              <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+              <h5>{{post.title}}</h5>
+              <p>{{post.subtitle}}</p>
             </div>
-            
-        {% endif %}
-    {% endfor %}
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div id="carouselExampleIndicators2" class="carousel slide mt-3" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          {% for post in brazil_posts %}
+          {% if forloop.counter > 3  and forloop.counter <= 6 %}
+          <div class="carousel-item {% if forloop.counter == 4 %}active{% endif %}">
 
-
-<div class="row d-flex mt-3">
-    {% for post in brazil_posts %}
-        {% if forloop.counter > 2 %}
-            <div class="col-md-7 d-flex flex-column format-head p-1 font-news">
-               <a href="{% url 'posts:detail_text' post.id %}" class=""> <h2>{{post.title}}</h1> 
-                <p>{{post.subtitle}}</p></a>
-                    <div class="d-flex flex-column align-items-end text-right mt-auto">
-                <span class="align-self-end">por {{post.user.first_name}} {{post.user.last_name}}</span>
-           
-                {% if post.updated %}
-                <span class="">Atualizado em: {{post.updated|date:"d/m/Y - H:i" }} <span class="format-textual-genre">{{post.textual_genre}}</span></span>
-
-                {% else %}
-
-                <span class="align-self-end"> Há {{post.created|timesince}} <span class="format-textual-genre">{{post.textual_genre}}</span></span>
-
-                {% endif %}
-            </div>          
+            <a href="{% url 'posts:detail_text' post.id %}">
+              <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+              <h5>{{post.title}}</h5>
+              <p>{{post.subtitle}}</p>
             </div>
-            {% if post.image %}
-            <div class="col-md-5 mb-2 mt-2">
-           <a href="{% url 'posts:detail_text' post.id %}"> <img src="{{post.image.url}}" alt="" class="img-fluid img-after-headline"></a>
-        
-        </div> 
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row d-flex mt-3">
+    {% for post in brazil_posts %}
+      {% if forloop.counter > 7 and forloop.counter <= 10 %}
+        <div class="col-md-3 d-flex flex-column align-items-center mb-3">
+          <div class="col">
+            <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
+          </div>
+          <div class="col">
+            <p>{{post.title}}</p>
+          </div>
+        </div>
 
-            {% endif %}
-        {% endif %}
+  
+
+
+
+
+
+
+      {% endif %}
     {% endfor %}
-</div>
+  
+   
+  
+  
+
+
+
 
 {% endblock %}

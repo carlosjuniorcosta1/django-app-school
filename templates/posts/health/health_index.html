@@ -1,128 +1,133 @@
 {% extends 'base.html' %}
-{% load form_tags %}
 {% load static %}
-{% block extrahead %} 
-<link rel="stylesheet" href="{% static 'admin/css/styles_health.css' %}">
+{% load form_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_world.css' %}">
 {% endblock %}
 
 {% block content %}
-
-<div class="row">
-  <div class="col-md-4 col-sm-12">
-    <form action="{% url 'posts:index_health' %}" method="GET" class="form-group">
-      <div class="form-row align-items-center">
-
-        <div class="col">
-          {{form.filter_by|add_attrs:"class=form-control"}}
-        </div>
-        <div class="col">
-          {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
-        </div>
-        <div class="col-auto">
-          <input type="submit" value="Filtrar" class="btn btn-success">
-        </div>
-      </div>
-
-    </form>
-
-  </div>
-</div>
-
-
-<div class="row">
-    <div class="col-md-6">
-<div id="carouselExampleIndicators" class="carousel slide mt-3" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
-    <div class="carousel-inner">
-        {% for post in world_posts %}
-        {% if forloop.counter <= 3 %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-       <a href="{% url 'posts:detail_text' post.id %}"> <img class="img-carro img-fluid img-world" src="{{post.image.url}}" alt="First slide"></a>
-        <div class="d-none d-md-block col-sm-12 text-start text-overlay">
-
-            <h5>{{post.title}}</h5>
-            <p>{{post.subtitle}}</p>
+<div class="row mt-2">
+    <div class="col-md-4 col-sm-12">
+      <form action="{% url 'posts:index_health' %}" method="GET" class="form-group">
+        <div class="form-row align-items-center">
+          <div class="col">
+            {{form.filter_by|add_attrs:"class=form-control"}}
           </div>
-      </div>
+          <div class="col">
+            {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-success">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col-md-6">
+      <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          {% for post in health_posts %}
+          {% if forloop.counter <= 3 %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{% url 'posts:detail_text' post.id %}">
+              <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+              <h5>{{post.title}}</h5>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </div>
+    </div>
+  
+    <div class="col-md-6 mt-3">
+      {% for post in health_posts %}
+      {% if forloop.counter > 3 and forloop.counter < 6 %}
+
+      <a href="{% url 'posts:detail_text' post.id %}"><div class="card border-card-health font-journal {% if forloop.counter > 4 %}mt-3{% endif %}">
+        <div class="card-body">
+          <h3 class="">{{post.title}}</h3>
+          <p>&#8226; {{post.subtitle}}</p>
+          <div class="d-flex">
+<span class="ml-auto align-self-end">{{post.user.first_name}} {{post.user.last_name}}</span>
+</div>
+<div class="d-flex">
+
+{% if text.updated %}
+<span class="font-span-date ml-auto align-self-end">Atualizado:{{post.updated|date:"d/m/Y - H:i"}}</span>  
+{% else %}
+<span class="font-span-date ml-auto align-self-end">Em: {{post.created|date:"d/m/Y - H:i"}}</span> 
+{% endif %} 
+</div>
+        </div></a>
+
+      </div>
 
       {% endif %}
       {% endfor %}
-    </div>
 
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Anterior</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Próximo</span>
-      </a>
-</div>
-{% for post in world_posts %}
-{% if forloop.counter > 3  and forloop.counter <= 4%}
-<div class="col-md-3 mt-3">
-    <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world">
-    <h5>{{post.title}}</h5>  </a>
-    {% for item in api_awesome %}    
-    {% if item.code == "USD" %}     
-        <div class="">
-    <div class="card">
-      <div class="card-body">
-        <p>Compra: {{item.bid}}</p>
-        <p>Venda: {{item.ask}}</p>
-        <p>{{item.pctChange|to_float}}</p>
       </div>
-    </div>
-  </div>    
-    {% endif %}
-    {% endfor %}  
-  </div>
-    {% endif %}
+ 
+    <div class="row d-flex mt-3">
+    {% for post in health_posts %}
+      {% if forloop.counter >= 6 and forloop.counter < 14 %}
+        <div class="col-md-3 d-flex flex-column align-items-center mb-3">
+          <div class="col">
+            <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
+          </div>
+          <div class="col">
+            <p class="font-weight-bold">{{post.title}}</p>
+          </div>
+        </div>
+
+      {% endif %}
     {% endfor %}
 
-{% for post in world_posts %}
-{% if forloop.counter > 4  and forloop.counter <= 5%}
-<div class="col-md-3 mt-3">
-    <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world">
-    <h5>{{post.title}}</h5> </a> 
+    <div id="more-posts" style="display: none;">
+      <div class="row d-flex mt-3">
+        {% for post in health_posts %}
+          {% if forloop.counter >= 14 and forloop.counter <= 30 %}
+            <div class="col-md-4 d-flex flex-column align-items-center mb-3">
+              <div class="col">
+                <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
+              </div>
+              <div class="col">
+                <p>{{post.title}}</p>
+              </div>
+            </div>
+             
+    <div class="row d-flex mt-3">
+      <div class="col-md-12 text-center align-self-stretch">
+        <button id="see-more-btn" class="btn btn-primary">Veja mais</button>
+      </div>
     </div>
-    {% endif %}
-    {% endfor %}
-</div>
-
-<div class="row d-flex mt-3">
-  {% for post in world_posts %}
-    {% if forloop.counter > 5 and forloop.counter <= 9 %}
-      <div class="col-md-3 d-flex flex-column align-items-center mb-3">
-      
-        <div class="col">
-          <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world">
-        </div>
-        <div class="col">
-          <p>{{post.title}}</p></a>
-        </div>
+          {% endif %}
+        {% endfor %}
       </div>
-    {% endif %}
-  {% endfor %}
+    </div>
+   
 
 
-  {% for post in world_posts %}
-    {% if forloop.counter > 9 %}
-      <div class="col-12 d-flex mb-3">
-        <div class="col align-content-center">
-          <a href="{% url 'posts:detail_text' post.id %}"><h3>{{post.title}}</h3></a>
-        </div>
-        <div class="col">
-          <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
-        </div>
-      </div>
-    {% endif %}
-  {% endfor %}
-</div>
+{% block script_js %}
+<script src="{% static 'admin\js\world_page.js' %}"></script>
+{% endblock %} 
+  
 {% endblock %}

@@ -4,7 +4,11 @@ from .views.post_views import PostListView, PostDetailView, PostCreateView, Post
 from .views.opinion_views import OpinionListView, OpinionStudentsListView
 from .views.brazil_views import BrazilListView
 from .views.world_views import WorldListView
-from .views.cuisine_views import CuisineListView
+from .views.culture.culture_views import CultureListView
+from .views.culture.cinema_views import CultureCineListView
+from .views.culture.literature_views import CultureLiteratureListView
+from .views.culture.games_views import CultureGamesListView
+
 from .views.health_views import HealthListView
 
 app_name = 'posts'
@@ -19,7 +23,10 @@ urlpatterns = [
     path('opinion_students/', OpinionStudentsListView.as_view(), name='list_opinion_students'),
     path('brazil_news/', BrazilListView.as_view(), name= "index_brazil"),
     path('world_news/', WorldListView.as_view(), name="index_world"),
-    path('cuisine_news/', CuisineListView.as_view(), name="index_cuisine"),
-    path('health_news/', HealthListView.as_view(), name="index_health")
+    path('culture_news/', CultureListView.as_view(), name="index_culture"),
+    path('culture_news/cinema', CultureCineListView.as_view(), name="list_cinema" ), 
+    path('culture_news/literature', CultureLiteratureListView.as_view(), name="list_literature"),
+    path('culture_news/games', CultureGamesListView.as_view(), name="list_games"),
+    path('health_news/', HealthListView.as_view(), name="index_health"),
 
 ]

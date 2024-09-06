@@ -1,17 +1,19 @@
 from django.views.generic import ListView
-from ..models import Post
-from posts.forms.cuisine_form import CuisineForm
+from posts.forms.culture_form import CultureForm
 from django.db.models import Q
+from ...models import Post
 
 
-class CuisineListView(ListView):
+
+class CultureLiteratureListView(ListView):
     model = Post
-    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']
-    template_name = "posts/cuisine/cuisine_index.html"
-
+    template_name = "posts/culture/culture_literature.html"
+    
     def get_queryset(self):
-        queryset = Post.objects.filter(section_name__section_name="culinaria").order_by('-created')
-        form = CuisineForm(self.request.GET)
+        queryset = Post.objects.filter(section_name__section_name="cultura_lazer",
+                                        textual_genre__textual_genre__in=['conto', 'cronica', 'fanfic', 'resenha', 'resumo', 'reportagem']
+                                        ).order_by('-created')
+        form = CultureForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')
             search_term = form.cleaned_data.get('search_term')
@@ -29,8 +31,8 @@ class CuisineListView(ListView):
                 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cuisine_posts'] = self.get_queryset()
-        context['form'] = CuisineForm(self.request.GET)
+        context['culture_lit_posts'] = self.get_queryset()
+        context['form'] = CultureForm(self.request.GET)
 
         return context 
 

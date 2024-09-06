@@ -13,9 +13,9 @@ class Genre(models.Model):
         ('conto', 'Conto'),
         ('resenha', 'Resenha'),
         ('receita', 'Receita'),
+        ('cronica', 'Crônica'),
         ('resumo', 'Resumo'),
-        ('tirinha', 'Tirinha'),
-        ('charge', 'Charge')
+        ('tirinha', 'Tirinha')
         
       ]
     textual_genre = models.CharField(max_length=30, choices=genre_choices, blank=True, null=True)
@@ -33,20 +33,33 @@ class Section(models.Model):
             ('opiniao', 'Opinião'),
             ('mundo', 'Mundo'),
             ('brasil', 'Brasil'),
-            ('culinaria', 'Culinária'),
             ('cultura_lazer', 'Cultura e Lazer'),
             ('enem', 'Enem'), 
             ('professor', 'Professor')
 
       ]
+    subsection_choices = [
+       ('literatura', 'Literatura'), 
+       ('cinema_tv', 'Cinema e TV'),
+       ('games', 'Games')
+    ]
     
     section_name = models.CharField(max_length=50, choices=section_choices)
+    subsection_name = models.CharField(max_length=50, choices=subsection_choices, blank=True, null=True)
 
     def __str__(self):
-        return self.get_section_name_display() 
+        if not self.subsection_name:
+           return self.get_section_name_display()
+        else:
+           return f'{self.get_section_name_display()}, {self.get_subsection()}'
     
     def get_section_names(self):
        return self.section_name
+    
+    def get_subsection(self):
+        if self.subsection_name:
+            return dict(self.subsection_choices).get(self.subsection_name)
+        return None
        
 
 class Post(models.Model):
@@ -59,7 +72,7 @@ class Post(models.Model):
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     post_views = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True, upload_to="images/", 
-                                      validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
+                              validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
     section_name = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
 
     
