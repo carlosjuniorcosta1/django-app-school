@@ -28,3 +28,8 @@ a:hover{
 format-card {
     box-shadow: inset;
 }
+
+.font-news {
+    font-family: 'Merriweather', serif;
+
+}

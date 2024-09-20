@@ -91,4 +91,28 @@ image img{
     margin-right: 0;
   }
 
+  
+font-textual-genre-carro-2 {
+    font-size: 16px;
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+
+}
+
+.font-textual-genre-carro {
+    font-size: 13px;
+    font-family: 'Merriweather', serif;
+
+
+}
+
+.font-count-views{
+    font-size: 12px;
+    font-weight: bold; 
+    color: #0e0503; 
+    background-color: #f0f0f0; 
+    padding: 2px 5px; 
+    border-radius: 3px;
+}
+
 

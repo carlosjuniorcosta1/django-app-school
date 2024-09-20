@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block content %}
+<h1 class="font-weight-bold mt-3 font-news">Mundo</h1>
+<hr>
 
 <div class="row">
   <div class="col-md-4 col-sm-12">
@@ -41,6 +43,12 @@
         {% if forloop.counter <= 3 %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           <a href="{% url 'posts:detail_text' post.id %}">
+            <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+              <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
+
+              <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+
+            </div>
             <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
           </a>
           <div class="d-none d-md-block col-sm-12 text-start text-overlay">
@@ -94,7 +102,7 @@
 
   <div class="row d-flex mt-3">
     {% for post in world_posts %}
-        {% if forloop.counter == 13 %}
+        {% if forloop.counter == 12 %}
             <div class="col-md-12 d-flex mb-3">
                 
                 <div class="col-md-4">
@@ -117,12 +125,12 @@
       <div class="row d-flex mt-3">
         {% for post in world_posts %}
           {% if forloop.counter > 13 and forloop.counter <= 20 %}
-            <div class="col-md-3 d-flex flex-column align-items-center mb-3">
+            <div class="col-md-6 d-flex flex-column align-items-center mb-3">
               <div class="col">
                 <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
               </div>
               <div class="col">
-                <p>{{post.title}}</p>
+                <p class="format-p-final">{{post.title}}</p>
               </div>
             </div>
           {% endif %}
@@ -132,7 +140,7 @@
     
     <div class="row d-flex mt-3">
       <div class="col-md-12 text-center align-self-stretch">
-        <button id="see-more-btn" class="btn btn-primary">Veja mais</button>
+        <button id="see-more-btn" class="btn btn-dark">Veja mais</button>
       </div>
     </div>
 

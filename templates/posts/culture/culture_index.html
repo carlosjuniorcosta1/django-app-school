@@ -3,7 +3,7 @@
 {% load form_tags %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'admin/css/styles_world.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/styles_culture.css' %}">
 
 {% endblock %}
 
@@ -27,6 +27,8 @@
         </div>
       </div>
 
+      <h1 class="font-weight-bold mt-3 font-news">Cultura</h1>
+  <hr>
        
   <div class="row">
     <div class="col-md-6">
@@ -41,6 +43,13 @@
           {% if forloop.counter <= 3 %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
             <a href="{% url 'posts:detail_text' post.id %}">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                <span class="font-textual-genre-carro-2">{{ post.section_name.get_subsection }}</span> <br>
+                <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
+
+                <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+
+              </div>
               <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
             </a>
             <div class="d-none d-md-block col-sm-12 text-start text-overlay">
@@ -74,11 +83,17 @@
           <div class="carousel-item {% if forloop.counter == 4 %}active{% endif %}">
 
             <a href="{% url 'posts:detail_text' post.id %}">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                <span class="font-textual-genre-carro-2">{{ post.section_name.get_subsection }}</span> <br>
+                <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
+
+                <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+
+              </div>
               <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
             </a>
             <div class="d-none d-md-block col-sm-12 text-start text-overlay">
               <h5>{{post.title}}</h5>
-              <p>{{post.subtitle}}</p>
             </div>
           </div>
           {% endif %}
@@ -96,7 +111,7 @@
     </div>
   </div>
   
-  <div class="row d-flex mt-3">
+  <div class="row d-flex mt-4">
     {% for post in culture_posts %}
       {% if forloop.counter > 7 and forloop.counter <= 10 %}
         <div class="col-md-3 d-flex flex-column align-items-center mb-3">

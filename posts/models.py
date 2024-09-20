@@ -41,7 +41,7 @@ class Section(models.Model):
     subsection_choices = [
        ('literatura', 'Literatura'), 
        ('cinema_tv', 'Cinema e TV'),
-       ('games', 'Games')
+       ('games', 'Jogos')
     ]
     
     section_name = models.CharField(max_length=50, choices=section_choices)

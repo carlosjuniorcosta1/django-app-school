@@ -47,3 +47,29 @@
 .font-span-date {
         font-size: 11px;
     }
+
+.font-news {
+    font-family: 'Merriweather', serif;
+    
+    }
+
+.font-textual-genre-carro {
+    font-size: 13px;
+    font-family: 'Merriweather', serif;
+
+
+}
+
+.font-p-rows {
+    font-size: 15px;
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+
+}
+
+font-textual-genre-carro-2 {
+    font-size: 16px;
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+
+}

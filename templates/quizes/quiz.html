@@ -6,7 +6,6 @@
 {% endblock %}
 
 
-
 {% block title %}
     {{obj.name}}
 {% endblock %}
@@ -14,17 +13,18 @@
 
 {% block content %}
 
+
 <div class="row">
     <div class="col"></div>
     <div class="col text-right" id="timer-box"></div>
 
 </div>
-<a class="btn btn-danger" href="{% url 'quizes:main-view' %}">go back</a>
+<a class="btn btn-danger" href="{% url 'quizes:main-view' %}">Voltar</a>
     
     <form action="" id="quiz-form" class="mt-3 mb-3">
         {% csrf_token %}
         <div id="quiz-box"></div>
-        <button type="submit" class="btn btn-primary mt-3">save</button>
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
 
     </form>
 

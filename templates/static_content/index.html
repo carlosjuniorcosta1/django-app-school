@@ -1,167 +1,140 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block content %}
+
+
 <div class="container main-news section">
-   <div class="row">
-      <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
-         <img src="https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w1460/f_auto/primary/z8dgsdazbj3mlsajn4ay" 
-         alt="imagem 1" class="img-fluid thumb">
-         <h3><a href="" class="font-large">Grêmio debaixo d'água</a>
-      </div>
-   </h3>
-   <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
-      <div class="row">
-         <div class="col-md-6 col-sm-12 col-xs12 col-lg-6">
-            <div class="image image-sm mt-1 thumb">
-               <img src="https://p2.trrsf.com/image/fget/cf/774/0/images.terra.com/2024/05/04/rs-u8b6ycu5g9iu.jpg" alt="imagem2">
-            </div>
-            <h3><a href="">Mais uma notícia</a>
-            </h3>
-            <div class="image image-sm mt-1 thumb">
-               <img src="https://s2-globorural.glbimg.com/nUcLtLKTAs-9sk3u9ykv8orN6Xo=/0x0:799x533/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_afe5c125c3bb42f0b5ae633b58923923/internal_photos/bs/2024/n/4/XmZVe1TBqiW4tlnucFPA/53694311296-1a65910ed3-c.jpg" alt="imagem2">
-            </div>
-            <h3><a href="">RS tem logística abalada</a>
-            </h3>
+    <div class="row">
+        {% for post in latest_posts %}
+        {% if forloop.counter == 1 %}
+         <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
+            <a href="{% url 'posts:detail_text' post.id %}">
+               <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                  <span class="font-textual-genre-carro-2">{{ post.section_name}}</span> <br>
+                  <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
+  
+                  <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+  
+                </div>
+               <img src="{{post.image.url}}" alt="imagem 1" class="img-fluid thumb">
 
-
-         </div>
-         <div class="col-md-6 col-sm-12 col-xs12 col-lg-6">
-            <div class="image image-sm mt-1 thumb">
-               <img src="https://metsul.com/wp-content/uploads/2023/10/aereo1010l-1280x640.jpg" alt="imagem2">
-            </div>
-            <h3><a href="">Enchente chega a SC</a>
-            </h3>
-            <div class="image image-sm mt-1 thumb">
-               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8KTW-aecuOR8Yx5KAY3FpZxPtpOR0Ndx_Tg&s" alt="imagem2">
-            </div>
-            <h3><a href="">Água recua em POA e mostra destruição</a>
-            </h3>
-
-
-         </div>
-
-      </div>
-</div>
-   </div>
-   <div class="container section mt-4">
-      <div class="section-title">
-         <h2>Jogos</h2>
-      </div>
-      <div class="row">
-         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
-            <div class="mb-2 image image-xs">
-               <img src="https://flowgames.gg/wp-content/uploads/2023/04/hKqS_MrZkF7xEhGr6ZFg2-transformed.jpg" alt="">
-
-            </div>
-         <h5>
-            <a href="">Zelda revoluciona mundo dos games novamente
-
-            </a>  
-         </h5>          
-         </div>
-         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
-            <div class="mb-2 image image-xs">
-               <img src="https://s2-g1.glbimg.com/f5G6HY80JPR9maplR0PzGD5Mn-s=/0x0:1200x675/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/f/8/hnw1aBSPCzN1eAKvvfDg/zelda-tears-of-the-kingdom.jpg" alt="">
-
-            </div>
-            <h5>
-            <a href="">Zelda revoluciona mundo dos games novamente
-            </a> 
-         </h5>           
-         </div>
-         <div class="col-sm-12 col-xs-12 col-md-3 col-lg-3">
-            <div class="mb-2 image image-xs">
-               <img src="https://s2-g1.glbimg.com/f5G6HY80JPR9maplR0PzGD5Mn-s=/0x0:1200x675/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/f/8/hnw1aBSPCzN1eAKvvfDg/zelda-tears-of-the-kingdom.jpg" alt="">
-
-            </div>
-            <h5>
-            <a href="">Zelda revoluciona mundo dos games novamente
-
-            </a> 
-         </h5>           
-         </div>
-
-      </div> <!--end of the second row-->
-
-      <div class="container section">
+               <div class="d-flex align-items-baseline">
+                  <h5 class="mb-0">{{ post.title }}</h5>
+                </div>
+          </a>
+        </div>    
+               {% endif %}
+       {% endfor %}
+       <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
          <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-               <div class="mb-4 mt-4 section">
-                  <div class="section-title">
-                     <span>Últimas atualizações</span>
+             {% for post in latest_posts %}
+                 {% if forloop.counter > 1 and forloop.counter <= 5 %}
+                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                        <a href="{% url 'posts:detail_text' post.id %}"> 
+                           <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                              <span class="font-textual-genre-carro">{{ post.section_name}}</span>
+              
+                            </div>
+                           
+                           
+                           <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb">
+                           
+                           
+                  <div class="d-flex align-items-baseline">
+   <h5 class="mb-0">{{ post.title }}</h5>
+ </div>
+                           </a>
+                     </div>
+                 {% endif %}
+             {% endfor %}
+         </div>
+     </div>
+
+
+     <div class="container-fluid p-0">
+      <!-- Faixa de colunistas -->
+      <section class="colunistas mt-1" style="background-color: #f8f9fa;">
+          <!-- Linha superior personalizada -->
+          <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
+  
+          <div class="container py-4">
+              <div class="row justify-content-center">
+                  {% for opinion in opinion_posts %}
+                  <div class="col-sm-12 col-md-6 col-lg-3 mb-1">
+                      <div class="card h-100 text-center border-0" style="background-color: transparent;">
+                          <img src="{{ opinion.user.profile_picture.url }}" class="rounded-circle shadow-lg mx-auto mb-3" style="width: 150px; height: 150px; object-fit: cover; border: 5px solid #171718;">
+  
+                          <div class="card-body p-0">
+                              <h5 class="card-title font-weight-bold">{{ opinion.user.first_name }} {{ opinion.user.last_name }}</h5>
+                              <p class="card-text text-muted">{{ opinion.title }}</p>
+                          </div>
+                      </div>
                   </div>
-                           <div class="row mb-3 bb-1 pt-0">
-         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-            <img src="https://tm.ibxk.com.br/2019/03/20/20235352819166.jpg" class="img-thumbnail">
-         </div>
-         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <h5>
-               <a href="">Mais notícias</a>
-            </h5>
-            <small>Data aqui</small>
-            <p>O novo título da produtora japonesa chega com a proposta de inovar o tal Soulsborne, oferecendo diversas mudanças de mecânicas centrais, gameplay e, pela primeira vez, um verdadeiro esforço em oferecer uma narrativa que não seja esquecível. Sekiro é a prova material (ou digital, neste caso), que um gênero consagrado tem potencial para evoluir de maneira colossal, sem perder a essência.
+                  {% endfor %}
+              </div>
+          </div>
+  
+          <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
+      </section>
+  
+  </div>
 
-            </p>
-
-         </div>
-         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-            <img src="https://tm.ibxk.com.br/2019/03/20/20235352819166.jpg" class="img-thumbnail">
-         </div>
-         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <h5>
-               <a href="">Mais notícias</a>
-            </h5>
-            <small>Data aqui</small>
-            <p>O novo título da produtora japonesa chega com a proposta de inovar o tal Soulsborne, oferecendo diversas mudanças de mecânicas centrais, gameplay e, pela primeira vez, um verdadeiro esforço em oferecer uma narrativa que não seja esquecível. Sekiro é a prova material (ou digital, neste caso), que um gênero consagrado tem potencial para evoluir de maneira colossal, sem perder a essência.
-
-            </p>
-
-         </div>
-         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-            <img src="https://tm.ibxk.com.br/2019/03/20/20235352819166.jpg" class="img-thumbnail">
-         </div>
-         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <h5>
-               <a href="">Mais notícias</a>
-            </h5>
-            <small>Data aqui</small>
-            <p>O novo título da produtora japonesa chega com a proposta de inovar o tal Soulsborne, oferecendo diversas mudanças de mecânicas centrais, gameplay e, pela primeira vez, um verdadeiro esforço em oferecer uma narrativa que não seja esquecível. Sekiro é a prova material (ou digital, neste caso), que um gênero consagrado tem potencial para evoluir de maneira colossal, sem perder a essência.
-
-            </p>
-
-         </div>
-                  </div>
-
-               </div>           
-
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-               <div class="section trending mt-4">
-               <div class="section-title">
-                  <span>Trending</span>
-               </div>
-               <div class="row">
-                  <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                     <img src="https://tm.ibxk.com.br/2019/03/20/20235352819166.jpg" alt="" class="img-thumbnail">
-                  </div>
-                  <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
-                     <a href="">Clique para jogar</a>
-                  </div>
-
-               </div>
-            </div>
-
-
-            </div>
-      
-       
-         </div> 
-         
+     <div class="row mt-2">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="row">
+              {% for post in latest_posts %}
+                  {% if forloop.counter > 5 and forloop.counter <= 9 %}
+                      <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                          <a href="{% url 'posts:detail_text' post.id %}">
+                              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                                  <span class="font-textual-genre-carro">{{ post.section_name}}</span>
+                              </div>
+                              <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb">
+                              <div class="d-flex align-items-baseline">
+                                  <h5 class="mb-0">{{ post.title }}</h5>
+                              </div>
+                          </a>
+                      </div>
+                  {% endif %}
+              {% endfor %}
+          </div>
       </div>
-
-
-   </div>
-</div>
+  
+      <div class="col-sm-12 col-md-6 col-lg-6">
+          <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+              <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner">
+                  {% for post in carro_final_posts %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <a href="{% url 'posts:detail_text' post.id %}">
+                        <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                            <span class="font-textual-genre-carro">{{ post.section_name}}</span>
+                        </div>
+                          <img class="img-carro img-fluid" src="{{ post.image.url }}" alt="{{ post.title }}">
+                      </a>
+                      <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+                          <h5>{{ post.title }}</h5>
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Próximo</span>
+              </a>
+          </div>
+      </div>
+  </div>
+  
 {% endblock %}
 

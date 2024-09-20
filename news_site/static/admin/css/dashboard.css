@@ -16,7 +16,6 @@
     padding-right: .6em;
 }
 
-/* RECENT ACTIONS MODULE */
 
 .module ul.actionlist {
     margin-left: 0;
@@ -26,4 +25,13 @@ ul.actionlist li {
     list-style-type: none;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.img-avatar-column {
+    height: 200px;
+    width: 200px;
+    filter: grayscale(100%);
+    object-fit: cover;
+    border-radius: 20%;
+   
 }

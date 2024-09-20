@@ -11,7 +11,7 @@ class CultureGamesListView(ListView):
     def get_queryset(self):
         queryset = Post.objects.filter(section_name__section_name="cultura_lazer",
                                        section_name__subsection_name="games",
-                                        textual_genre__textual_genre__in=['resenha', 'resumo', 'cronica']
+                                        textual_genre__textual_genre__in=['resenha', 'resumo', 'cronica', 'reportagem', 'noticia']
                                         ).order_by('-created')
         form = CultureForm(self.request.GET)
         if form.is_valid():

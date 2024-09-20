@@ -1,0 +1,130 @@
+{% extends 'base_culture.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_culture.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row mt-2">
+        <div class="col-md-4 col-sm-12">
+          <form action="{% url 'posts:list_games' %}" method="GET" class="form-group">
+            <div class="form-row align-items-center">
+              <div class="col">
+                {{form.filter_by|add_attrs:"class=form-control"}}
+              </div>
+              <div class="col">
+                {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Filtrar" class="btn btn-success">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <h1 class="font-weight-bold mt-3 font-news">Jogos</h1>
+      <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          {% for post in culture_game_posts %}
+          {% if forloop.counter <= 3 %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{% url 'posts:detail_text' post.id %}">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
+
+                <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+
+              </div>
+              <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+              <h5>{{post.title}}</h5>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div id="carouselExampleIndicators2" class="carousel slide mt-3" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          {% for post in culture_game_posts %}
+          {% if forloop.counter > 3  and forloop.counter <= 6 %}
+          <div class="carousel-item {% if forloop.counter == 4 %}active{% endif %}">
+
+            <a href="{% url 'posts:detail_text' post.id %}">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                <span class="font-textual-genre-carro">{{ post.textual_genre}} de</span>
+
+                <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
+
+              </div>
+              <img class="img-carro img-fluid" src="{{post.image.url}}" alt="{{post.title}}">
+            </a>
+            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+              <h5>{{post.title}}</h5>
+              <p>{{post.subtitle}}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Próximo</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row d-flex mt-4">
+    {% for post in culture_game_posts %}
+      {% if forloop.counter > 7 and forloop.counter <= 10 %}
+        <div class="col-md-3 d-flex flex-column align-items-center mb-3">
+          <div class="col">
+            <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
+          </div>
+          <div class="col">
+            <p>{{post.title}}</p>
+          </div>
+        </div>
+
+        
+      {% endif %}
+      {% endfor %}
+    
+
+ {% endblock %}

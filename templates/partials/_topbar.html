@@ -12,14 +12,15 @@
             {% if user.is_authenticated %}
             {% csrf_token %}   
                     <li class="list-inline-item">
-                      <a href="{% url 'dashboard' %}" class="nav-link d-inline">Olá, {{user.username}}</a>
+                      <a href="{% url 'dashboard' %}" class="nav-link d-inline"> <i class="fas fa-user"></i>               
+                        Olá, {{user.username}}</a>
                        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link fas fa-sign-out-alt d-inline" title="Sair">
                           </a>
                           <form action="{% url 'logout' %}" method="POST" id="logout">
                             {% csrf_token %}
                             <input type="hidden">
                           </form>
-                    </li>              
+                    </li>
                 {% else %}
                 <li class="list-inline-item font-weight-bold">
                     <a href="{% url 'register' %}" class="nav-link d-inline p-1">Registrar</a>
