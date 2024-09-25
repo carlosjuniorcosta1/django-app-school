@@ -125,12 +125,12 @@
       <div class="row d-flex mt-3">
         {% for post in world_posts %}
           {% if forloop.counter > 13 and forloop.counter <= 20 %}
-            <div class="col-md-6 d-flex flex-column align-items-center mb-3">
+            <div class="col-md-4 d-flex flex-column align-items-center mb-3">
               <div class="col">
                 <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world"></a>
               </div>
               <div class="col">
-                <p class="format-p-final">{{post.title}}</p>
+                <h5 class="">{{post.title}}</h5>
               </div>
             </div>
           {% endif %}

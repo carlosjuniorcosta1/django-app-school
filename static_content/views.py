@@ -6,8 +6,6 @@ from posts.models import Post
 from .index_form import IndexForm
 from django.db.models import Q
 
-
-
 class IndexListView(ListView):
     model = Post
     template_name= "static_content/index.html"
@@ -32,8 +30,8 @@ class IndexListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_posts'] = Post.objects.all().order_by('-created')[:10]
-        context['carro_final_posts'] = Post.objects.all().order_by('-created')[10:13]
+        context['latest_posts'] = Post.objects.exclude(section_name__section_name='opiniao').order_by('-created')[:10]
+        context['carro_final_posts'] = Post.objects.exclude(section_name__section_name='opiniao').order_by('-created')[10:13]
 
 
         context['health_posts'] = Post.objects.filter(section_name__section_name='saude').order_by('-created')[:4]

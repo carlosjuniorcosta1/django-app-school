@@ -15,7 +15,8 @@ class Genre(models.Model):
         ('receita', 'Receita'),
         ('cronica', 'Crônica'),
         ('resumo', 'Resumo'),
-        ('tirinha', 'Tirinha')
+        ('tirinha', 'Tirinha'), 
+        ('ilustracao', 'Ilustração')
         
       ]
     textual_genre = models.CharField(max_length=30, choices=genre_choices, blank=True, null=True)
@@ -41,7 +42,9 @@ class Section(models.Model):
     subsection_choices = [
        ('literatura', 'Literatura'), 
        ('cinema_tv', 'Cinema e TV'),
-       ('games', 'Jogos')
+       ('games', 'Jogos'),
+       ('comida', 'Comida'),
+       ('artes', 'Ilustrações')
     ]
     
     section_name = models.CharField(max_length=50, choices=section_choices)
@@ -51,7 +54,7 @@ class Section(models.Model):
         if not self.subsection_name:
            return self.get_section_name_display()
         else:
-           return f'{self.get_section_name_display()}, {self.get_subsection()}'
+           return f'{self.get_subsection()}'
     
     def get_section_names(self):
        return self.section_name

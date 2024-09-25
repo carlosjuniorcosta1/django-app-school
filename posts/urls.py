@@ -8,7 +8,8 @@ from .views.culture.culture_views import CultureListView
 from .views.culture.cinema_views import CultureCineListView
 from .views.culture.literature_views import CultureLiteratureListView
 from .views.culture.games_views import CultureGamesListView
-
+from .views.culture.food_views import CultureFoodListView
+from .views.culture.arts_views import CultureArtsListView
 from .views.health_views import HealthListView
 
 app_name = 'posts'
@@ -28,5 +29,7 @@ urlpatterns = [
     path('culture_news/literature', CultureLiteratureListView.as_view(), name="list_literature"),
     path('culture_news/games', CultureGamesListView.as_view(), name="list_games"),
     path('health_news/', HealthListView.as_view(), name="index_health"),
+    path('food_recipe_news/', CultureFoodListView.as_view(), name="list_food"),
+    path('arts_students_users/', CultureArtsListView.as_view(), name="list_arts")
 
 ]

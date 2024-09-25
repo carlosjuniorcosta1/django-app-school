@@ -7,15 +7,20 @@
 {% endblock %}
 {% block content %}
 
+
 <div class="container">
+    <h1 class="font-weight-bold mt-3 font-news">{{post.section_name}}</h1>
+<hr>
     <h1 class="font-title-preview mt-3">{{post.title}}</h1>
     <p class="font-subtitle-preview">{{post.subtitle}}</p>
     <small>por {{post.user}} em {{post.created}}</small>  <small class="font-count-views">{{post.textual_genre}}</small>
+    <br><br>
+    
     {% if post.image %}
     <div class="text-center">
         <figure>
             <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-3">
-            <figcaption>{{ post.image.name }}</figcaption>
+            <figcaption>{{ post.title }}</figcaption>
         </figure>
     </div>
 
@@ -24,13 +29,15 @@
 
 
 
-
-
-
 <div class="font-paragraph-preview">{{ post.main_text|linebreaks}}</div>
+<br><br><br>
 
 {% if user.is_authenticated and user == post.user %}
-<a href="{% url 'posts:delete_post' pk=post.pk %}" class="btn btn-danger">Deletar</a>
+<a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2"></a>
+
+<a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2"></a>
+
+
 {% endif %}
 </div>
 

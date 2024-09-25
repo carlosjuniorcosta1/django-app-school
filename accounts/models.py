@@ -10,6 +10,5 @@ class CustomUser(AbstractUser):
     user_picture =  models.ImageField(null=True, blank=True, upload_to="images/", 
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
 
-
     def __str__(self):
         return self.username

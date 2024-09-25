@@ -13,3 +13,12 @@
     padding: 2px 5px; 
     border-radius: 3px;
 }
+
+.font-paragraph-preview {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #333;
+}
+
+

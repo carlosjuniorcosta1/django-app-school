@@ -30,3 +30,4 @@ urlpatterns = [
     path('quizes/', include('quizes.urls', namespace='quizes'))
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
