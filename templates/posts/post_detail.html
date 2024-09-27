@@ -27,9 +27,8 @@
     {% endif %}
   
 
-
-
-<div class="font-paragraph-preview">{{ post.main_text|linebreaks}}</div>
+<div class="font-paragraph-preview">    
+    {{ post.main_text|linebreaks}}</div>
 <br><br><br>
 
 {% if user.is_authenticated and user == post.user %}

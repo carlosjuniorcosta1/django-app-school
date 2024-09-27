@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewTitle = document.getElementById('preview-title');
     const previewSubtitle = document.getElementById('preview-subtitle');
     const previewMainText = document.getElementById('preview-text');
-    
+    const previewContainer = document.getElementById('preview-container'); // Contêiner que engloba o preview
+
     // Preview dos ingredientes e modo de preparo
     const ingredientsContainer = document.getElementById('ingredients-container');
     const preparationContainer = document.getElementById('preparation-container');
@@ -74,27 +75,28 @@ document.addEventListener("DOMContentLoaded", function () {
             preparationContainer.style.display = 'none';
         }
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
+    // Sincronizar os campos de gênero textual e seção
     const genreSelect = document.getElementById('id_textual_genre');
     const sectionSelect = document.getElementById('id_section_name');
-    const mainTextInput = document.getElementById('id_main_text');
 
     function syncFields() {
         const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
-        const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
 
         // Ajustar seção de acordo com o gênero
         if (selectedGenre === 'artigo') {
             selectSectionByName('opinião');
+            showPreview(); // Mostra o preview
         } else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
+            showPreview(); // Mostra o preview
         } else if (['tirinha', 'ilustração'].includes(selectedGenre)) {
             selectSectionByName('ilustrações');
+            showPreview(); // Mostra o preview
         } else if (selectedGenre === 'receita') {
             selectSectionByName('comida');
             insertRecipeTemplate();
+            hidePreview(); // Oculta o preview de título, subtítulo, nome e texto
         }
     }
 
@@ -113,6 +115,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function hidePreview() {
+        // Oculta título, subtítulo, nome e texto, mas mantém a imagem
+        previewSubtitle.style.display = 'none';
+        previewMainText.style.display = 'none';
+    }
+
+    function showPreview() {
+        // Mostra título, subtítulo, nome e texto novamente
+        previewSubtitle.style.display = 'block';
+        previewMainText.style.display = 'block';
+    }
+
     genreSelect.addEventListener('change', syncFields);
     sectionSelect.addEventListener('change', syncFields);
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const titleInput = document.getElementById('id_title');
+    const previewTitle = document.getElementById('preview-title');
+
+    function capitalizeFirstLetter(text) {
+        if (text.length === 0) return text;
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    titleInput.addEventListener('input', function () {
+        const capitalizedTitle = capitalizeFirstLetter(titleInput.value);
+        previewTitle.textContent = capitalizedTitle;
+        titleInput.value = capitalizedTitle; 
+    });
 });

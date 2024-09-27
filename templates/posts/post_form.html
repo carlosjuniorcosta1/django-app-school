@@ -1,6 +1,5 @@
 {% load static %}
 {% load form_tags %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +49,6 @@
             </div>
 
             <div class="mb-4">
-                <!-- Label e campo para o gênero textual -->
                 <label for="id_textual_genre" class="form-label"><i class="fas fa-book"></i> Gênero Textual</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -92,7 +90,6 @@
             </div>
         </form>     
 
-        <!-- Preview Container -->
         <div id="preview-container" class="mt-4">
             <h4 class="font-title-preview" id="preview-title"></h4>
             <h5 class="font-subtitle-preview" id="preview-subtitle"></h5>
@@ -103,13 +100,11 @@
             </div>
         </div>
 
-        <!-- Ingredients Container (only for "Receita") -->
         <div id="ingredients-container" class="mt-4" style="display: none;">
-            <h5><i class="fas fa-utensils"></i> Ingredientes:</h5>
+            <h5 class="">Ingredientes:</h5>
             <ul id="ingredients-preview" class="list-unstyled"></ul>
         </div>
 
-        <!-- Preparation Mode Container (only for "Receita") -->
         <div id="preparation-container" class="mt-4" style="display: none;">
             <h5><i class="fas fa-oven"></i> Modo de Preparo:</h5>
             <ul id="preparation-preview" class="list-unstyled"></ul>

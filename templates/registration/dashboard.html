@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="container-fluid">
     <div class="row">     
 
@@ -46,14 +45,24 @@
 
                                 <input type="checkbox" id="edit-toggle" style="display: none;">
 
-                                <form action="{% url 'update_profile' %}" method="POST" id="edit-form" style="display: none;">
+                                <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data" id="edit-form" style="display: none;">
                                     {% csrf_token %}
                                     <div class="form-group font-weight-bold">
                                         <label for="presentation">Descrição</label>
                                         <textarea name="presentation" class="form-control">{{ user.presentation }}</textarea>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="user_picture">Atualizar Foto</label>
+                                        <input type="file" name="user_picture" class="form-control" accept="image/*" onchange="previewImage(event)">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <img id="img-preview" src="{{ user.user_picture }}" alt="Pré-visualização da imagem" style="max-width: 200px; display: block;"/>
+                                    </div>
+
                                     <div class="form-group d-flex align-items-center">
-                                        <input type="submit" value="Atualizar" class="btn btn-secondary mr-2">
+                                        <input type="submit" value="Atualizar perfil" class="btn btn-secondary mr-2">
                                         <label for="edit-toggle" class="btn btn-secondary mb-0" style="cursor: pointer;">Cancelar</label>
                                     </div>
                                 </form>
@@ -69,26 +78,48 @@
                 </div>
             </div>
 
-            {% if user.is_columnist %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h4>Atualizar foto</h4>
-                    <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">  
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <input type="file" name="user_picture" class="form-control" accept="image/*" onchange="previewImage(event)">
-                        </div>
-                        <div class="form-group">
-                            <img id="img-preview" src="#" alt="Pré-visualização da imagem" style="max-width: 200px; display: none;"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Atualizar foto" class="btn btn-secondary">
-                        </div>
-                    </form>
-                </div>
+            <div class="">
+                <h2 class="mb-3">Seus últimos 10 posts</h2>
+                <ul class="list-group">
+                    {% for post in user_posts|slice:":10" %}
+                    <a href="{% url 'posts:detail_text' post.id %}" class="text-decoration-none text-dark">
+                        <li class="list-group-item mb-0 border-0 p-1 shadow-lg rounded d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="mb-0">{{ post.title }}</h4>
+                                {% if post.updated %}
+                                <small class="text-muted">Atualizado em: {{ post.updated|date:"d/m/Y" }}</small>
+                                {% else %}
+                                <small class="text-muted">Publicado em: {{ post.created|date:"d/m/Y" }}</small>
+                                {% endif %}
+                                
+                                <p class="text-muted d-flex align-items-center mb-1">
+                                    <em>{{ post.textual_genre }}</em>
+                                    <!-- Escolha de ícones baseada no gênero textual -->
+                                    {% if post.textual_genre.textual_genre == 'noticia' %}
+                                        <i class="fas fa-newspaper ms-1"></i>
+                                    {% elif post.textual_genre.textual_genre == 'artigo' %}
+                                        <i class="fas fa-file-alt ms-1"></i>
+                                    {% elif post.textual_genre.textual_genre == 'resenha' %}
+                                        <i class="fas fa-book-open ms-1"></i>
+                                    {% elif post.textual_genre.textual_genre == 'conto' %}
+                                        <i class="fas fa-feather-alt ms-1"></i>
+                                    {% elif post.textual_genre.textual_genre == 'receita' %}
+                                        <i class="fas fa-utensils ms-1"></i>
+                                    {% elif post.textual_genre.textual_genre == 'fanfic' %}
+                                        <i class="fas fa-pen-fancy ms-1"></i>
+                                    {% else %}
+                                        <i class="fas fa-file-alt ms-1"></i> 
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <span class="badge bg-light text-dark rounded-pill shadow-sm">{{ post.section_name }}</span>
+                        </li>  
+                    </a>
+                    {% empty %}
+                        <li class="list-group-item">Nenhum post encontrado.</li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% endif %}
-
         </main>
     </div>
 </div>
