@@ -24,7 +24,9 @@ class PostCreateView(CreateView, LoginRequiredMixin):
         context['first_name'] = user.first_name
         context['last_name'] = user.last_name
         context['post'] = self.object
-
+        context['is_artist'] = user.is_artist
+        context['is_columnist'] = user.is_columnist
+        
         return context
     def get_success_url(self):
         return reverse('posts:detail_text', kwargs={'pk': self.object.pk})

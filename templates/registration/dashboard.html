@@ -93,23 +93,7 @@
                                 {% endif %}
                                 
                                 <p class="text-muted d-flex align-items-center mb-1">
-                                    <em>{{ post.textual_genre }}</em>
-                                    <!-- Escolha de ícones baseada no gênero textual -->
-                                    {% if post.textual_genre.textual_genre == 'noticia' %}
-                                        <i class="fas fa-newspaper ms-1"></i>
-                                    {% elif post.textual_genre.textual_genre == 'artigo' %}
-                                        <i class="fas fa-file-alt ms-1"></i>
-                                    {% elif post.textual_genre.textual_genre == 'resenha' %}
-                                        <i class="fas fa-book-open ms-1"></i>
-                                    {% elif post.textual_genre.textual_genre == 'conto' %}
-                                        <i class="fas fa-feather-alt ms-1"></i>
-                                    {% elif post.textual_genre.textual_genre == 'receita' %}
-                                        <i class="fas fa-utensils ms-1"></i>
-                                    {% elif post.textual_genre.textual_genre == 'fanfic' %}
-                                        <i class="fas fa-pen-fancy ms-1"></i>
-                                    {% else %}
-                                        <i class="fas fa-file-alt ms-1"></i> 
-                                    {% endif %}
+                                    <em style="color: black;">{{ post.textual_genre }}</em>
                                 </p>
                             </div>
                             <span class="badge bg-light text-dark rounded-pill shadow-sm">{{ post.section_name }}</span>

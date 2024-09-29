@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewMainText = document.getElementById('preview-text');
     const previewContainer = document.getElementById('preview-container'); // Contêiner que engloba o preview
 
-    // Preview dos ingredientes e modo de preparo
     const ingredientsContainer = document.getElementById('ingredients-container');
     const preparationContainer = document.getElementById('preparation-container');
     const ingredientsPreview = document.getElementById('ingredients-preview');
@@ -27,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     mainTextInput.addEventListener('input', function () {
         updatePreviewMainText();
-        updateRecipePreview(); // Atualiza os previews
+        updateRecipePreview(); 
     });
 
     imageInput.addEventListener('change', function () {
@@ -57,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const ingredientsMatch = text.match(/Ingredientes:(.*?)(Modo de preparo:|$)/s);
         const preparationMatch = text.match(/Modo de preparo:(.*)/s);
 
-        // Atualizar ingredientes
         if (ingredientsMatch) {
             const ingredients = ingredientsMatch[1].trim().split('\n').filter(line => line.trim() !== "");
             ingredientsPreview.innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
@@ -66,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
             ingredientsContainer.style.display = 'none';
         }
 
-        // Atualizar modo de preparo
         if (preparationMatch) {
             const preparation = preparationMatch[1].trim().split('\n').filter(line => line.trim() !== "");
             preparationPreview.innerHTML = preparation.map(step => `<li>${step}</li>`).join('');
@@ -76,27 +73,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Sincronizar os campos de gênero textual e seção
     const genreSelect = document.getElementById('id_textual_genre');
     const sectionSelect = document.getElementById('id_section_name');
 
     function syncFields() {
         const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
 
-        // Ajustar seção de acordo com o gênero
         if (selectedGenre === 'artigo') {
             selectSectionByName('opinião');
-            showPreview(); // Mostra o preview
+            showPreview(); 
         } else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
-            showPreview(); // Mostra o preview
+            showPreview(); 
         } else if (['tirinha', 'ilustração'].includes(selectedGenre)) {
             selectSectionByName('ilustrações');
-            showPreview(); // Mostra o preview
+            showPreview(); 
         } else if (selectedGenre === 'receita') {
             selectSectionByName('comida');
             insertRecipeTemplate();
-            hidePreview(); // Oculta o preview de título, subtítulo, nome e texto
+            hidePreview(); 
         }
     }
 
@@ -116,13 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function hidePreview() {
-        // Oculta título, subtítulo, nome e texto, mas mantém a imagem
         previewSubtitle.style.display = 'none';
         previewMainText.style.display = 'none';
     }
 
     function showPreview() {
-        // Mostra título, subtítulo, nome e texto novamente
         previewSubtitle.style.display = 'block';
         previewMainText.style.display = 'block';
     }
@@ -146,4 +139,34 @@ document.addEventListener("DOMContentLoaded", function () {
         previewTitle.textContent = capitalizedTitle;
         titleInput.value = capitalizedTitle; 
     });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var idArtist = document.getElementById('idArtist')
+    var artistAtt = idArtist.getAttribute('data-is-artist')
+    var textualGenreSelect = document.getElementById('id_textual_genre');
+    var selectedGenre = document.getElementById('selected-genre')
+    var hideFields = document.getElementsByClassName('hide-ilustrator')
+
+    console.log(artistAtt)
+    if(artistAtt == 'False'){
+        textualGenreSelect.addEventListener('change', function(){
+            var textTextualGenre = textualGenreSelect.options[textualGenreSelect.selectedIndex].text
+        if(textTextualGenre == "Ilustração"|| textTextualGenre == "Tirinha"){
+                selectedGenre.innerHTML = "Você ainda não tem permissão de ilustrador. Solicite-a ao administrador via email e mostre seu trabalho antes."
+                selectedGenre.style.display = "block"
+                for(var i = 0; i < hideFields.length; i++){
+                    hideFields[i].style.display =  'none'
+                }
+                textualGenreSelect.selectedIndex = 0; 
+            }
+            else {
+                selectedGenre.style.display = "none"
+                for(var i=0; i < hideFields.length; i++){
+                    hideFields[i].style.display = "block"
+                }
+            }
+        } )       
+
+    }  
 });
