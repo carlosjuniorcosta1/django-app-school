@@ -12,7 +12,7 @@ class CultureArtsListView(ListView):
         queryset = Post.objects.filter(section_name__section_name="cultura_lazer",
                                        section_name__subsection_name="artes",
                                         textual_genre__textual_genre__in=['ilustracao', 'tirinha']
-                                        ).order_by('-created')
+                                      , status="approved"  ).order_by('-created')
         form = CultureForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')

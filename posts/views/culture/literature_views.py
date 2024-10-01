@@ -1,7 +1,8 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from posts.forms.culture_form import CultureForm
 from django.db.models import Q
 from ...models import Post
+from django.urls import reverse_lazy
 
 
 
@@ -12,7 +13,7 @@ class CultureLiteratureListView(ListView):
     def get_queryset(self):
         queryset = Post.objects.filter(section_name__section_name="cultura_lazer",
                                         textual_genre__textual_genre__in=['conto', 'cronica', 'fanfic', 'resenha', 'resumo', 'reportagem']
-                                        ).order_by('-created')
+                                        , status="approved").order_by('-created')
         form = CultureForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')
@@ -35,7 +36,6 @@ class CultureLiteratureListView(ListView):
         context['form'] = CultureForm(self.request.GET)
 
         return context 
-
 
 
 

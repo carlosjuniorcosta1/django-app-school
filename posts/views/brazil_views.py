@@ -10,7 +10,8 @@ class BrazilListView(ListView):
     template_name = "posts/brazil/brazil_index.html"
 
     def get_queryset(self):
-        queryset = Post.objects.filter(section_name__section_name="brasil").order_by('-created')
+        queryset = Post.objects.filter(section_name__section_name="brasil", status="approved").order_by('-created')
+
         form = BrazilForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')

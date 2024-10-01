@@ -7,6 +7,7 @@ class PostFilterForm(forms.Form):
         ('textual_genre', 'Gênero'),
         ('section_name', 'Seção'),
         ('user', 'Colunista')
+        
     ]
     filter_by = forms.ChoiceField(choices=filter_choices, label="Filtrar por", initial='')
     search_term = forms.CharField(required=False, label="Buscar")

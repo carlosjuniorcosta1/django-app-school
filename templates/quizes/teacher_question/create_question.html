@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">Criar uma questão</h1>
+
+<!-- Formulário de criação de questão -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Campo de contexto da questão -->
+    <div class="form-group mb-3">
+        <label for="{{ form.context.id_for_label }}" class="form-label">Contexto da Questão</label>
+        {{ form.context }}
+    </div>
+
+    <!-- Campo de pergunta -->
+    <div class="form-group mb-3">
+        <label for="{{ form.question.id_for_label }}" class="form-label">Texto da Questão</label>
+        {{ form.question }}
+    </div>
+
+    <!-- Campo de assunto do quiz -->
+    <div class="form-group mb-3">
+        <label for="{{ form.quiz_subject.id_for_label }}" class="form-label">Assunto do Quiz</label>
+        {{ form.quiz_subject }}
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="{{ form.question_image.id_for_label }}" class="form-label">Imagem da Questão (opcional)</label>
+        {{ form.question_image }}
+    </div>
+
+    <hr>
+
+    <!-- Seção de Respostas -->
+    <h2 class="mb-3">Respostas</h2>
+    {% for i in "12345" %}
+    <div class="form-group mb-3">
+        <label for="answer_text_{{ i }}" class="form-label">Resposta {{ i }}</label>
+        <textarea name="answer_text_{{ i }}" id="answer_text_{{ i }}" class="form-control" rows="3"></textarea>
+    </div>
+
+
+ 
+    <div class="form-group mb-3">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="answer_is_correct_{{ i }}" id="answer_is_correct_{{ i }}">
+            <label for="answer_is_correct_{{ i }}" class="form-check-label">Essa resposta é a correta?</label>
+        </div>
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary mt-4">Criar Questão</button>
+</form>
+
+{% endblock %}

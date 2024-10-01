@@ -27,6 +27,9 @@ class Answer(models.Model):
     is_correct = models.BooleanField(null=True, blank=True)
     has_image_alt = models.BooleanField(blank=True, null=True)   
     alternative = models.CharField(max_length=1, blank=True, null=True)
+    answer_image = models.TextField(blank=True, null=True)
+
+
 
 
     def __str__(self):

@@ -1,75 +1,94 @@
 {% extends 'base_opinion.html' %}
-
 {% load static %}
 {% load form_tags %}
+
 {% block extrahead %} 
 <link rel="stylesheet" href="{% static 'admin/css/styles_opinion_index.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
-
+{% block content %} 
+<h2 class="font-weight-bold mt-3 font-news">Opinião</h2>
+<hr>
 <div class="row">
     <div class="col-md-4 col-sm-12">
-        <form action="" method="GET" class="form-group">
-            <div class="form-row align-content-center">
-                <div class="col">
-                    {{form.filter_by|add_attrs:"class=form-control"}}
-                </div>
-                <div class="col">
-                    {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
-                </div>
-            <div class="col-auto">
-                <input type="submit" value="Filtrar" class="btn btn-success">
-            </div>
-        </div>            
-        </form>
-
+      <form action="{% url 'posts:index_opinion' %}" method="GET" class="form-group">
+        <div class="form-row align-items-center">
+          <div class="col">
+            {{form.filter_by|add_attrs:"class=form-control"}}
+          </div>
+          <div class="col">
+            {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
+          </div>
+          <div class="col-auto">
+            <input type="submit" value="Filtrar" class="btn btn-success">
+          </div>
+        </div>
+      </form>
     </div>
-</div>
+  </div>
 
-
-
-<h2 class="font-weight-bold mt-3 font-news">Opinião dos alunos</h2>
-<hr>
 {% for opinion in opinion_students %}
-<div class="row mt-2">
-    <div  class="col-md-6">
-                    <ul class="list-inline d-flex align-items-lg-stretch format-ul-students">
-                <a href="{% url 'posts:detail_text' opinion.id %}" class="link-head-opinion"><li class="list-inline-item">
-                    <h4>{{opinion.title}} <span class="font-span-identity">- por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
-                    <p>{{opinion.subtitle|slice:":100"}}</p>
-                    <small>{{opinion.user.presentation}}</small> 
-                    {% if opinion.updated %}
-                    <small>| atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
-                    {% else %}
-                    <small>| em {{opinion.created|date:"d/m/Y - H:i"}}</small>
-                    {% endif %} 
-                    <small class="format-textual-genre">{{opinion.textual_genre}}</small>            
+{% if forloop.counter < 20 %}
+                   
+<div class="row">
+<div class="col-md-6"> 
+    <div class="control-titles">
+        <ul class="list-inline d-flex align-items-stretch link-head-opinion" >
+        <li class="list-inline-item">
+          {% if opinion.user.user_picture %}
+          <img src="{{opinion.user.user_picture.url}}" alt="" class="img-avatar-column">
+        
+        {% elif not opinion.user.user_picture %}
+        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto font-opinion-posts img-avatar-column"
+        style="font-size: 45px; object-fit: cover; border: 1px solid #171718; background-color: #d9d9d9;">
+        {{ opinion.user.first_name|slice:":1"|upper }}{{ opinion.user.first_name|slice:"1:3"|lower }}
+    </div> 
+  </li>
 
-                    </li> </a>
-            </ul>
-        </div> 
-    <div class="col-md-6 d-flex justify-content-center">
-        <ul class="list-inline d-flex align-content-stretch">
+        {% endif %}
+        <a href="{% url 'posts:detail_text' opinion.id %}" class="link-head-opinion">
             <li class="list-inline-item">
-                <div class="card">
-                    <div class="card-body card-blockquote">
-                        <blockquote class="blockquote">
-                            <p class="p-1 font-italic">"{{opinion.main_text|slice:":100"}}"[...]</p>
-                        </blockquote>
-                    </div>
-                </div>
+            <h4 class="font-news">{{ opinion.title}}<span class="font-span-identity"> - por {{opinion.user.first_name}} {{opinion.user.last_name}}</span></h4> 
 
-            </li>
-        </ul>
+            <p>{{opinion.user.presentation}}</p>
+            <small class="format-textual-genre"> {{opinion.textual_genre}}</small> 
+            {% if opinion.updated %}
+            <small>atualizado em {{opinion.updated|date:"d/m/Y - H:i"}}</small>
+            {% else %}
+            <small>Há {{opinion.created|timesince}}</small>
+            {% endif %}
+            </li> 
+            <hr>
+
+               </a>              
+    </ul>
+ 
+</div>
+</div>
+<div class="col-md-6  d-flex justify-content-center">
+    <ul class="list-inline d-flex align-items-stretch">
+        <li class="list-inline-item">
+            <div class="card">
+                <div class="card-body card-blockquote">
+            <blockquote class="blockquote">
+                <p class="p-1 font-italic font-news">"{{opinion.main_text|slice:"50"}}[...]</p>
+            </blockquote>
+        </div>
     </div>
+
+        </li>
+
+    </ul>
+</div>
 
 </div>
 
-    
+{% endif %}
+
+  
+
 {% endfor %}
 
 
-
-
-{% endblock %}
+    {% endblock %}

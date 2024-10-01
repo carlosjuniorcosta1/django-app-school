@@ -66,6 +66,11 @@ class Section(models.Model):
        
 
 class Post(models.Model):
+    status_choices = (
+    ('pending', 'Pendente'),
+    ('approved', 'Aprovado'),
+    ('rejected', 'Rejeitado'),
+    )
     title = models.CharField(max_length=80)
     subtitle = models.CharField(max_length=80)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,8 +82,11 @@ class Post(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to="images/", 
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
     section_name = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
+    image_illustrator =  models.ImageField(null=True, blank=True, upload_to="images/", 
+                              validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
 
-    
+    status = models.CharField(max_length=10, choices=status_choices, default='pending')
+
     
     def __str__(self):
         return f"{self.user.username} {self.textual_genre}-{self.created}"

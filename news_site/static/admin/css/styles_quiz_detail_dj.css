@@ -44,5 +44,13 @@ body {
 
 }
 
+.img-avatar-column {
+    height: 100px;
+    width: 100px;
+    filter: grayscale(100%);
+    object-fit: cover;
+    border-radius: 45%;
+   
+}
 
 

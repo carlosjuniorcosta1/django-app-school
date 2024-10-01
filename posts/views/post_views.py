@@ -10,11 +10,16 @@ from django.db.models import Q
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']
+    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name', 'image_illustrator']
     success_url = reverse_lazy("posts:detail_text")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if self.request.user.is_columnist or self.request.user.is_superuser:
+            form.instance.status = 'approved'
+        else:
+            form.instance.status = 'pending'
+
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -26,6 +31,7 @@ class PostCreateView(CreateView, LoginRequiredMixin):
         context['post'] = self.object
         context['is_artist'] = user.is_artist
         context['is_columnist'] = user.is_columnist
+        context['is_artist'] = user.is_artist
         
         return context
     def get_success_url(self):
@@ -39,6 +45,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(status='approved')
 
         search_term = self.request.GET.get('search_term')
         filter_by = self.request.GET.get('filter_by')
@@ -78,8 +85,7 @@ class PostDetailView(DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name']
-
+    fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name', 'image_illustrator']
     
     def get_success_url(self):
         print(f"Post updated with ID:{ self.object.pk}")  
@@ -99,7 +105,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
-
 
 
  
