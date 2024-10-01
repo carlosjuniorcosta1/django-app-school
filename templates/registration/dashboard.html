@@ -78,32 +78,7 @@
                 </div>
             </div>
 
-            <div class="">
-                <h2 class="mb-3">Seus últimos 10 posts</h2>
-                <ul class="list-group">
-                    {% for post in user_posts|slice:":10" %}
-                    <a href="{% url 'posts:detail_text' post.id %}" class="text-decoration-none text-dark">
-                        <li class="list-group-item mb-0 border-0 p-1 shadow-lg rounded d-flex justify-content-between align-items-center">
-                            <div>
-                                <h4 class="mb-0">{{ post.title }}</h4>
-                                {% if post.updated %}
-                                <small class="text-muted">Atualizado em: {{ post.updated|date:"d/m/Y" }}</small>
-                                {% else %}
-                                <small class="text-muted">Publicado em: {{ post.created|date:"d/m/Y" }}</small>
-                                {% endif %}
-                                
-                                <p class="text-muted d-flex align-items-center mb-1">
-                                    <em style="color: black;">{{ post.textual_genre }}</em>
-                                </p>
-                            </div>
-                            <span class="badge bg-light text-dark rounded-pill shadow-sm">{{ post.section_name }}</span>
-                        </li>  
-                    </a>
-                    {% empty %}
-                        <li class="list-group-item">Nenhum post encontrado.</li>
-                    {% endfor %}
-                </ul>
-            </div>
+
         </main>
     </div>
 </div>

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}  <!-- Extenda seu template base -->
+{% block content %}
+<div class="container my-5">
+    {% for post in posts %}
+    {% if forloop.counter == 1 %}
+
+    <h1 class="display-4 text-center mb-4">Postagens de {{post.user.first_name}}</h1>
+
+    {% endif %}
+    {% endfor %}
+    <div class="row">
+        {% for post in posts %}
+
+        <div class="col-lg-4 col-md-6 mb-4 col-xs-12 col-sm-12">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <!-- Título do post com ícone à direita -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <!-- Exibindo o ícone baseado na seção e subseção -->
+                        {% if post.section_name.section_name == 'cultura_lazer' %}
+                            {% if post.section_name.subsection_name == 'literatura' %}
+                                <i class="fas fa-book fa-2x text-primary"></i>
+                            {% elif post.section_name.subsection_name == 'cinema_tv' %}
+                                <i class="fas fa-film fa-2x text-secondary"></i>
+                            {% elif post.section_name.subsection_name == 'games' %}
+                                <i class="fas fa-gamepad fa-2x text-danger"></i>
+                            {% elif post.section_name.subsection_name == 'comida' %}
+                                <i class="fas fa-utensils fa-2x text-success"></i>
+                            {% elif post.section_name.subsection_name == 'artes' %}
+                                <i class="fas fa-paint-brush fa-2x text-warning"></i>
+                            {% endif %}
+                        {% else %}
+                            <!-- Ícones para as outras seções -->
+                            {% if post.section_name.section_name == 'saude' %}
+                                <i class="fas fa-heartbeat fa-2x text-danger"></i>
+                            {% elif post.section_name.section_name == 'opiniao' %}
+                                <i class="fas fa-comment-alt fa-2x text-info"></i>
+                            {% elif post.section_name.section_name == 'mundo' %}
+                                <i class="fas fa-globe fa-2x text-primary"></i>
+                            {% elif post.section_name.section_name == 'brasil' %}
+                                <i class="fas fa-flag fa-2x"></i>
+                            {% elif post.section_name.section_name == 'enem' %}
+                                <i class="fas fa-graduation-cap fa-2x text-warning"></i>
+                            {% elif post.section_name.section_name == 'professor' %}
+                                <i class="fas fa-chalkboard-teacher fa-2x text-dark"></i>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <!-- Exibindo a foto da publicação -->
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid my-2" style="max-height: 200px; object-fit: cover;">
+                    {% endif %}
+
+                    <!-- Resumo do post -->
+                    <p class="card-text">{{ post.main_text|truncatewords:10 }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Nenhum post encontrado para este usuário.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

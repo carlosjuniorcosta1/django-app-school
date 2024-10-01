@@ -89,7 +89,7 @@ class Post(models.Model):
 
     
     def __str__(self):
-        return f"{self.user.username} {self.textual_genre}-{self.created}"
+        return f"{self.status}, {self.user.first_name} {self.user.last_name}, {self.section_name}, {self.textual_genre}"
   
     def clean(self):
       super().clean()
