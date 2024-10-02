@@ -1,17 +1,24 @@
 {% extends 'base.html' %}  <!-- Extenda seu template base -->
 {% block content %}
-<div class="container my-5">
+<div class="container my-2 col-sm-12">
     {% for post in posts %}
     {% if forloop.counter == 1 %}
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="display-4 border-bottom">Postagens de {{ post.user.first_name }} {{post.user.last_name}}</h2>
+        {% if post.user.user_picture %}
+        <span>
+            <img class="img-avatar-column" src="{{ post.user.user_picture.url }}" alt="">
+        </span>
+        {% endif %}
 
-    <h1 class="display-4 text-center mb-4">Postagens de {{post.user.first_name}}</h1>
 
+    </div>
     {% endif %}
     {% endfor %}
+    
     <div class="row">
         {% for post in posts %}
-
-        <div class="col-lg-4 col-md-6 mb-4 col-xs-12 col-sm-12">
+        <div class="col-lg-3 col-md-4 mb-4 col-sm-12">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <!-- Título do post com ícone à direita -->
@@ -50,11 +57,10 @@
 
                     <!-- Exibindo a foto da publicação -->
                     {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid my-2" style="max-height: 200px; object-fit: cover;">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid my-2" style="max-height: 150px; object-fit: cover;">
                     {% endif %}
 
                     <!-- Resumo do post -->
-                    <p class="card-text">{{ post.main_text|truncatewords:10 }}</p>
                 </div>
             </div>
         </div>

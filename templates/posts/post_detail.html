@@ -21,7 +21,8 @@
                 <a href="{% url 'list_user_posts' post.user.id %}"><img class="img-fluid rounded-circle img-avatar-column" 
                      src="{{ post.user.user_picture.url }}" 
                      alt="Avatar de {{ post.user.first_name }}" 
-                     style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #171718;"></a>
+                     style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #171718;">
+                    </a>
             {% else %}
             <a href="{% url 'list_user_posts' post.user.id %}"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center img-avatar-column"
                      style="width: 80px; height: 80px; font-size: 20px; border: 1px solid #171718; background-color: #d9d9d9;">
@@ -52,16 +53,16 @@
 
 <div class="font-paragraph-preview">    
     {{ post.main_text|linebreaks}}</div>
-<br><br><br>
+<br>
+<p class="font-italic">{{post.user.presentation}}</p>
+
 
 {% if user.is_authenticated and user == post.user %}
-<a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2"></a>
+<a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
 
-<a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2"></a>
-
+<a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
 
 {% endif %}
-
 
 
 
