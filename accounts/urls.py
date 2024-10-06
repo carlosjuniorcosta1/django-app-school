@@ -19,7 +19,8 @@ urlpatterns = [
           name="password_reset_confirm"),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
     path('update_profile',UpdateProfileView.as_view(), name="update_profile" ),
-    path('user/<int:user_id>/posts/', UserSharedPostsListView.as_view(), name="list_user_posts" )
+    path('user/<int:user_id>/posts/', UserSharedPostsListView.as_view(template_name='user_posts/list_user_posts.html'), name="list_user_posts" ),
+
 
 
 ]

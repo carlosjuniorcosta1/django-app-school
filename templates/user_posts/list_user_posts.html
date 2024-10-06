@@ -1,67 +1,65 @@
-{% extends 'base.html' %}  <!-- Extenda seu template base -->
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_list_user_posts.css' %}">
+{% endblock %}
 {% block content %}
-<div class="container my-2 col-sm-12">
+
+<div class="container my-2 col-sm-12 col-xm-12">
     {% for post in posts %}
     {% if forloop.counter == 1 %}
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2 class="display-4 border-bottom">Postagens de {{ post.user.first_name }} {{post.user.last_name}}</h2>
+    <div class="d-flex justify-content-between align-items-center mb-1">
+        <h3 class="border-bottom">{{ post.user.first_name }} {{ post.user.last_name }}</h3>
         {% if post.user.user_picture %}
-        <span>
+        <span class=" d-flex justify-content-center">
             <img class="img-avatar-column" src="{{ post.user.user_picture.url }}" alt="">
         </span>
         {% endif %}
-
-
     </div>
+
+    <!-- Apresentação com ícones das redes sociais -->
+    <div class="d-flex justify-content-between align-items-end flex-column flex-sm-row">
+        <h5 class="font-italic border-bottom">{{ post.user.presentation }}</h5>
+
+        <!-- Ícones das redes sociais -->
+        <div class="social-icons">
+            <!-- LinkedIn -->
+            <a href="{{ post.user.linkedin_url }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="LinkedIn">
+                <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+            <!-- Instagram -->
+            <a href="{{ post.user.instagram_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Instagram">
+                <i class="fab fa-instagram fa-2x"></i>
+            </a>
+            <!-- Twitter -->
+            <a href="{{ post.user.twitter_url }}" target="_blank" class="text-info mx-2" data-toggle="tooltip" title="Twitter">
+                <i class="fab fa-twitter fa-2x"></i>
+            </a>
+            <!-- YouTube -->
+            <a href="{{ post.user.youtube_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="YouTube">
+                <i class="fab fa-youtube fa-2x"></i>
+            </a>
+        </div>
+    </div>
+    <h4>Publicações</h4>
     {% endif %}
     {% endfor %}
-    
+
     <div class="row">
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 mb-4 col-sm-12">
             <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <!-- Título do post com ícone à direita -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <!-- Exibindo o ícone baseado na seção e subseção -->
-                        {% if post.section_name.section_name == 'cultura_lazer' %}
-                            {% if post.section_name.subsection_name == 'literatura' %}
-                                <i class="fas fa-book fa-2x text-primary"></i>
-                            {% elif post.section_name.subsection_name == 'cinema_tv' %}
-                                <i class="fas fa-film fa-2x text-secondary"></i>
-                            {% elif post.section_name.subsection_name == 'games' %}
-                                <i class="fas fa-gamepad fa-2x text-danger"></i>
-                            {% elif post.section_name.subsection_name == 'comida' %}
-                                <i class="fas fa-utensils fa-2x text-success"></i>
-                            {% elif post.section_name.subsection_name == 'artes' %}
-                                <i class="fas fa-paint-brush fa-2x text-warning"></i>
-                            {% endif %}
-                        {% else %}
-                            <!-- Ícones para as outras seções -->
-                            {% if post.section_name.section_name == 'saude' %}
-                                <i class="fas fa-heartbeat fa-2x text-danger"></i>
-                            {% elif post.section_name.section_name == 'opiniao' %}
-                                <i class="fas fa-comment-alt fa-2x text-info"></i>
-                            {% elif post.section_name.section_name == 'mundo' %}
-                                <i class="fas fa-globe fa-2x text-primary"></i>
-                            {% elif post.section_name.section_name == 'brasil' %}
-                                <i class="fas fa-flag fa-2x"></i>
-                            {% elif post.section_name.section_name == 'enem' %}
-                                <i class="fas fa-graduation-cap fa-2x text-warning"></i>
-                            {% elif post.section_name.section_name == 'professor' %}
-                                <i class="fas fa-chalkboard-teacher fa-2x text-dark"></i>
-                            {% endif %}
+                <a href="{% url 'posts:detail_text' post.id %}">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <!-- Ícones das seções (se necessário) -->
+                        </div>
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid my-2" style="max-height: 200px; object-fit: cover;">
                         {% endif %}
                     </div>
-
-                    <!-- Exibindo a foto da publicação -->
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid my-2" style="max-height: 150px; object-fit: cover;">
-                    {% endif %}
-
-                    <!-- Resumo do post -->
-                </div>
+                </a>
             </div>
         </div>
         {% empty %}
@@ -69,4 +67,19 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Media Queries para Responsividade -->
+<style>
+    @media (max-width: 768px) {
+        .social-icons {
+            margin-top: 10px; /* Espaço acima dos ícones em dispositivos móveis */
+            display: flex;
+            justify-content: center; /* Centraliza os ícones em dispositivos móveis */
+        }
+        .social-icons a {
+            margin: 0 10px; /* Espaçamento uniforme entre os ícones */
+        }
+    }
+</style>
+
 {% endblock %}

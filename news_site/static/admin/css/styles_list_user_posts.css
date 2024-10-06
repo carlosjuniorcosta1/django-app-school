@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+    .social-icons {
+        margin-top: 10px; /* Espaço acima dos ícones em dispositivos móveis */
+        display: flex;
+        justify-content: center; /* Centraliza os ícones em dispositivos móveis */
+    }
+    .social-icons a {
+        margin: 0 10px; /* Espaçamento uniforme entre os ícones */
+    }
+}

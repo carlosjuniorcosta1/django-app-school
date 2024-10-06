@@ -78,10 +78,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function syncFields() {
         const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
+        const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
 
-        if (selectedGenre === 'artigo') {
-            selectSectionByName('opinião');
-            showPreview(); 
+        if (selectedSection === 'opinião') {
+            if (['artigo', 'crônica'].includes(selectedGenre)) {
+                showPreview();
+            } else {
+                selectGenreByName('artigo');
+                showPreview();
+            }
         } else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
             showPreview(); 
@@ -95,10 +100,52 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    sectionSelect.addEventListener('change', function() {
+        const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
+        if (selectedSection === 'opinião') {
+            addChronicleOption();
+        } else {
+            removeChronicleOption();
+        }
+        syncFields();
+    });
+
+    function addChronicleOption() {
+        let optionExists = false;
+        for (let i = 0; i < genreSelect.options.length; i++) {
+            if (genreSelect.options[i].text.toLowerCase() === 'crônica') {
+                optionExists = true;
+                break;
+            }
+        }
+        if (!optionExists) {
+            const option = new Option('Crônica', 'crônica');
+            genreSelect.add(option);
+        }
+    }
+
+    function removeChronicleOption() {
+        for (let i = 0; i < genreSelect.options.length; i++) {
+            if (genreSelect.options[i].text.toLowerCase() === 'crônica') {
+                genreSelect.remove(i);
+                break;
+            }
+        }
+    }
+
     function selectSectionByName(sectionName) {
         for (let i = 0; i < sectionSelect.options.length; i++) {
             if (sectionSelect.options[i].text.toLowerCase() === sectionName) {
                 sectionSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    function selectGenreByName(genreName) {
+        for (let i = 0; i < genreSelect.options.length; i++) {
+            if (genreSelect.options[i].text.toLowerCase() === genreName) {
+                genreSelect.selectedIndex = i;
                 break;
             }
         }
@@ -124,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sectionSelect.addEventListener('change', syncFields);
 });
 
-
+// Capitalize primeira letra do título
 document.addEventListener("DOMContentLoaded", function () {
     const titleInput = document.getElementById('id_title');
     const previewTitle = document.getElementById('preview-title');
@@ -141,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Verifica permissão do artista para ilustração ou tirinha
 document.addEventListener('DOMContentLoaded', function() {
     var idArtist = document.getElementById('idArtist')
     var artistAtt = idArtist.getAttribute('data-is-artist')
@@ -148,11 +196,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var selectedGenre = document.getElementById('selected-genre')
     var hideFields = document.getElementsByClassName('hide-ilustrator')
 
-    console.log(artistAtt)
     if(artistAtt == 'False'){
         textualGenreSelect.addEventListener('change', function(){
             var textTextualGenre = textualGenreSelect.options[textualGenreSelect.selectedIndex].text
-        if(textTextualGenre == "Ilustração"|| textTextualGenre == "Tirinha"){
+            if(textTextualGenre == "Ilustração" || textTextualGenre == "Tirinha"){
                 selectedGenre.innerHTML = "Você ainda não tem permissão de ilustrador. Solicite-a ao administrador via email e mostre seu trabalho antes."
                 selectedGenre.style.display = "block"
                 for(var i = 0; i < hideFields.length; i++){
@@ -166,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     hideFields[i].style.display = "block"
                 }
             }
-        } )       
-
+        });
     }  
 });

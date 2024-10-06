@@ -7,7 +7,6 @@ from posts.models import Post
 class UserPostsListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'registration/dashboard.html'
-    context_object_name = 'user_posts'
 
     def get_queryset(self):
         queryset = Post.objects.filter(user=self.request.user).order_by('-created')

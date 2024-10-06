@@ -54,7 +54,25 @@
 <div class="font-paragraph-preview">    
     {{ post.main_text|linebreaks}}</div>
 <br>
-<p class="font-italic">{{post.user.presentation}}</p>
+<p class="font-italic">{{post.user.presentation}}</p> <span>Redes sociais:</span>
+<div class="social-icons">
+    <!-- LinkedIn -->
+    <a href="{{ post.user.linkedin_url }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="LinkedIn">
+        <i class="fab fa-linkedin fa-2x"></i>
+    </a>
+    <!-- Instagram -->
+    <a href="{{ post.user.instagram_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Instagram">
+        <i class="fab fa-instagram fa-2x"></i>
+    </a>
+    <!-- Twitter -->
+    <a href="{{ post.user.twitter_url }}" target="_blank" class="text-info mx-2" data-toggle="tooltip" title="Twitter">
+        <i class="fab fa-twitter fa-2x"></i>
+    </a>
+    <!-- YouTube -->
+    <a href="{{ post.user.youtube_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="YouTube">
+        <i class="fab fa-youtube fa-2x"></i>
+    </a>
+</div>
 
 
 {% if user.is_authenticated and user == post.user %}
