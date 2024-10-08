@@ -49,3 +49,17 @@ td:hover .copy-icon {
     font-family: 'Merriweather', serif;
 
 }
+
+
+
+@media (max-width: 768px) {
+    .show-know-object-header, .show-know-object-data,
+    .show-axis-header, .show-axis-data, 
+    .show-language-practice-header, .show-language-practice-data,
+    .show-field-act-header, .show-field-act-data,
+    .show-thematic-unities-header, .show-thematic-unities-data,
+    .show-subject-header, .show-subject-data
+     {
+        display: none;
+    }
+}

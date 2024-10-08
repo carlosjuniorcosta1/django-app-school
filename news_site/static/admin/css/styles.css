@@ -209,8 +209,12 @@ font-textual-genre-carro-2 {
 
 .font-textual-genre-carro {
     font-size: 13px;
-    font-family: 'Merriweather', serif;
 
+
+}
+
+body {
+    font-family: 'Merriweather', sans-serif;
 
 }
 

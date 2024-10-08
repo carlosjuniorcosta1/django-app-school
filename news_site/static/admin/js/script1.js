@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewTitle = document.getElementById('preview-title');
     const previewSubtitle = document.getElementById('preview-subtitle');
     const previewMainText = document.getElementById('preview-text');
-    const previewContainer = document.getElementById('preview-container'); // Contêiner que engloba o preview
+    const previewContainer = document.getElementById('preview-container'); 
 
     const ingredientsContainer = document.getElementById('ingredients-container');
     const preparationContainer = document.getElementById('preparation-container');
@@ -87,7 +87,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectGenreByName('artigo');
                 showPreview();
             }
-        } else if (['conto', 'fanfic'].includes(selectedGenre)) {
+     
+        
+        } else if (selectedGenre == 'artigo'){
+            selectSectionByName('opinião');
+            showPreview()
+        }        
+        
+        else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
             showPreview(); 
         } else if (['tirinha', 'ilustração'].includes(selectedGenre)) {
@@ -171,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
     sectionSelect.addEventListener('change', syncFields);
 });
 
-// Capitalize primeira letra do título
 document.addEventListener("DOMContentLoaded", function () {
     const titleInput = document.getElementById('id_title');
     const previewTitle = document.getElementById('preview-title');

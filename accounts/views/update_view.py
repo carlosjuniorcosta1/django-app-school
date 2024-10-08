@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = User
-    fields = ['user_picture', 'presentation']  
+    fields = ['user_picture', 'presentation', 'user_instagram', 'user_linkedin', 'user_youtube', 'user_facebook']  
     template_name = 'registration/dashboard.html'
     success_url = reverse_lazy('dashboard')  
 

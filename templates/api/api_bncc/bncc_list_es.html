@@ -8,6 +8,8 @@
     
 
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <h3 class="font-weight-bold mt-3 font-news">Consulta à Base Nacional Curricular Comum - BNCC</h3>
 <hr>
 
@@ -61,18 +63,18 @@
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Matéria</th>
-                        <th scope="col">Objeto do Conhecimento</th>
-                        <th class="" scope="col">Habilidades</th>
+                        <th class="col show-subject-header">Matéria</th>
+                        <th class="show-know-object-header" scope="col">Objeto do Conhecimento</th>
+                        <th class="col">Habilidades</th>
                         {% if not show_columns_port %}
-                        <th scope="col">Unidade temática</th>
+                        <th class="show-thematic-unities-header col">Unidade temática</th>
                         {% endif %}
                         {% if show_columns_english %}
-                        <th scope="col">Eixo</th>
+                        <th class="show-axis-header col">Eixo</th>
                         {% endif %}
                         {% if show_columns_port %}
-                        <th scope="col">Prática de linguagem</th>
-                        <th scope="col">Campo de ação</th>
+                        <th class="show-language-practice-header col">Prática de linguagem</th>
+                        <th class="show-field-act-header col">Campo de ação</th>
                         {% endif %}
 
                     </tr>
@@ -80,8 +82,8 @@
                 <tbody>
                     {% for post in api_bncc %}
                     <tr>
-                        <td>{{ post.get_cur_comp_display}}</td>
-                        <td><span class="copiable-text">{{ post.k_obj }}</span>                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
+                        <td class="show-subject-data">{{ post.get_cur_comp_display}}</td>
+                        <td class="show-know-object-data"><span class="copiable-text">{{ post.k_obj }}</span>                        <i class="fa fa-copy copy-icon" title="Copiar"></i>
                         </td>
 
                         <td class="justify-text-skill">
@@ -90,16 +92,16 @@
                             <i class="fa fa-copy copy-icon" title="Copiar"></i>
                         </td>
                         {% if not show_columns_port %}
-                        <td>{{post.thema_unities}}</td>
+                        <td class="show-thematic-unities-data">{{post.thema_unities}}</td>
                         {% endif %}
                         {% if show_columns_english %}
-                        <td>{{post.axis}}</td>
+                        <td class="show-axis-data">{{post.axis}}</td>
                         {% endif %}
                         {% if show_columns_port %}
-                        <td><span class="copiable-text-lang">{{post.lang_prac}}</span>
+                        <td class="show-language-practice-data"><span class="copiable-text-lang">{{post.lang_prac}}</span>
                         <i class="fa fa-copy copy-icon" title="Copiar"></i>
                         </td>
-                        <td>{{post.field_act}}</td>
+                        <td class="show-field-act-data">{{post.field_act}}</td>
                         {% endif %}
                     </tr>
                     {% endfor %}

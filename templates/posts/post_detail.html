@@ -6,85 +6,119 @@
 <link rel="stylesheet" href="{% static 'admin/css/styles_post_form.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'admin/css/styles_post_detail.css' %}" type="text/css">
 {% endblock %}
-{% block content %}
 
+{% block content %}
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mt-3 font-news">
-        <h1 class="font-weight-bold">
-            {{ post.section_name }}
-        </h1>
+        <h2 class="font-weight-bold font-section-title">
+           {{ post.section_name }}
+        </h2>
+        <div class="show-icons-mobile">
+        
+        {% if post.section_name.section_name == "saude" %}
+            <a href="{% url 'posts:index_health' %}" class="fas fa-heartbeat fa-2x"></a>
+            <a href="{% url 'posts:index_health' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.subsection_name == "literatura" %}
+            <a href="{% url 'posts:list_literature' %}" class="fas fa-book mr-1 fa-2x"></a>
+            <a href="{% url 'posts:list_literature' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.subsection_name == "games" %}
+            <a href="{% url 'posts:list_games' %}" class="fas fa-gamepad fa-2x"></a>
+            <a href="{% url 'posts:list_games' %}"><p>{{post.section_name}}</p></a>
+                
+        {% elif post.section_name.subsection_name == "comida" %}
+            <a href="{% url 'posts:list_food' %}" class="fas fa-birthday-cake mr-2 fa-2x"></a>
+            <i class="fas fa-hamburger fa-2x"></i>
+            <a href="{% url 'posts:list_food' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.subsection_name == "artes" %}
+            <a href="{% url 'posts:list_arts' %}" class="fas fa-pencil-alt mr-2 fa-2x"></a>
+            <i class="fas fa-palette fa-2x"></i>
+            <a href="{% url 'posts:list_arts' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.subsection_name == "cinema_tv" %}
+            <a href="{% url 'posts:list_cinema' %}" class="fas fa-film mr-2 fa-2x"></a>
+            <a href="{% url 'posts:list_cinema' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.section_name == "opiniao" %}
+            <a href="{% url 'posts:index_opinion' %}" class="fas fa-lightbulb fa-2x"></a>
+            <a href="{% url 'posts:index_opinion' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.section_name == "mundo" %}
+            <a href="{% url 'posts:index_world' %}" class="fas fa-globe fa-2x"></a>
+            <a href="{% url 'posts:index_world' %}"><p>{{post.section_name}}</p></a>
+
+        {% elif post.section_name.section_name == "brasil" %}
+            <a href="{% url 'posts:index_brazil' %}" class="fas fa-globe fa-2x"></a>
+            <a href="{% url 'posts:index_brazil' %}"><p>{{post.section_name}}</p></a>
+
+        {% endif %}
+    </div>
         
         <div class="d-flex align-items-end">
             <span class="mr-2">{{ post.user.first_name }} {{ post.user.last_name }}</span>
             {% if post.user.user_picture %}
-                <a href="{% url 'list_user_posts' post.user.id %}"><img class="img-fluid rounded-circle img-avatar-column" 
-                     src="{{ post.user.user_picture.url }}" 
-                     alt="Avatar de {{ post.user.first_name }}" 
-                     style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #171718;">
-                    </a>
+                <a href="{% url 'list_user_posts' post.user.id %}">
+                    <img class="img-fluid rounded-circle img-avatar-column" 
+                         src="{{ post.user.user_picture.url }}" 
+                         alt="Avatar de {{ post.user.first_name }}" 
+                         style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #171718;">
+                </a>
             {% else %}
-            <a href="{% url 'list_user_posts' post.user.id %}"><div class="rounded-circle bg-light d-flex align-items-center justify-content-center img-avatar-column"
-                     style="width: 80px; height: 80px; font-size: 20px; border: 1px solid #171718; background-color: #d9d9d9;">
-                    {{ post.user.first_name|slice:":1"|upper }}{{ post.user.first_name|slice:"1:3"|lower }}
-                </div></a>
+                <a href="{% url 'list_user_posts' post.user.id %}">
+                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center img-avatar-column"
+                         style="width: 80px; height: 80px; font-size: 20px; border: 1px solid #171718; background-color: #d9d9d9;">
+                        {{ post.user.first_name|slice:":1"|upper }}{{ post.user.first_name|slice:"1:3"|lower }}
+                    </div>
+                </a>
             {% endif %}
         </div>
     </div>
 </div>
 
-
 <hr>
-    <h1 class="font-title-preview mt-3">{{post.title}}</h1>
-    <p class="font-subtitle-preview">{{post.subtitle}}</p>
-   <small>em {{post.created}}</small>  <small class="font-count-views">{{post.textual_genre}}</small>
-    <br><br>
-    
-    {% if post.image %}
+<h2 class="font-title-preview mt-3">{{post.title}}</h2>
+<p class="font-subtitle-preview">{{post.subtitle}}</p>
+<small>em {{post.created}}</small> <small class="font-count-views">{{post.textual_genre}}</small>
+<br><br>
+
+{% if post.image %}
     <div class="text-center">
         <figure>
             <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-3">
             <figcaption>{{ post.title }}</figcaption>
         </figure>
     </div>
+{% endif %}
 
-    {% endif %}
-  
-
-<div class="font-paragraph-preview">    
-    {{ post.main_text|linebreaks}}</div>
+<div class="font-paragraph-preview">
+    {{ post.main_text|linebreaks }}
+</div>
 <br>
-<p class="font-italic">{{post.user.presentation}}</p> <span>Redes sociais:</span>
+<p class="font-italic">{{post.user.presentation}}</p>
+<span>Redes sociais:</span>
 <div class="social-icons">
-    <!-- LinkedIn -->
-    <a href="{{ post.user.linkedin_url }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="LinkedIn">
+    <a href="{{ post.user_linkedin }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="LinkedIn">
         <i class="fab fa-linkedin fa-2x"></i>
     </a>
-    <!-- Instagram -->
-    <a href="{{ post.user.instagram_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Instagram">
+    <a href="{{ post.user.user_instagram }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Instagram">
         <i class="fab fa-instagram fa-2x"></i>
     </a>
-    <!-- Twitter -->
-    <a href="{{ post.user.twitter_url }}" target="_blank" class="text-info mx-2" data-toggle="tooltip" title="Twitter">
+    <a href="{{ post.user.user_x }}" target="_blank" class="text-info mx-2" data-toggle="tooltip" title="Twitter">
         <i class="fab fa-twitter fa-2x"></i>
     </a>
-    <!-- YouTube -->
-    <a href="{{ post.user.youtube_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="YouTube">
+    <a href="{{ post.user.user_youtube }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="YouTube">
         <i class="fab fa-youtube fa-2x"></i>
     </a>
 </div>
 
-
 {% if user.is_authenticated and user == post.user %}
-<a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
-
-<a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
-
+    <a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
+    <a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
 {% endif %}
 
-
-
 </div>
-
 
 {% endblock %}

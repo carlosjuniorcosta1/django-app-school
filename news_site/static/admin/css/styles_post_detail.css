@@ -36,3 +36,22 @@
         max-height: 300px;  
     }
 }
+
+
+@media (max-width: 768px) {
+    .font-section-title {
+        display: none;
+    }
+
+}
+
+.show-icons-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .show-icons-mobile {
+        display: block;
+    }
+}
+

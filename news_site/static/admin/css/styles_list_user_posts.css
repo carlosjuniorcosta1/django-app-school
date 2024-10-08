@@ -8,3 +8,7 @@
         margin: 0 10px; /* Espaçamento uniforme entre os ícones */
     }
 }
+
+body {
+    font-family: 'Merriweather', sans-serif; 
+}

@@ -19,26 +19,35 @@
 
     <!-- Apresentação com ícones das redes sociais -->
     <div class="d-flex justify-content-between align-items-end flex-column flex-sm-row">
-        <h5 class="font-italic border-bottom">{{ post.user.presentation }}</h5>
+        <p class="font-italic border-bottom">{{ post.user.presentation }}</p>
 
         <!-- Ícones das redes sociais -->
         <div class="social-icons">
             <!-- LinkedIn -->
-            <a href="{{ post.user.linkedin_url }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="LinkedIn">
+             {% if post.user.user_linkedin %}
+            <a href="{{ post.user.user_linkedin }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="Perfil no LinkedIn">
                 <i class="fab fa-linkedin fa-2x"></i>
             </a>
+            {% endif %}
+            {% if post.user.user_instagram %}
             <!-- Instagram -->
-            <a href="{{ post.user.instagram_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Instagram">
+             
+            <a href="{{ post.user.user_instagram }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Perfil no Instagram">
                 <i class="fab fa-instagram fa-2x"></i>
             </a>
-            <!-- Twitter -->
-            <a href="{{ post.user.twitter_url }}" target="_blank" class="text-info mx-2" data-toggle="tooltip" title="Twitter">
-                <i class="fab fa-twitter fa-2x"></i>
+            {% endif %}
+            {% if post.user.user_facebook %}
+            <a href="{{ post.user.user_facebook }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="Perfil no Facebook">
+                <i class="fab fa-facebook fa-2x"></i>
             </a>
+            {% endif %}
+
+            {% if post.user.user_youtube %}        
             <!-- YouTube -->
-            <a href="{{ post.user.youtube_url }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="YouTube">
+            <a href="{{ post.user_youtube }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Canal no YouTube">
                 <i class="fab fa-youtube fa-2x"></i>
             </a>
+            {% endif %}
         </div>
     </div>
     <h4>Publicações</h4>

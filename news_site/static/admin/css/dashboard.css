@@ -35,3 +35,27 @@ ul.actionlist li {
     border-radius: 20%;
    
 }
+
+
+@media (max-width: 767px) {
+    .img-avatar-column {
+        display: none;
+    }
+    .img-avatar-column-mobile {
+        height: 150px;
+        width: 150px;
+        filter: grayscale(100%);
+        object-fit: cover;
+        border-radius: 20%;
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .img-avatar-column-mobile {
+        display: none;
+    }
+    .img-avatar-column {
+        display: block;
+    }
+}

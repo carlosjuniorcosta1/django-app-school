@@ -79,7 +79,7 @@ class Post(models.Model):
     updated = models.DateTimeField(null=True, blank=True)
     textual_genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     post_views = models.IntegerField(default=0)
-    image = models.ImageField(null=True, blank=True, upload_to="images/", 
+    image = models.ImageField(blank=True, upload_to="images/", 
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
     section_name = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
     image_illustrator =  models.ImageField(null=True, blank=True, upload_to="images/", 

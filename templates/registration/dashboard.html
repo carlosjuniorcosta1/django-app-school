@@ -10,15 +10,14 @@
     <div class="row w-100">     
         <main class="col-md-9 mx-auto px-md-4">  <!-- mx-auto centers the main element -->
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Olá, {{ user.first_name }}</h1>
+                <h2 class="">Olá, {{ user.first_name }}</h2>
             </div>
-
-            <div class="card mb-4">
+            <div class="card mb-4 col-sm-12 col-xm-12">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 align-items-center justify-content-center d-flex">
                             {% if user.is_columnist and user.user_picture %}
-                                <img src="{{ user.user_picture.url }}" class="img-fluid rounded-circle img-avatar-column" alt="User Picture">
+                                <img src="{{ user.user_picture.url }}" class="img-fluid rounded-circle img-avatar-column img-avatar-column-mobile" alt="User Picture">
                             {% elif user.is_columnist and not user.user_picture %}
                                 <div class="rounded-circle bg-light d-flex align-items-center justify-content-center"
                                     style="width: 150px; height: 150px; font-size: 60px; color: #333; background-color: #d9d9d9;">
@@ -31,8 +30,8 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="col-md-8">
-                            <h3>Nome de usuário: {{ user.username }}</h3>
+                        <div class="col-md-8 mt-2">
+                            <p>Nome de usuário: {{ user.username }}</p>
 
                             <div>
                                 <p id="description-text">
@@ -51,6 +50,26 @@
                                         <textarea name="presentation" class="form-control">{{ user.presentation }}</textarea>
                                     </div>
 
+                                    <div class="form-group font-weight-bold">
+                                        <label for="user_instagram">Instagram</label>
+                                        <input type="text" name="user_instagram" class="form-control" value="{{user.user_instagram|default_if_none:'https://www.instagram.com/seu_perfil/'}}">
+                                    </div>
+                                                                  
+                                    <div class="form-group font-weight-bold">
+                                        <label for="user_linkedin">LinkedIn</label>
+                                        <input type="text" name="user_linkedin" class="form-control" value="{{ user.user_linkedin|default_if_none:'https://www.linkedin.com/in/seu_perfil/'}}">
+                                    </div>
+
+                                    <div class="form-group font-weight-bold">
+                                        <label for="user_facebook">Facebook</label>
+                                        <input type="text" name="user_facebook" class="form-control" value="{{ user.user_facebook|default_if_none:'https://www.facebook.com/seu_perfil/' }}">
+                                    </div>                                    
+                                    
+                                    <div class="form-group font-weight-bold">
+                                        <label for="user_youtube">YouTube</label>
+                                        <input type="text" name="user_youtube" class="form-control" value="{{ user.user_youtube|default_if_none:'https://www.youtube.com/channel/seu_canal/' }}">
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="form-label" for="user_picture">Atualizar Foto</label>
                                         <input type="file" name="user_picture" class="form-control" accept="image/*" onchange="previewImage(event)">
@@ -60,17 +79,22 @@
                                         <img id="img-preview" src="{{ user.user_picture }}" alt="Pré-visualização da imagem" style="max-width: 200px; display: block;"/>
                                     </div>
 
-                                    <div class="form-group d-flex align-items-center">
-                                        <input type="submit" value="Atualizar perfil" class="btn btn-secondary mr-2">
+                                    <div class="form-group align-items-center">
+                                        <input type="submit" value="Atualizar perfil" class="btn btn-secondary mr-2 mt-2">
                                         <label for="edit-toggle" class="btn btn-secondary mb-0" style="cursor: pointer;">Cancelar</label>
                                     </div>
                                 </form>
                             </div>
 
-                            {% if user.is_columnist %}
-                                <p><strong>Status:</strong> Colunista</p>
-                            {% else %}
-                                <p><strong>Status:</strong> Usuário normal</p>
+                            {% if user.is_columnist and user.is_artist %}
+                                <p><strong>Função:</strong> Colunista e desenhista</p>
+
+                            {% elif user.is_columnist and not user.is_artist %}
+                            <p><strong>Função:</strong> Colunista</p>
+
+                            {% elif not user.is_columnist and not user.is_artist %}
+
+                            <p>Usuário comum</p>
                             {% endif %}
                         </div>
                     </div>

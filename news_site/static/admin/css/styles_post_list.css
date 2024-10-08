@@ -61,3 +61,10 @@ nav a:hover,
     background-color: rgb(239, 234, 234); 
 }
 
+@media (max-width: 768px) {
+    .font-main-text, .font-section-link {
+      display: none;
+    }
+  }
+  
+

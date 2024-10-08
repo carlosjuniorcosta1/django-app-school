@@ -26,7 +26,6 @@
     </form>
   </div>
 </div>
-
     {% for text in object_list %}
 
         <div class="card mb-1">
@@ -57,52 +56,70 @@
                             {% if text.section_name.section_name == "saude" %}
 
                              <a class="fas fa-heartbeat"></a>
-                              <a href="{% url 'posts:index_health' %}" class="ml-1">{{text.section_name}}</a>
+                              <a href="{% url 'posts:index_health' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
 
-                             {% elif text.section_name.section_name == "cultura_lazer" %}
+                             {% elif text.section_name.subsection_name == "literatura" %}
+                             <a class="fas fa-book mr-1"></a>                      
+                             <a href="{% url 'posts:index_culture' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
+                             
+                             {% elif text.section_name.subsection_name == "games" %}
+                             <a class="fas fa-gamepad"></a>                      
+                             <a href="{% url 'posts:index_culture' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
+                             
+                                     
+                             {% elif text.section_name.subsection_name == "comida" %}
+                             <a class="fas fa-birthday-cake mr-2"></a>  
+                             <i class="fas fa-hamburger"></i>
+                    
+                             <a href="{% url 'posts:index_culture' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
+                             
+                             {% elif text.section_name.subsection_name == "artes" %}
+                             <a class="fas fa-pencil-alt mr-2"></a>  
+                             <i class="fas fa-palette"></i>
+                    
+                             <a href="{% url 'posts:index_culture' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
+                             
+                             {% elif text.section_name.subsection_name == "cinema_tv" %}
+                             <a class="fas fa-film mr-2"></a>  
+                    
+                             <a href="{% url 'posts:index_culture' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
+                             
+                             
 
-                             <a class="fas fa-book mr-1"></a>
-
-                             <a class="fas fa-gamepad"></a>
-                             <i class="fas fa-utensils"></i>
-
-
-
-                             <a href="{% url 'posts:index_culture' %}" class="ml-1">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "opiniao" %}  
 
                              <a class="fas fa-lightbulb"></a>
-                             <a href="{% url 'posts:index_opinion' %}" class="ml-1">{{text.section_name}}</a>
+                             <a href="{% url 'posts:index_opinion' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "mundo" %}
 
                              <a class="fas fa-globe"></a>
-                             <a href="{% url 'posts:index_world' %}" class="ml-1">{{text.section_name}}</a>
+                             <a href="{% url 'posts:index_world' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "brasil" %}
 
                              <a class="fas fa-globe"></a>
-                             <a href="" class="ml-1">{{text.section_name}}</a>
+                             <a href="" class="ml-1 font-section-link">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "culinaria" %}
                              <a class="fas fa-utensils"></a>
-                             <a href="{% url 'posts:index_cuisine' %}" class="ml-1">{{text.section_name}}</a>
+                             <a href="{% url 'posts:index_cuisine' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
 
 
                              {% elif text.section_name.section_name == "esportes" %}
 
                              <a class="fas fa-running" href=""></a>
-                             <a href="" class="ml-1">Esportes</a>
+                             <a href="" class="ml-1 font-section-link">Esportes</a>
 
                              {% elif text.section_name.section_name == "enem" %}
                              <a class="fas fa-graduation-cap" href=""></a>
-                             <a href="" class="ml-1">{{text.section_name}}</a>
+                             <a href="" class="ml-1 font-section-link">{{text.section_name}}</a>
 
                              {% elif text.section_name.section_name == "professor" %}
 
                              <a class="fas fa-chalkboard-teacher" href=""></a>
-                             <a href="" class="ml-1">{{text.section_name}}</a>
+                             <a href="" class="ml-1 font-section-link">{{text.section_name}}</a>
 
 
                              {% endif %}
