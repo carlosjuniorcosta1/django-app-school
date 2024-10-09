@@ -57,12 +57,14 @@
           <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
   
           <div class="container py-4">
-              <div class="row justify-content-center">
+              <div class="row justify-content-center ">
                   {% for opinion in opinion_posts %}
                   {% if forloop.counter < 5 %}
                   <a href="{% url 'posts:detail_text' opinion.id %}" class="format-link-index"><div class="col-sm-12 col-md-6 col-lg-3 mb-1 text-center">
                         {% if opinion.user.user_picture %}
+                        <div class="">
                         <img src="{{ opinion.user.user_picture }}" class="rounded-circle shadow-lg mx-auto mb-2 img-avatar-column" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #171718;">
+                    </div>
                         {% elif not opinion.user.user_picture %}
                         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto font-opinion-posts img-avatar-column mb-2"
                                     style="width: 150px; height: 150px; font-size: 50px; object-fit: cover; border: 1px solid #171718; background-color: #d9d9d9;">
@@ -70,7 +72,17 @@
                                 </div>                        
                           {% endif %}
                           <div class="card-body p-0">
-                              <h5 class="card-title font-weight-bold font-opinion-posts">{{ opinion.user.first_name }} {{ opinion.user.last_name }}</h5>
+                              <h5 class="card-title font-weight-bold font-opinion-posts">{{ opinion.user.first_name }} {{ opinion.user.last_name }} 
+                                <span>
+                                {% if opinion.user.user_linkedin %}
+                                <a href="{{ opinion.user.user_linkedin }}"><i class="fab fa-linkedin"></span>
+                                </i></a>
+                                {% endif %}
+                                {% if opinion.user.user_instagram %}
+                                <i class="fab fa-instagram"></i>
+                                {% endif %}
+                              </h5> 
+                              </span>
                               <p class="card-text font-opinion-posts">{{ opinion.title }}</p>
                           </div></a>
                       

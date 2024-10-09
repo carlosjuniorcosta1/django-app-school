@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 
-<div class="container my-2 col-sm-12 col-xm-12">
+<div class="container-fluid my-2 col-sm-12 col-xm-12">
     {% for post in posts %}
     {% if forloop.counter == 1 %}
     <div class="d-flex justify-content-between align-items-center mb-1">
@@ -50,7 +50,7 @@
             {% endif %}
         </div>
     </div>
-    <h4>Publicações</h4>
+    <h5 class="mt-2">Publicações</h5>
     {% endif %}
     {% endfor %}
 
