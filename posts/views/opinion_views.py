@@ -15,7 +15,7 @@ class OpinionListView(ListView):
     ordering = ['-created']
     
     def get_queryset(self):
-        queryset = Post.objects.filter(section_name__section_name="opiniao", user__is_columnist=True ).order_by('-created')  
+        queryset = Post.objects.filter(section_name__section_name="opiniao", user__is_columnist=True, status="approved" ).order_by('-created')  
         form = PostOpinionForm(self.request.GET)
 
         if form.is_valid():
@@ -46,7 +46,7 @@ class OpinionStudentsListView(ListView):
     ordering = ['-created']
 
     def get_queryset(self):
-        queryset = Post.objects.filter(section_name__section_name='opiniao', user__is_columnist=False).order_by('-created')
+        queryset = Post.objects.filter(section_name__section_name='opiniao', user__is_columnist=False, status="approved").order_by('-created')
         form = PostOpinionForm(self.request.GET)     
         if form.is_valid():
             search_term = form.cleaned_data.get('search_term')

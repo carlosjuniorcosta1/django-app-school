@@ -43,7 +43,7 @@
           {% if forloop.counter <= 3 %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
             <a href="{% url 'posts:detail_text' post.id %}">
-              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px;">
                 <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
 
                 <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
@@ -82,7 +82,7 @@
           <div class="carousel-item {% if forloop.counter == 4 %}active{% endif %}">
 
             <a href="{% url 'posts:detail_text' post.id %}">
-              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px;">
                 <span class="font-textual-genre-carro">{{ post.textual_genre}} de</span>
 
                 <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>

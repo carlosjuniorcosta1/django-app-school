@@ -15,10 +15,10 @@
 }
 
 .img-world {
-    border-radius: 10px;
+    border-radius: 5px;
 }
 .img-last-row {
-    border-radius: 10px;
+    border-radius: 5px;
     max-height: 500px;
 }
 
@@ -72,4 +72,8 @@ font-textual-genre-carro-2 {
     font-family: 'Merriweather', serif;
     font-weight: bold;
 
+}
+
+img { 
+    border-radius:5px; 
 }

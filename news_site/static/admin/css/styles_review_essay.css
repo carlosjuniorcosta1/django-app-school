@@ -1,0 +1,20 @@
+#canvas-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Garante que a largura da imagem e do texto fique consistente */
+  }
+  
+  .text-box {
+    position: absolute;
+    white-space: nowrap; /* Impede que o texto quebre de linha automaticamente */
+    width: auto;
+    max-width: 100%; /* Limita o texto à largura da imagem */
+    word-wrap: break-word; /* Permite que a palavra quebre quando atinge o limite */
+    overflow: hidden; /* Remove o excesso de texto que ultrapassa a caixa */
+    font-size: 16px; /* Tamanho do texto */
+    background: transparent; /* Deixa o fundo transparente */
+    color: black; /* Cor do texto */
+    border: 1px dashed black; /* Apenas para visualizar a área de texto (opcional) */
+  }
+  
+  

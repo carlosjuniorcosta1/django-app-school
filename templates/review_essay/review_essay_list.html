@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if request.user.is_essay_editor %}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Redações Submetidas</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Tema da redação</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for essay in essays %}
+            <tr>
+                <td>
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.user.username }}</a> <!-- Nome do usuário -->
+                </td>
+                <td>
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.essay_topic }}</td> </a>    <!-- Tema da redação -->
+                <td>
+                    {% if essay.is_corrected %}        <!-- Verifica se está corrigida -->
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}"> Corrigida </a>
+                    {% else %}
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}"> Não Corrigida </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+
+<div class="alert alert-warning text-center" role="alert">
+    <h1>Você ainda não é um corretor cadastrado.</h1>
+    <p>Faça sua solicitação contatando o administrador.</p>
+</div>
+
+{% endif %}
+
+{% endblock %}

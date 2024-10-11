@@ -116,7 +116,7 @@
 {% if post.image %}
     <div class="text-center">
         <figure>
-            <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-3">
+            <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-2 img-border-radius">
             <figcaption>{{ post.title }}</figcaption>
         </figure>
     </div>
@@ -141,13 +141,14 @@
     </a>
    
 </div>
-</div>
-
 
 {% if user.is_authenticated and user == post.user %}
     <a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
     <a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
 {% endif %}
+</div>
+
+
 
 </div>
 

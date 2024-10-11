@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block content %}
+<div class="container mt-5 col-sm-12 col-xm-12">
+  {% if has_pending_essay %}
+  <div class="alert alert-warning text-center" role="alert">
+    <h1>Você já tem redações submetidas!</h1>
+    <p>Espere até que elas sejam corrigidas para submeter outra.</p>
+    <a href="{% url 'review_essay:update_essay' essay.id %}"><button type="submit" class="btn btn-dark">Revisar submissão</button></a>
+  </div>
+
+
+  {% else %}
+  {% if request.resolver_match.url_name == 'submit_essay' %}
+    <h2>Submeter redação</h2>
+  {% elif request.resolver_match.url_name == 'update_essay' %}
+    <h2>Revisar envio</h2>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" id="essay-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_essay_imagem" class="form-label">Foto da redação: {{ form.essay_image|add_class:"form-control-file" }}</label>
+    </div>
+
+    <div class="form-group">
+      <label for="id_essay_topic">Tema da redação: {{ form.essay_topic|add_attrs:"class=form-control" }}</label>
+    </div>
+ 
+
+    {% if request.resolver_match.url_name == 'submit_essay' %}
+      <button type="submit" class="btn btn-dark">Postar</button>
+    {% else %}
+      <button type="submit" class="btn btn-dark">Reenviar</button>
+    {% endif %}
+  </form>
+  <div id="confirmation-message" style="display: none;"></div>
+  {% endif %}
+</div>
+
+
+{% block script_js %}
+<script src="{% static 'admin/js/script_review_essay.js' %}"></script>
+{% endblock %}
+{% endblock %}

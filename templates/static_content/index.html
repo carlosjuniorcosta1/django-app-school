@@ -10,14 +10,14 @@
         {% if forloop.counter == 1 %}
          <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
             <a href="{% url 'posts:detail_text' post.id %}">
-               <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+               <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                   <span class="font-textual-genre-carro-2">{{ post.section_name}}</span> <br>
                   <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
   
                   <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
   
                 </div>
-               <img src="{{post.image.url}}" alt="imagem 1" class="img-fluid thumb">
+               <img src="{{post.image.url}}" alt="imagem 1" class="img-fluid thumb img-border-radius">
 
                <div class="d-flex align-items-baseline">
                   <h5 class="mb-0">{{ post.title }}</h5>
@@ -32,13 +32,13 @@
                  {% if forloop.counter > 1 and forloop.counter <= 5 %}
                      <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                         <a href="{% url 'posts:detail_text' post.id %}"> 
-                           <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                           <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius: 5px;">
                               <span class="font-textual-genre-carro">{{ post.section_name}}</span>
               
                             </div>
                            
                            
-                           <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb">
+                           <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius">
                            
                            
                   <div class="d-flex align-items-baseline">
@@ -79,7 +79,7 @@
                                 </i></a>
                                 {% endif %}
                                 {% if opinion.user.user_instagram %}
-                                <i class="fab fa-instagram"></i>
+                               <a href="{{opinion.user.user_instagram}}"> <i class="fab fa-instagram"></i></a>
                                 {% endif %}
                               </h5> 
                               </span>
@@ -95,7 +95,7 @@
           <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
       </section>
   
-  </div>
+  </div> 
 
      <div class="row mt-2">
       <div class="col-sm-12 col-md-6 col-lg-6">
@@ -104,10 +104,10 @@
                   {% if forloop.counter > 5 and forloop.counter <= 9 %}
                       <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                           <a href="{% url 'posts:detail_text' post.id %}">
-                              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                              <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                                   <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                               </div>
-                              <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb">
+                              <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius">
                               <div class="d-flex align-items-baseline">
                                   <h5 class="mb-0">{{ post.title }}</h5>
                               </div>
@@ -129,10 +129,10 @@
                   {% for post in carro_final_posts %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
                       <a href="{% url 'posts:detail_text' post.id %}">
-                        <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5);">
+                        <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                             <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                         </div>
-                          <img class="img-carro img-fluid" src="{{ post.image.url }}" alt="{{ post.title }}">
+                          <img class="img-carro img-fluid img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
                       </a>
                       <div class="d-none d-md-block col-sm-12 text-start text-overlay">
                           <h5>{{ post.title }}</h5>

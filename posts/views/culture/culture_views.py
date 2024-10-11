@@ -11,7 +11,7 @@ class CultureListView(ListView):
     template_name = "posts/culture/culture_index.html"
 
     def get_queryset(self):
-        queryset = Post.objects.filter(section_name__section_name="cultura_lazer").order_by('-created')
+        queryset = Post.objects.filter(section_name__section_name="cultura_lazer", status="approved").order_by('-created')
         form = CultureForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')
