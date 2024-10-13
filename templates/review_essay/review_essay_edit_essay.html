@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+{% load static %}
+{% load form_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_review_essay.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-3 col-sm-12 col-xm-12">
+    <div class="row">
+
+        <div class="row mb-3">
+            <div class="col-12 d-flex justify-content-start align-content-start">
+                <a href="{% url 'review_essay:list_essay_editors' %}" class="btn btn-secondary m-1">
+                    <i class="fas fa-arrow-left"></i> 
+                </a>
+                <button id="btn-draw" class="btn btn-dark m-1">
+                    <i class="fas fa-pencil-alt"></i> 
+                </button>
+                <button id="btn-text" class="btn btn-info m-1">
+                    <i class="fas fa-font"></i> 
+                </button>
+                <button id="btn-undo" class="btn btn-warning m-1">
+                    <i class="fas fa-undo"></i> 
+                </button>
+                <button id="btn-clear" class="btn btn-danger m-1">
+                    <i class="fas fa-eraser"></i>
+                </button>
+                <button id="btn-save" class="btn btn-primary m-1">
+                    <i class="fas fa-save"></i>
+                </button>
+            
+    
+            </div>
+        <div class="col-12 col-sm-12">
+            <canvas id="canvas" width="1000" height="1400" style="border:1px solid #000; display: block; margin: 0 auto;"></canvas>
+            <input type="hidden" id="canvas_image_data" name="canvas_image_data">
+
+           
+            <form method="POST" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                
+                <!-- Campo C1 -->
+                <div class="form-group">
+                    <label for="id_c1" class="form-label">
+                        <i class="fas fa-pencil-alt"></i> C1
+                    </label>
+                    <input type="number" id="id_c1" name="c1" value="{{ form.c1.value|default:'' }}" class="form-control" placeholder="Digite o valor de C1">
+                </div>
+                
+                <!-- Comentário para C1 -->
+                <div class="form-group">
+                    <label for="id_about_c1" class="form-label">
+                        <i class="fas fa-comments"></i> Comentário - C1
+                    </label>
+                    <input type="text" id="about_c1" name="about_c1" value="{{ form.about_c1.value|default:'' }}" class="form-control" placeholder="Comentário sobre C1">
+                </div>
+                
+                <!-- Campo C2 -->
+                <div class="form-group">
+                    <label for="id_c2" class="form-label">
+                        <i class="fas fa-pencil-alt"></i> C2
+                    </label>
+                    <input type="number" id="id_c2" name="c2" value="{{ form.c2.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                </div>
+            
+                <!-- Comentário para C2 -->
+                <div class="form-group">
+                    <label for="id_about_c2" class="form-label">
+                        <i class="fas fa-comments"></i> Comentário - C2
+                    </label>
+                    <input type="text" id="about_c2" name="about_c2" value="{{ form.about_c2.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C2">
+                </div>
+                
+                <!-- Campo C3 -->
+                <div class="form-group">
+                    <label for="id_c3" class="form-label">
+                        <i class="fas fa-pencil-alt"></i> C3
+                    </label>
+                    <input type="number" id="id_c3" name="c3" value="{{ form.c3.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                </div>
+            
+                <!-- Comentário para C3 -->
+                <div class="form-group">
+                    <label for="id_about_c3" class="form-label">
+                        <i class="fas fa-comments"></i> Comentário - C3
+                    </label>
+                    <input type="text" id="about_c3" name="about_c3" value="{{ form.about_c3.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C3">
+                </div>
+                
+                <!-- Campo C4 -->
+                <div class="form-group">
+                    <label for="id_c4" class="form-label">
+                        <i class="fas fa-pencil-alt"></i> C4
+                    </label>
+                    <input type="number" id="id_c4" name="c4" value="{{ form.c4.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                </div>
+            
+                <!-- Comentário para C4 -->
+                <div class="form-group">
+                    <label for="id_about_c4" class="form-label">
+                        <i class="fas fa-comments"></i> Comentário - C4
+                    </label>
+                    <input type="text" id="about_c4" name="about_c4" value="{{ form.about_c4.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C4">
+                </div>
+                
+                <!-- Campo C5 -->
+                <div class="form-group">
+                    <label for="id_c5" class="form-label">
+                        <i class="fas fa-pencil-alt"></i> C5
+                    </label>
+                    <input type="number" id="id_c5" name="c5" value="{{ form.c5.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                </div>
+            
+                <!-- Comentário para C5 -->
+                <div class="form-group">
+                    <label for="id_about_c5" class="form-label">
+                        <i class="fas fa-comments"></i> Comentário - C5
+                    </label>
+                    <input type="text" id="about_c5" name="about_c5" value="{{ form.about_c5.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C5">
+                </div>
+                <div class="form-group">
+                    <label for="correction_image" class="form-label">
+                        <i class="fas fa-image"></i> Imagem da correção
+                    </label>
+
+                    {% if essay.correction_image %}
+                    <p><strong>Imagem de correção enviada:</strong> {{ essay.correction_image.name }}</p>
+                {% endif %}
+                    <input type="file" id="correction_image" name="correction_image" class="form-control">
+                </div>
+                
+                <!-- Botão de envio -->
+                <button id="sendCorrection" type="submit" class="btn btn-success mt-2">
+                    <i class="fas fa-paper-plane"></i> Enviar correção
+                </button>
+            </form>
+        
+        </div> 
+
+    
+    </div>
+
+
+</div>
+{% if essay.essay_image and essay.correction_image %}
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const img = new Image();
+const correctionImg = new Image();
+img.src = "{{ essay.correction_image.url }}";
+</script>
+{% endif %}
+{% if not essay.correction_image %}
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const img = new Image();
+const correctionImg = new Image();
+img.src = "{{ essay.essay_image.url }}";
+</script>
+{% endif %}
+{% endblock %}
+
+{% block script_js %}
+<script>
+img.onload = function() {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); }
+
+    let isDrawing = false;
+    let isTextMode = false;
+    let isDrawingMode = false;
+    let isDraggingTextBox = false;
+    let selectedTextBox = null;
+    let offsetX = 0, offsetY = 0;
+    let textBoxes = [];
+    let actions = [];
+    let currentPath = [];
+
+    // Função para calcular a largura do texto e ajustar o tamanho da caixa de texto
+    function adjustTextareaWidth(textBox) {
+        const span = document.createElement('span');
+        span.style.font = '20px Arial';
+        span.style.visibility = 'hidden';
+        span.style.whiteSpace = 'nowrap';
+        span.style.padding = '5px'
+        span.textContent = textBox.value;
+        document.body.appendChild(span);
+
+        const textWidth = span.offsetWidth;
+        textBox.style.width = textWidth + 'px';
+
+        document.body.removeChild(span);
+    }
+
+    // Evento para criar a caixa de texto
+    canvas.addEventListener('mousedown', function(e) {
+        if (isTextMode) {
+            isDraggingTextBox = true;
+
+            const textBox = document.createElement('textarea');
+            textBox.style.position = 'absolute';
+            textBox.style.left = e.pageX + 'px';
+            textBox.style.top = e.pageY + 'px';
+            textBox.style.height = '30px';
+            textBox.style.font = '20px Arial';
+            textBox.style.color = 'red';
+            textBox.style.background = 'transparent';
+            textBox.style.border = '1px dashed #000';
+            textBox.style.whiteSpace = 'nowrap';
+            textBox.style.resize = 'none'; // Impedir redimensionamento manual
+            textBox.style.overflow = 'hidden';
+            document.body.appendChild(textBox);
+
+            offsetX = e.pageX - canvas.offsetLeft;
+            offsetY = e.pageY - canvas.offsetTop;
+
+            textBoxes.push(textBox);
+
+            actions.push({ type: 'add', element: textBox });
+
+            textBox.addEventListener('mousedown', function(event) {
+                selectedTextBox = textBox;
+                offsetX = event.pageX - selectedTextBox.offsetLeft;
+                offsetY = event.pageY - selectedTextBox.offsetTop;
+                isDraggingTextBox = true;
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDraggingTextBox = false;
+            });
+
+            document.addEventListener('mousemove', function(event) {
+                if (isDraggingTextBox && selectedTextBox) {
+                    selectedTextBox.style.left = (event.pageX - offsetX) + 'px';
+                    selectedTextBox.style.top = (event.pageY - offsetY) + 'px';
+                }
+            });
+
+            // Aumentar a largura da caixa de texto conforme a digitação
+            textBox.addEventListener('input', function() {
+                adjustTextareaWidth(textBox);
+            });
+
+            // Adicionar o texto no canvas ao pressionar Enter
+            textBox.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const text = textBox.value;
+                    const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
+                    const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
+
+                    // Adicionar o texto no canvas
+                    ctx.font = '20px Arial';
+                    ctx.fillStyle = 'red';
+                    ctx.fillText(text, x, y);
+
+                    document.body.removeChild(textBox);
+
+                    actions.push({ type: 'text', text, x, y });
+                }
+            });
+        } else if (isDrawingMode) {
+            isDrawing = true;
+            currentPath = [{ x: e.offsetX, y: e.offsetY }];
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+    });
+
+    canvas.addEventListener('mousemove', function(e) {
+        if (isDrawing && isDrawingMode) {
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            currentPath.push({ x: e.offsetX, y: e.offsetY });
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (isDrawing) {
+            isDrawing = false;
+            actions.push({ type: 'draw', path: currentPath.slice() });
+        }
+    });
+
+    document.getElementById('btn-text').addEventListener('click', function() {
+        isTextMode = true;
+        isDrawingMode = false;
+    });
+
+    document.getElementById('btn-draw').addEventListener('click', function() {
+        isDrawingMode = true;
+        isTextMode = false;
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        textBoxes.forEach(function(box) {
+            document.body.removeChild(box);
+        });
+        textBoxes = [];
+        actions = [];
+    });
+
+    document.getElementById('btn-save').addEventListener('click', function() {
+        textBoxes.forEach(function(textBox) {
+        const text = textBox.value;
+        const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
+        const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
+
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText(text, x, y);
+    });
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'correcao_redacao.png';
+        link.click();
+    });
+
+    document.getElementById('btn-undo').addEventListener('click', function() {
+        if (actions.length > 0) {
+            const lastAction = actions.pop();
+
+            if (lastAction.type === 'add') {
+                document.body.removeChild(lastAction.element);
+                textBoxes.pop();
+            } else if (lastAction.type === 'draw') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                actions.forEach(function(action) {
+                    if (action.type === 'draw') {
+                        ctx.beginPath();
+                        ctx.moveTo(action.path[0].x, action.path[0].y);
+
+                        action.path.forEach(function(point) {
+                            ctx.lineTo(point.x, point.y);
+                        });
+
+                        ctx.stroke();
+                    } else if (action.type === 'text') {
+                        ctx.font = '20px Arial';
+                        ctx.fillStyle = 'red';
+                        ctx.fillText(action.text, action.x, action.y);
+                    }
+                });
+            }
+        }
+    });
+
+// Evento para o botão de salvar a imagem no campo oculto
+document.getElementById('btn-save').addEventListener('click', function() {
+    const canvasImageDataInput = document.getElementById('canvas_image_data');
+    if (canvasImageDataInput) {
+        textBoxes.forEach(function(textBox) {
+            const text = textBox.value;
+            const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
+            const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
+
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'red';
+            ctx.fillText(text, x, y);
+        });
+        const dataURL = canvas.toDataURL('image/png');
+        canvasImageDataInput.value = dataURL;
+
+        // Converter o canvas em Blob para simular um arquivo de imagem
+        const byteString = atob(dataURL.split(',')[1]);
+        const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        const blob = new Blob([ab], { type: mimeString });
+
+        // Criar um objeto File a partir do Blob
+        const file = new File([blob], 'correction.png', { type: mimeString });
+
+        // Criar um objeto DataTransfer para simular o upload do arquivo
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+
+        // Atribuir o arquivo ao campo de upload de arquivo
+        const fileInput = document.getElementById('correction_image');
+        fileInput.files = dataTransfer.files;
+    } else {
+        console.error("O campo oculto 'canvas_image_data' não foi encontrado.");
+    }
+});
+
+
+
+
+
+</script>
+{% endblock %}

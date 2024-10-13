@@ -17,7 +17,5 @@ class CustomUser(AbstractUser):
     user_youtube = models.URLField( null=True, blank=True)
     user_facebook = models.URLField(null=True, blank=True)
 
-
-
     def __str__(self):
         return self.username

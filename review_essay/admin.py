@@ -3,3 +3,5 @@ from .models import Essay
 
 
 admin.site.register(Essay)
+
+

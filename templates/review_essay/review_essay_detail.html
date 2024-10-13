@@ -1,43 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
+{% load form_tags %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_review_essay.css' %}">
 {% endblock %}
 
 {% block content %}
+
 <div class="container-fluid mt-3 col-sm-12 col-xm-12">
-    <!-- Menu na parte superior -->
-    <div class="row mb-3">
-        <div class="col-12 d-flex justify-content-start align-content-start">
-            <a href="{% url 'review_essay:list_essay_editors' %}" class="btn btn-secondary m-1">
-                <i class="fas fa-arrow-left"></i> 
-            </a>
-            <button id="btn-draw" class="btn btn-dark m-1">
-                <i class="fas fa-pencil-alt"></i> 
-            </button>
-            <button id="btn-text" class="btn btn-info m-1">
-                <i class="fas fa-font"></i> 
-            </button>
-            <button id="btn-undo" class="btn btn-warning m-1">
-                <i class="fas fa-undo"></i> 
-            </button>
-            <button id="btn-clear" class="btn btn-danger m-1">
-                <i class="fas fa-eraser"></i>
-            </button>
-            <button id="btn-save" class="btn btn-primary m-1">
-                <i class="fas fa-save"></i>
-            </button>
+
+    <div class="row justify-content-end align-items-end">
+        <div class="col-sm-12">
+            <a href="{% url 'review_essay:update_essay_editors' essay.id %}" class="btn btn-primary">Corrigir</a>
         </div>
     </div>
 
-    <!-- Canvas com a imagem da redação -->
-    <div class="row">
-        <div class="col-12">
-            <canvas id="canvas" width="1000" height="1400" style="border:1px solid #000; display: block; margin: 0 auto;"></canvas>
+    <div class="row ">
+        <div class="col-12 col-sm-12">
+            <canvas id="canvas"  width="1000" height="1400" style="border:1px solid #000; display: block;"></canvas>
         </div>
     </div>
+
 </div>
+
+
+
+
+
 {% endblock %}
 
 {% block script_js %}
@@ -45,10 +35,10 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const img = new Image();
-    img.src = "{{ essay.essay_image.url }}"; // Carrega a imagem da redação
+    img.src = "{{ essay.essay_image.url }}"; 
 
     img.onload = function() {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Desenha a imagem no canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); 
     };
 
     // Variáveis de controle
@@ -62,7 +52,6 @@
     let actions = [];
     let currentPath = [];
 
-    // Função para calcular a largura do texto e ajustar o tamanho da caixa de texto
     function adjustTextareaWidth(textBox) {
         const span = document.createElement('span');
         span.style.font = '20px Arial';
@@ -78,7 +67,6 @@
         document.body.removeChild(span);
     }
 
-    // Evento para criar a caixa de texto
     canvas.addEventListener('mousedown', function(e) {
         if (isTextMode) {
             isDraggingTextBox = true;
@@ -230,5 +218,28 @@
             }
         }
     });
+
+
+    function adjustCanvasSize() {
+        const canvas = document.getElementById("canvas");
+        const isMobile = window.innerWidth <= 768; // Pode ajustar o valor conforme necessário
+
+        if (isMobile) {
+            // Defina as dimensões para dispositivos móveis
+            canvas.width = 400; // Largura para celular
+            canvas.height = 600; // Altura para celular
+        } else {
+            // Defina as dimensões para desktop
+            canvas.width = 1000; // Largura para desktop
+            canvas.height = 1400; // Altura para desktop
+        }
+    }
+
+    // Ajusta o tamanho do canvas ao carregar a página
+    window.onload = adjustCanvasSize;
+    // Ajusta o tamanho do canvas ao redimensionar a janela
+    window.onresize = adjustCanvasSize;
+
+
 </script>
 {% endblock %}
