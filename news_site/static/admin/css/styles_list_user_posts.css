@@ -13,9 +13,3 @@ body {
     font-family: 'Merriweather', sans-serif; 
 }
 
-audio {
-    width: 60%; /* Ajusta a largura do áudio */
-    max-width: 100px; /* Define uma largura máxima */
-    margin: 0 auto; /* Centraliza o elemento de áudio */
-    display: block; /* Garante que a margem funcione corretamente */
-}

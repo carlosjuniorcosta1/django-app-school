@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_review_detail_users.css' %}">
 {% endblock %}
@@ -25,7 +26,7 @@
                 <!-- Competências em cards pequenos com cores aplicadas de forma discreta -->
                 <div class="col-12 col-md-8 d-flex flex-wrap">
                     <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c1 < 40 %}#f8d7da{% elif essay.c1 < 80 %}#f0b4b9{% elif essay.c1 < 120 %}#e6a1a7{% elif essay.c1 < 160 %}#f5e7b2{% elif essay.c1 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c1 < 40 %}#d98286{% elif essay.c1 < 80 %}#fbc687{% elif essay.c1 < 120 %}#f5e7b2{% elif essay.c1 < 160 %}#a3d1f5{% elif essay.c1 <= 200 %}#c4e6a3{% endif %};">
                             <div class="card-body">
                                 <h5 class="card-title">C1</h5>
                                 <p class="card-text">{{ essay.c1 }}</p>
@@ -33,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c2 < 40 %}#f8d7da{% elif essay.c2 < 80 %}#f0b4b9{% elif essay.c2 < 120 %}#e6a1a7{% elif essay.c2 < 160 %}#f5e7b2{% elif essay.c2 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c2 < 40 %}#d98286{% elif essay.c2 < 80 %}#fbc687{% elif essay.c2 < 120 %}#f5e7b2{% elif essay.c2 < 160 %}#a3d1f5{% elif essay.c2 <= 200 %}#c4e6a3{% endif %};">
                             <div class="card-body">
                                 <h5 class="card-title">C2</h5>
                                 <p class="card-text">{{ essay.c2 }}</p>
@@ -41,7 +42,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c3 < 40 %}#f8d7da{% elif essay.c3 < 80 %}#f0b4b9{% elif essay.c3 < 120 %}#e6a1a7{% elif essay.c3 < 160 %}#f5e7b2{% elif essay.c3 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c3 < 40 %}#d98286{% elif essay.c3 < 80 %}#fbc687{% elif essay.c3 < 120 %}#f5e7b2{% elif essay.c3 < 160 %}#a3d1f5{% elif essay.c3 <= 200 %}#c4e6a3{% endif %};">
                             <div class="card-body">
                                 <h5 class="card-title">C3</h5>
                                 <p class="card-text">{{ essay.c3 }}</p>
@@ -49,7 +50,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c4 < 40 %}#f8d7da{% elif essay.c4 < 80 %}#f0b4b9{% elif essay.c4 < 120 %}#e6a1a7{% elif essay.c4 < 160 %}#f5e7b2{% elif essay.c4 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c4 < 40 %}#d98286{% elif essay.c4 < 80 %}#fbc687{% elif essay.c4 < 120 %}#f5e7b2{% elif essay.c4 < 160 %}#a3d1f5{% elif essay.c4 <= 200 %}#c4e6a3{% endif %};">
                             <div class="card-body">
                                 <h5 class="card-title">C4</h5>
                                 <p class="card-text">{{ essay.c4 }}</p>
@@ -57,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c5 < 40 %}#f8d7da{% elif essay.c5 < 80 %}#f0b4b9{% elif essay.c5 < 120 %}#e6a1a7{% elif essay.c5 < 160 %}#f5e7b2{% elif essay.c5 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c5 < 40 %}#d98286{% elif essay.c5 < 80 %}#fbc687{% elif essay.c5 < 120 %}#f5e7b2{% elif essay.c5 < 160 %}#a3d1f5{% elif essay.c5 <= 200 %}#c4e6a3{% endif %};">
                             <div class="card-body">
                                 <h5 class="card-title">C5</h5>
                                 <p class="card-text">{{ essay.c5 }}</p>

@@ -33,50 +33,62 @@
             {% for essay in object_list %}
             <tr data-url="{% url 'review_essay:detail_reviewed_essay' essay.id %}" style="cursor: pointer;">
                 <td>{{ essay.essay_topic }}</td>
-                <td class="text-center" style="background-color: {% if essay.c1 == 0 %} #f8d7da 
-                    {% elif essay.c1 >= 160 and essay.c1 <= 200 %} #c4e6a3 
+
+                <td class="text-center" style="background-color: 
+                    {% if essay.c1 < 40 %} #f8d7da 
+                    {% elif essay.c1 >= 160 and essay.c1 <= 200 %} #c4e6a3
                     {% elif essay.c1 >= 120 and essay.c1 < 160 %} #a3d1a5 
                     {% elif essay.c1 >= 80 and essay.c1 < 120 %} #f5e7b2 
-                    {% elif essay.c1 > 40 %} #e6a1a7 
+                    {% elif essay.c1 >= 40 and essay.c1 < 80 %} #fbc687 
                     {% else %} #f0b4b9 
                     {% endif %};">{{ essay.c1 }}</td>
-                <td class="text-center" style="background-color: {% if essay.c2 == 0 %} #f8d7da 
-                    {% elif essay.c2 >= 160 and essay.c2 <= 200 %} #c4e6a3 
+
+                <td class="text-center" style="background-color: 
+                    {% if essay.c2 < 40 %} #f8d7da 
+                    {% elif essay.c2 >= 160 and essay.c2 <= 200 %} #c4e6a3
                     {% elif essay.c2 >= 120 and essay.c2 < 160 %} #a3d1a5 
                     {% elif essay.c2 >= 80 and essay.c2 < 120 %} #f5e7b2 
-                    {% elif essay.c2 > 40 %} #e6a1a7 
+                    {% elif essay.c2 >= 40 and essay.c2 < 80 %} #fbc687 
                     {% else %} #f0b4b9 
                     {% endif %};">{{ essay.c2 }}</td>
-                <td class="text-center" style="background-color: {% if essay.c3 == 0 %} #f8d7da 
-                    {% elif essay.c3 >= 160 and essay.c3 <= 200 %} #c4e6a3 
+
+                <td class="text-center" style="background-color: 
+                    {% if essay.c3 < 40 %} #f8d7da 
+                    {% elif essay.c3 >= 160 and essay.c3 <= 200 %} #c4e6a3
                     {% elif essay.c3 >= 120 and essay.c3 < 160 %} #a3d1a5 
                     {% elif essay.c3 >= 80 and essay.c3 < 120 %} #f5e7b2 
-                    {% elif essay.c3 > 40 %} #e6a1a7 
+                    {% elif essay.c3 >= 40 and essay.c3 < 80 %} #fbc687 
                     {% else %} #f0b4b9 
                     {% endif %};">{{ essay.c3 }}</td>
-                <td class="text-center" style="background-color: {% if essay.c4 == 0 %} #f8d7da 
-                    {% elif essay.c4 >= 160 and essay.c4 <= 200 %} #c4e6a3 
+
+                <td class="text-center" style="background-color: 
+                    {% if essay.c4 < 40 %} #f8d7da 
+                    {% elif essay.c4 >= 160 and essay.c4 <= 200 %} #c4e6a3
                     {% elif essay.c4 >= 120 and essay.c4 < 160 %} #a3d1a5 
                     {% elif essay.c4 >= 80 and essay.c4 < 120 %} #f5e7b2 
-                    {% elif essay.c4 > 40 %} #e6a1a7 
+                    {% elif essay.c4 >= 40 and essay.c4 < 80 %} #fbc687 
                     {% else %} #f0b4b9 
                     {% endif %};">{{ essay.c4 }}</td>
-                <td class="text-center" style="background-color: {% if essay.c5 == 0 %} #f8d7da 
-                    {% elif essay.c5 >= 160 and essay.c5 <= 200 %} #c4e6a3 
+
+                <td class="text-center" style="background-color: 
+                    {% if essay.c5 < 40 %} #f8d7da 
+                    {% elif essay.c5 >= 160 and essay.c5 <= 200 %} #c4e6a3
                     {% elif essay.c5 >= 120 and essay.c5 < 160 %} #a3d1a5 
                     {% elif essay.c5 >= 80 and essay.c5 < 120 %} #f5e7b2 
-                    {% elif essay.c5 > 40 %} #e6a1a7 
+                    {% elif essay.c5 >= 40 and essay.c5 < 80 %} #fbc687 
                     {% else %} #f0b4b9 
                     {% endif %};">{{ essay.c5 }}</td>
+
                 <td class="text-center" style="background-color: 
-                    {% if essay.total_grade == 0 %} #f8d7da /* 0-200 (vermelho claro) */
-                    {% elif essay.total_grade >= 200 and essay.total_grade < 400 %} #f0b4b9 /* 200-400 (tom um pouco mais escuro de vermelho) */
-                    {% elif essay.total_grade >= 400 and essay.total_grade < 600 %} #e6a1a7 /* 400-600 (entre rosa e lilás) */
-                    {% elif essay.total_grade >= 600 and essay.total_grade < 800 %} #f5e7b2 /* 600-800 (tom meio amarelado) */
-                    {% elif essay.total_grade >= 800 and essay.total_grade < 1000 %} #c4e6a3 /* 800-900 (um verde mais suave) */
-                    {% elif essay.total_grade == 1000 %} #a3d1f5 /* 900-1000 (um verde mais intenso) */
-                    {% else %} #f0b4b9 /* Caso padrão, não esperado */
+                    {% if essay.total_grade < 200 %}#f0b4b9 
+                    {% elif essay.total_grade > 200 and essay.total_grade < 400 %} #fbc687 
+                    {% elif essay.total_grade >= 400 and essay.total_grade < 600 %} #f5e7b2
+                    {% elif essay.total_grade >= 600 and essay.total_grade < 800 %} #a3d1f5
+                    {% elif essay.total_grade >= 800 and essay.total_grade <= 1000 %}#a3d1a5
+                    {% elif essay.total_grade == 1000 %} 
+                    
                     {% endif %};">{{ essay.total_grade }}</td>
+
                 <td style="width: 150px;">
                     {% if essay.audio_feedback %}
                     <audio controls>
