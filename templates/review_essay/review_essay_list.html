@@ -4,7 +4,7 @@
 {% if request.user.is_essay_editor %}
 
 <div class="container mt-5">
-    <h2 class="mb-4">Redações Submetidas</h2>
+    <h2 class="mb-4">Redações submetidas</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -17,15 +17,15 @@
             {% for essay in essays %}
             <tr>
                 <td>
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.user.username }}</a> <!-- Nome do usuário -->
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.user.first_name }} {{essay.user.last_name}}</a> <!-- Nome do usuário -->
                 </td>
                 <td>
                     <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.essay_topic }}</td> </a>    <!-- Tema da redação -->
                 <td>
-                    {% if essay.is_corrected %}        <!-- Verifica se está corrigida -->
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}"> Corrigida </a>
+                    {% if essay.is_reviewed %}        <!-- Verifica se está corrigida -->
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-success"> <i class="fas fa-check-circle"></i> Corrigida </a>
                     {% else %}
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}"> Não Corrigida </a>
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-danger" >   <i class="fas fa-exclamation-circle"></i> Não Corrigida </a>
                     {% endif %}
                 </td>
             </tr>

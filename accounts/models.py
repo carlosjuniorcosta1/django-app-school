@@ -16,6 +16,7 @@ class CustomUser(AbstractUser):
     user_linkedin = models.URLField( null=True, blank=True)
     user_youtube = models.URLField( null=True, blank=True)
     user_facebook = models.URLField(null=True, blank=True)
+    is_premium = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return self.username

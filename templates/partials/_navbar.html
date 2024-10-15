@@ -27,7 +27,7 @@
       </li>
      
       <li class="nav-item active nav-item-divider">
-        <a class="nav-link" href="{% url 'posts:index_culture' %}">Cultura e lazer</a>
+        <a class="nav-link" href="{% url 'posts:index_culture' %}">Cultura</a>
       </li>
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'posts:index_health' %}">Saúde</a>
@@ -37,8 +37,16 @@
       </li>
 
       <li class="nav-item active nav-item-divider">
-        <a class="nav-link" href="{% url 'review_essay:submit_essay' %}">Redação</a>
+        <a class="nav-link" href="{% url 'review_essay:list_user_essays' %}">Redação</a>
       </li>
+
+      {% if user.is_essay_editor %}
+
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'review_essay:list_essay_editors' %}">Corrigir</a>
+      </li>
+
+      {% endif %}
 
 
 

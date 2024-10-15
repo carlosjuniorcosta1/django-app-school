@@ -25,12 +25,21 @@ class Essay(models.Model):
                               validators=
                               [FileExtensionValidator(allowed_extensions=
                                                        ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])], blank=True, null=True)
+    total_grade = models.IntegerField(blank=True, null=True)
 
 
+    audio_feedback = models.FileField(upload_to="audio/", 
+                             validators=[FileExtensionValidator(allowed_extensions=['mp3', 'wav', 'ogg'])], 
+                             blank=True, null=True)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}, tema: {self.essay_topic}'
+        return f'{self.user.first_name} {self.user.last_name}, tema: {self.essay_topic}, total: {self.total_grade}'
     
+
+
+    def save(self, *args, **kwargs):
+        self.total_grade = sum(filter(None, [self.c1, self.c2, self.c3, self.c4, self.c5]))
+        super(Essay, self).save(*args, **kwargs)
 
 # class EssayGrade(models.Model):
 #     essay_id = models.ForeignKey(Essay,on_delete=models.CASCADE)

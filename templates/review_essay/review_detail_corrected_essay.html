@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_review_detail_users.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 col-sm-12 col-xm-12">
+    <div class="card col-sm-12 col-xm-12">
+        <div class="card-body">
+            <!-- Linha para Título -->
+            <div>
+                <h2 class="card-title d-flex align-items-center">
+                    Tema: {{ essay.essay_topic }}
+                </h2>
+                <hr class="border-bottom"> <!-- Adiciona uma borda inferior -->
+            </div>
+            <!-- Linha para o Total -->
+            <div class="text-right">
+                <h2 class="card-title">Total: {{ essay.total_grade }}</h2>
+            </div>
+
+            <!-- Competências e Áudio em uma linha, adaptável para dispositivos móveis -->
+            <div class="row">
+                <!-- Competências em cards pequenos com cores aplicadas de forma discreta -->
+                <div class="col-12 col-md-8 d-flex flex-wrap">
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c1 < 40 %}#f8d7da{% elif essay.c1 < 80 %}#f0b4b9{% elif essay.c1 < 120 %}#e6a1a7{% elif essay.c1 < 160 %}#f5e7b2{% elif essay.c1 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                            <div class="card-body">
+                                <h5 class="card-title">C1</h5>
+                                <p class="card-text">{{ essay.c1 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c2 < 40 %}#f8d7da{% elif essay.c2 < 80 %}#f0b4b9{% elif essay.c2 < 120 %}#e6a1a7{% elif essay.c2 < 160 %}#f5e7b2{% elif essay.c2 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                            <div class="card-body">
+                                <h5 class="card-title">C2</h5>
+                                <p class="card-text">{{ essay.c2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c3 < 40 %}#f8d7da{% elif essay.c3 < 80 %}#f0b4b9{% elif essay.c3 < 120 %}#e6a1a7{% elif essay.c3 < 160 %}#f5e7b2{% elif essay.c3 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                            <div class="card-body">
+                                <h5 class="card-title">C3</h5>
+                                <p class="card-text">{{ essay.c3 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c4 < 40 %}#f8d7da{% elif essay.c4 < 80 %}#f0b4b9{% elif essay.c4 < 120 %}#e6a1a7{% elif essay.c4 < 160 %}#f5e7b2{% elif essay.c4 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                            <div class="card-body">
+                                <h5 class="card-title">C4</h5>
+                                <p class="card-text">{{ essay.c4 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c5 < 40 %}#f8d7da{% elif essay.c5 < 80 %}#f0b4b9{% elif essay.c5 < 120 %}#e6a1a7{% elif essay.c5 < 160 %}#f5e7b2{% elif essay.c5 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                            <div class="card-body">
+                                <h5 class="card-title">C5</h5>
+                                <p class="card-text">{{ essay.c5 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card do Áudio à direita das competências -->
+                <div class="col-12 col-md-4 mb-3 col-sm-12">
+                    <div class="card shadow-sm text-center">
+                        <div class="card-body p-2">
+                            <h5 class="card-title">Comentários gravados</h5>
+                            {% if essay.audio_feedback %}
+                            <audio controls>
+                                <source src="{{ essay.audio_feedback.url }}" type="audio/mpeg">
+                                Seu navegador não suporta o elemento de áudio.
+                            </audio>
+                            {% else %}
+                            <span>Corretor não gravou áudio.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Imagem corrigida -->
+            <div class="text-center mt-4">
+                <h4>Redação corrigida</h4>
+                {% if essay.correction_image %}
+                <img src="{{ essay.correction_image.url }}" alt="Imagem Corrigida" class="img-fluid mb-3">
+                {% else %}
+                <p>Imagem não disponível.</p>
+                {% endif %}
+            </div>
+
+            <!-- Comentários organizados verticalmente com sombras e bordas -->
+            <div class="mt-4">
+                <div class="shadow-sm p-3 mb-3 border rounded">
+                    <h5>Comentário C1</h5>
+                    <p>{{ essay.about_c1 }}</p>
+                </div>
+                <div class="shadow-sm p-3 mb-3 border rounded">
+                    <h5>Comentário C2</h5>
+                    <p>{{ essay.about_c2 }}</p>
+                </div>
+                <div class="shadow-sm p-3 mb-3 border rounded">
+                    <h5>Comentário C3</h5>
+                    <p>{{ essay.about_c3 }}</p>
+                </div>
+                <div class="shadow-sm p-3 mb-3 border rounded">
+                    <h5>Comentário C4</h5>
+                    <p>{{ essay.about_c4 }}</p>
+                </div>
+                <div class="shadow-sm p-3 mb-3 border rounded">
+                    <h5>Comentário C5</h5>
+                    <p>{{ essay.about_c5 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -29,7 +29,7 @@
                     <i class="fas fa-eraser"></i>
                 </button>
                 <button id="btn-save" class="btn btn-primary m-1">
-                    <i class="fas fa-save"></i>
+                    <i class="fas fa-download"></i>
                 </button>
             
     
@@ -47,7 +47,7 @@
                     <label for="id_c1" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C1
                     </label>
-                    <input type="number" id="id_c1" name="c1" value="{{ form.c1.value|default:'' }}" class="form-control" placeholder="Digite o valor de C1">
+                    <input type="number" id="id_c1" name="c1" value="{{ form.c1.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
                 </div>
                 
                 <!-- Comentário para C1 -->
@@ -55,7 +55,8 @@
                     <label for="id_about_c1" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C1
                     </label>
-                    <input type="text" id="about_c1" name="about_c1" value="{{ form.about_c1.value|default:'' }}" class="form-control" placeholder="Comentário sobre C1">
+                    <textarea id="about_c1" name="about_c1" class="form-control" placeholder="Comentário sobre C1">{{ form.about_c1.value|default:'' }}</textarea>
+
                 </div>
                 
                 <!-- Campo C2 -->
@@ -71,7 +72,8 @@
                     <label for="id_about_c2" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C2
                     </label>
-                    <input type="text" id="about_c2" name="about_c2" value="{{ form.about_c2.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C2">
+                    <textarea id="about_c2" name="about_c2" class="form-control" placeholder="Comentário sobre C2">{{ form.about_c2.value|default:'' }}</textarea>
+
                 </div>
                 
                 <!-- Campo C3 -->
@@ -87,7 +89,8 @@
                     <label for="id_about_c3" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C3
                     </label>
-                    <input type="text" id="about_c3" name="about_c3" value="{{ form.about_c3.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C3">
+                    <textarea id="about_c3" name="about_c3" class="form-control" placeholder="Comentário sobre C3">{{ form.about_c3.value|default:'' }}</textarea>
+
                 </div>
                 
                 <!-- Campo C4 -->
@@ -103,7 +106,8 @@
                     <label for="id_about_c4" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C4
                     </label>
-                    <input type="text" id="about_c4" name="about_c4" value="{{ form.about_c4.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C4">
+                    <textarea id="about_c4" name="about_c4" class="form-control" placeholder="Comentário sobre C4">{{ form.about_c4.value|default:'' }}</textarea>
+
                 </div>
                 
                 <!-- Campo C5 -->
@@ -119,7 +123,8 @@
                     <label for="id_about_c5" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C5
                     </label>
-                    <input type="text" id="about_c5" name="about_c5" value="{{ form.about_c5.value|default:'' }}" class="form-control" placeholder="Adicione um comentário para C5">
+                    <textarea id="about_c5" name="about_c5" class="form-control" placeholder="Comentário sobre C5">{{ form.about_c5.value|default:'' }}</textarea>
+
                 </div>
                 <div class="form-group">
                     <label for="correction_image" class="form-label">
@@ -129,13 +134,50 @@
                     {% if essay.correction_image %}
                     <p><strong>Imagem de correção enviada:</strong> {{ essay.correction_image.name }}</p>
                 {% endif %}
-                    <input type="file" id="correction_image" name="correction_image" class="form-control">
+                    <input type="file" id="correction_image" name="correction_image" class="form-control" style="display: none;">
                 </div>
+
+           <div class="form-group">
+            <div class="mt-2 mb-2">
+            <button type="button" id="recordButton" class="btn btn-danger">
+                <i class="fas fa-microphone"></i> 
+            </button>
+            <button type="button" id="stopButton" class="btn btn-secondary" disabled>
+                <i class="fas fa-stop"></i> 
+            </button>
+            <button type="button" id="deleteButton" class="btn btn-warning" style="display: none;">
+                <i class="fas fa-trash"></i> 
+            </button>
+        </div>
+         
+
+            <p id="recordingTime" style="font-weight: bold; display: none;">Tempo de gravação: 0s</p>
+
+            <!-- Campo oculto para armazenar o áudio gravado -->
+            <input type="file" id="audioFile" name="audio_feedback" accept="audio/*" style="display: none;" class="form-control">
+            {% if essay.audio_feedback %}
+            <p><strong>Áudio já gravado:</strong> {{ essay.audio_feedback.name }}</p>
+
+
+            {% endif %}
+            <!-- Player para ouvir o áudio gravado antes do envio -->
+            <audio id="audioPlayer" controls style="display: none;" class="mt-2"></audio>
+            
+           </div>
+                
                 
                 <!-- Botão de envio -->
                 <button id="sendCorrection" type="submit" class="btn btn-success mt-2">
-                    <i class="fas fa-paper-plane"></i> Enviar correção
+                    <i class="fas fa-paper-plane"></i> Salvar e corrigir outra
                 </button>
+
+             
+                <button type="submit" name="mark_as_reviewed" value="True" class="btn btn-success mt-2">
+                    <i class="fas fa-check"></i> Marcar como corrigida
+                </button>
+
+
+
             </form>
         
         </div> 
@@ -147,19 +189,19 @@
 </div>
 {% if essay.essay_image and essay.correction_image %}
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const img = new Image();
-const correctionImg = new Image();
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var img = new Image();
+var correctionImg = new Image();
 img.src = "{{ essay.correction_image.url }}";
 </script>
 {% endif %}
 {% if not essay.correction_image %}
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const img = new Image();
-const correctionImg = new Image();
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var img = new Image();
+var correctionImg = new Image();
 img.src = "{{ essay.essay_image.url }}";
 </script>
 {% endif %}
@@ -323,7 +365,7 @@ img.onload = function() {
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'correcao_redacao.png';
+        link.download = 'correcao_redacao_{{essay.user.first_name}}_{{essay.user.last_name}}.png';
         link.click();
     });
 
@@ -359,7 +401,7 @@ img.onload = function() {
     });
 
 // Evento para o botão de salvar a imagem no campo oculto
-document.getElementById('btn-save').addEventListener('click', function() {
+document.getElementById('sendCorrection').addEventListener('click', function() {
     const canvasImageDataInput = document.getElementById('canvas_image_data');
     if (canvasImageDataInput) {
         textBoxes.forEach(function(textBox) {
@@ -400,10 +442,93 @@ document.getElementById('btn-save').addEventListener('click', function() {
         console.error("O campo oculto 'canvas_image_data' não foi encontrado.");
     }
 });
+let mediaRecorder;
+  let audioChunks = [];
+  let recordingTime = 0; // Variável para armazenar o tempo de gravação em segundos
+  let timerInterval; // Variável para armazenar o intervalo do temporizador
 
+  const recordButton = document.getElementById('recordButton');
+  const stopButton = document.getElementById('stopButton');
+  const deleteButton = document.getElementById('deleteButton'); // Botão para apagar o áudio
+  const audioPlayer = document.getElementById('audioPlayer');
+  const audioFile = document.getElementById('audioFile');
+  const recordingTimeDisplay = document.getElementById('recordingTime'); // Elemento de exibição do tempo de gravação
 
+  // Verificar se o navegador suporta a gravação de mídia
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Quando o botão de gravação for clicado
+    recordButton.addEventListener('click', () => {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.start();
 
+          // Resetar o tempo e começar o temporizador
+          recordingTime = 0;
+          recordingTimeDisplay.textContent = `Tempo de gravação: 0s`;
 
+          // Exibir o temporizador quando a gravação começa
+          recordingTimeDisplay.style.display = 'block';
+
+          // Iniciar o temporizador
+          timerInterval = setInterval(() => {
+            recordingTime++;
+            recordingTimeDisplay.textContent = `Tempo de gravação: ${recordingTime}s`;
+          }, 1000); // Atualizar a cada 1 segundo
+
+          recordButton.disabled = true;
+          stopButton.disabled = false;
+          
+          mediaRecorder.ondataavailable = event => {
+            audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            clearInterval(timerInterval); // Parar o temporizador quando a gravação terminar
+
+            // Esconder o temporizador quando a gravação parar
+            recordingTimeDisplay.style.display = 'none';
+
+            const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+            audioChunks = [];
+
+            // Criar uma URL para o áudio gravado
+            const audioURL = URL.createObjectURL(audioBlob);
+            audioPlayer.src = audioURL;
+            audioPlayer.style.display = 'block';
+
+            // Converter o Blob para File e anexar ao input
+            const file = new File([audioBlob], "audio_feedback.mp3", { type: 'audio/mpeg' });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            audioFile.files = dataTransfer.files;
+
+            // Mostrar o campo de arquivo para enviar
+            audioFile.style.display = 'block';
+            
+            // Exibir o botão de apagar o áudio
+            deleteButton.style.display = 'inline-block';
+          };
+        });
+    });
+
+    // Quando o botão de parar for clicado
+    stopButton.addEventListener('click', () => {
+      mediaRecorder.stop();
+      recordButton.disabled = false;
+      stopButton.disabled = true;
+    });
+
+    // Função para apagar o áudio gravado
+    deleteButton.addEventListener('click', () => {
+      audioPlayer.src = '';
+      audioPlayer.style.display = 'none'; // Esconder o player de áudio
+      audioFile.value = ''; // Limpar o campo de input
+      deleteButton.style.display = 'none'; // Esconder o botão de apagar
+    });
+  } else {
+    alert('O seu navegador não suporta gravação de áudio.');
+  }
 
 </script>
 {% endblock %}

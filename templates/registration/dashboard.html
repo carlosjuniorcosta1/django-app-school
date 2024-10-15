@@ -86,15 +86,19 @@
                                 </form>
                             </div>
 
-                            {% if user.is_columnist and user.is_artist %}
-                                <p><strong>Função:</strong> Colunista e desenhista</p>
-
-                            {% elif user.is_columnist and not user.is_artist %}
-                            <p><strong>Função:</strong> Colunista</p>
-
-                            {% elif not user.is_columnist and not user.is_artist %}
-
-                            <p>Usuário comum</p>
+                            {% if user.is_columnist %}
+                                <p><strong>Função:</strong> Colunista</p>
+                            {% else %}
+                            <p><strong>Função:</strong> Usuário comum</p>
+                            {% endif %}
+                            {% if user.is_artist %}
+                            <p><strong></strong>Ilustrador(a)</p>
+                            {% endif %}
+                            {% if user.is_premium %}
+                            <p><strong>Acesso e correções: Usuário premium</strong></p>
+                            {% else %}    
+                            <p>Acesso e correções: limitado</p>
+                    
                             {% endif %}
                         </div>
                     </div>
