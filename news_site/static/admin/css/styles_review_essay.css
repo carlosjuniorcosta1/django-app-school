@@ -32,3 +32,20 @@
   }
 }
 
+.error-highlight {
+  background-color: #ffe6e6; /* Rosa claro */
+  border: 2px solid #ff9999; /* Borda rosa */
+}
+
+
+
+@media (max-width: 768px) {
+  #mobile-cards {
+      display: block;
+  }
+  #desktop-version {
+
+    display: none;
+  }
+}
+

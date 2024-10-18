@@ -1,8 +1,31 @@
-/* Estilos para o elemento de áudio */
 audio {
-    width: 80%; /* Ajusta a largura do áudio */
-    max-width: 400px; /* Define uma largura máxima */
-    margin: 0 auto; /* Centraliza o elemento de áudio */
-    display: block; /* Garante que a margem funcione corretamente */
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
 }
+
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .competency-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .competency-card {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px 10px;
+        flex: 1 0 100px;
+        text-align: center;
+        min-width: 80px;
+    }
+}
+
 

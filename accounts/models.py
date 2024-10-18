@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 
 
-
 class CustomUser(AbstractUser):
     is_columnist = models.BooleanField(default=False)
     is_artist = models.BooleanField(default=False)
@@ -17,6 +16,7 @@ class CustomUser(AbstractUser):
     user_youtube = models.URLField( null=True, blank=True)
     user_facebook = models.URLField(null=True, blank=True)
     is_premium = models.BooleanField(null=True, blank=True)
+
 
     def __str__(self):
         return self.username

@@ -39,7 +39,7 @@
             <input type="hidden" id="canvas_image_data" name="canvas_image_data">
 
            
-            <form method="POST" enctype="multipart/form-data" class="mt-4">
+            <form method="POST" enctype="multipart/form-data" class="mt-4" id="form-grade-editor">
                 {% csrf_token %}
                 
                 <!-- Campo C1 -->
@@ -47,7 +47,7 @@
                     <label for="id_c1" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C1
                     </label>
-                    <input type="number" id="id_c1" name="c1" value="{{ form.c1.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                    <input type="number" id="id_c1" name="c1" value="{{ form.c1.value|default:'' }}" class="form-control required-field" placeholder="Valor de 0-200">
                 </div>
                 
                 <!-- Comentário para C1 -->
@@ -55,7 +55,7 @@
                     <label for="id_about_c1" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C1
                     </label>
-                    <textarea id="about_c1" name="about_c1" class="form-control" placeholder="Comentário sobre C1">{{ form.about_c1.value|default:'' }}</textarea>
+                    <textarea id="about_c1" name="about_c1" class="form-control required-field" placeholder="Comentário sobre C1">{{ form.about_c1.value|default:'' }}</textarea>
 
                 </div>
                 
@@ -64,7 +64,7 @@
                     <label for="id_c2" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C2
                     </label>
-                    <input type="number" id="id_c2" name="c2" value="{{ form.c2.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                    <input type="number" id="id_c2" name="c2" value="{{ form.c2.value|default:'' }}" class="form-control required-field" placeholder="Valor de 0-200">
                 </div>
             
                 <!-- Comentário para C2 -->
@@ -72,7 +72,7 @@
                     <label for="id_about_c2" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C2
                     </label>
-                    <textarea id="about_c2" name="about_c2" class="form-control" placeholder="Comentário sobre C2">{{ form.about_c2.value|default:'' }}</textarea>
+                    <textarea id="about_c2" name="about_c2" class="form-control required-field" placeholder="Comentário sobre C2">{{ form.about_c2.value|default:'' }}</textarea>
 
                 </div>
                 
@@ -81,7 +81,7 @@
                     <label for="id_c3" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C3
                     </label>
-                    <input type="number" id="id_c3" name="c3" value="{{ form.c3.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                    <input type="number" id="id_c3" name="c3" value="{{ form.c3.value|default:'' }}" class="form-control required-field" placeholder="Valor de 0-200">
                 </div>
             
                 <!-- Comentário para C3 -->
@@ -89,7 +89,7 @@
                     <label for="id_about_c3" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C3
                     </label>
-                    <textarea id="about_c3" name="about_c3" class="form-control" placeholder="Comentário sobre C3">{{ form.about_c3.value|default:'' }}</textarea>
+                    <textarea id="about_c3" name="about_c3" class="form-control required-field" placeholder="Comentário sobre C3">{{ form.about_c3.value|default:'' }}</textarea>
 
                 </div>
                 
@@ -98,7 +98,7 @@
                     <label for="id_c4" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C4
                     </label>
-                    <input type="number" id="id_c4" name="c4" value="{{ form.c4.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                    <input type="number" id="id_c4" name="c4" value="{{ form.c4.value|default:'' }}" class="form-control required-field" placeholder="Valor de 0-200">
                 </div>
             
                 <!-- Comentário para C4 -->
@@ -106,7 +106,7 @@
                     <label for="id_about_c4" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C4
                     </label>
-                    <textarea id="about_c4" name="about_c4" class="form-control" placeholder="Comentário sobre C4">{{ form.about_c4.value|default:'' }}</textarea>
+                    <textarea id="about_c4" name="about_c4" class="form-control required-field" placeholder="Comentário sobre C4">{{ form.about_c4.value|default:'' }}</textarea>
 
                 </div>
                 
@@ -115,7 +115,7 @@
                     <label for="id_c5" class="form-label">
                         <i class="fas fa-pencil-alt"></i> C5
                     </label>
-                    <input type="number" id="id_c5" name="c5" value="{{ form.c5.value|default:'' }}" class="form-control" placeholder="Valor de 0-200">
+                    <input type="number" id="id_c5" name="c5" value="{{ form.c5.value|default:'' }}" class="form-control required-field" placeholder="Valor de 0-200">
                 </div>
             
                 <!-- Comentário para C5 -->
@@ -123,7 +123,7 @@
                     <label for="id_about_c5" class="form-label">
                         <i class="fas fa-comments"></i> Comentário - C5
                     </label>
-                    <textarea id="about_c5" name="about_c5" class="form-control" placeholder="Comentário sobre C5">{{ form.about_c5.value|default:'' }}</textarea>
+                    <textarea id="about_c5" name="about_c5" class="form-control required-field" placeholder="Comentário sobre C5">{{ form.about_c5.value|default:'' }}</textarea>
 
                 </div>
                 <div class="form-group">
@@ -156,10 +156,9 @@
             <!-- Campo oculto para armazenar o áudio gravado -->
             <input type="file" id="audioFile" name="audio_feedback" accept="audio/*" style="display: none;" class="form-control">
             {% if essay.audio_feedback %}
-            <p><strong>Áudio já gravado:</strong> {{ essay.audio_feedback.name }}</p>
+            <p class=""><strong>Áudio já gravado:</strong> {{ essay.audio_feedback.name }}</p>         
+        {% endif %}
 
-
-            {% endif %}
             <!-- Player para ouvir o áudio gravado antes do envio -->
             <audio id="audioPlayer" controls style="display: none;" class="mt-2"></audio>
             
@@ -167,15 +166,15 @@
                 
                 
                 <!-- Botão de envio -->
-                <button id="sendCorrection" type="submit" class="btn btn-success mt-2">
+                <button id="sendCorrection" type="submit" class="btn btn-success mt-2" name="mark_as_reviewed">
                     <i class="fas fa-paper-plane"></i> Salvar e corrigir outra
+                </button>             
+         
+        <div>
+                <button id="sendToStudent" type="submit" name="mark_as_finished" value="True" class="btn btn-danger mt-5">
+                    <i class="fas fa-check"></i> Enviar ao aluno
                 </button>
-
-             
-                <button type="submit" name="mark_as_reviewed" value="True" class="btn btn-success mt-2">
-                    <i class="fas fa-check"></i> Marcar como corrigida
-                </button>
-
+            </div>
 
 
             </form>
@@ -529,6 +528,56 @@ let mediaRecorder;
   } else {
     alert('O seu navegador não suporta gravação de áudio.');
   }
+ 
+  $(document).ready(function() {
+    let submitButton = null;
+
+    $("button[name='mark_as_finished']").on("click", function() {
+        submitButton = "mark_as_finished";
+    });
+    
+
+    $("button[name='mark_as_reviewed']").on("click", function() {
+        submitButton = "mark_as_reviewed";
+    });
+
+    $("#form-grade-editor").on("submit", function(e) {
+        let isValid = true;
+
+        if (submitButton === "mark_as_finished") {
+            $(".required-field").each(function() {
+                if ($(this).val().trim() === "") {
+                    $(this).attr("placeholder", "Campo obrigatório");
+                    $(this).addClass("error error-highlight");
+                    isValid = false;
+                } else {
+                    $(this).removeClass("error error-highlight");
+
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        }
+    });
+});
+
+document.getElementById('sendToStudent').addEventListener('click', function (event) {
+    var audioFileInput = document.getElementById('audioFile');
+    var existingAudio = "{{ essay.audio_feedback }}"; 
+    var recordedAudio = audioFileInput.files.length > 0;
+
+    if (!existingAudio && !recordedAudio) {
+        event.preventDefault();  // 
+
+        var recordingTimeMessage = document.getElementById('recordingTime');
+        recordingTimeMessage.style.display = 'block';  
+        audioFileInput.style.display = 'block';  // 
+        audioFileInput.style.backgroundColor = '#ffcccc';  // 
+    }
+});
+
 
 </script>
 {% endblock %}

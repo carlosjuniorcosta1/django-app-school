@@ -86,10 +86,14 @@ class Post(models.Model):
                               validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])])
 
     status = models.CharField(max_length=10, choices=status_choices, default='pending')
+    is_asking_for_illustration = models.BooleanField(null=True, blank=True, default=False)
+    is_illustration_done = models.BooleanField(default=False, null=True, blank=True)
+    illustrator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='illustrated_posts')
 
-    
+
+   
     def __str__(self):
-        return f"{self.status}, {self.user.first_name} {self.user.last_name}, {self.section_name}, {self.textual_genre}"
+        return f"{self.status}, {self.user.first_name} {self.user.last_name}, {self.section_name}, {self.textual_genre}, Asking for illustration: {self.is_asking_for_illustration} Illustration done: {self.is_illustration_done}, Title: {self.title}"
   
     def clean(self):
       super().clean()

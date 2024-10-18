@@ -130,6 +130,8 @@ font-textual-genre-carro-2 {
 
 .font-opinion-posts { 
     font-family: 'Merriweather', sans-serif;
+    font-weight: bolder;
+    font-size: 15px;
 
 
 }
@@ -151,6 +153,7 @@ font-textual-genre-carro-2 {
 .img-carro {
     width: 600px;
     height: 400px;
+    object-fit: cover;
 }
 
 .text-overlay {
@@ -170,6 +173,7 @@ font-textual-genre-carro-2 {
 .img-last-row {
     border-radius: 10px;
     max-height: 500px;
+    object-fit: cover;
 }
 
 .format-textual-genre {
@@ -222,3 +226,51 @@ body {
     border-radius: 5px;
 }
 
+.img-first-index {
+    max-width: 550px; 
+    max-height: 550px;
+    object-fit: cover;
+}
+.title-first-loop {
+    text-align: justify;
+}
+
+.title-second-loop {
+    text-align: justify;
+}
+
+.img-second-loop {
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.title-second-loop {
+    margin-bottom: 15px;
+}
+
+.img-fourth-loop{
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+}
+ 
+
+
+.mobile-titles {
+    text-align: justify;
+}
+
+@media (max-width: 768px) {
+    .desktop-version {
+        display: none;
+    }
+    .mobile-version {
+        display: block;
+    }
+}
+
+.just-text {
+    text-align: justify;
+
+}

@@ -3,56 +3,62 @@
 {% load form_tags %}
 
 {% block content %}
-
-<div class="container main-news section">
-    <div class="row">
-        {% for post in latest_posts %}
-        {% if forloop.counter == 1 %}
-         <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
-            <a href="{% url 'posts:detail_text' post.id %}">
-               <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
-                  <span class="font-textual-genre-carro-2">{{ post.section_name}}</span> <br>
-                  <span class="font-textual-genre-carro">{{ post.textual_genre}}-por </span>
-  
-                  <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
-  
-                </div>
-               <img src="{{post.image.url}}" alt="imagem 1" class="img-fluid thumb img-border-radius">
-
-               <div class="d-flex align-items-baseline">
-                  <h5 class="mb-0">{{ post.title }}</h5>
-                </div>
-          </a>
-        </div>    
-               {% endif %}
-       {% endfor %}
-       <div class="col-sm-12 col-md-6 col-xs-12 col-lg-6">
-         <div class="row">
-             {% for post in latest_posts %}
-                 {% if forloop.counter > 1 and forloop.counter <= 5 %}
-                     <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
-                        <a href="{% url 'posts:detail_text' post.id %}"> 
-                           <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius: 5px;">
-                              <span class="font-textual-genre-carro">{{ post.section_name}}</span>
-              
+<div class="row mt-2 container-fluid p-2">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            {% for post in latest_posts %}
+                {% if forloop.counter <= 4 %}
+                    <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
+                        <a href="{% url 'posts:detail_text' post.id %}">
+                            <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
+                                <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                             </div>
-                           
-                           
-                           <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius">
-                           
-                           
-                  <div class="d-flex align-items-baseline">
-   <h5 class="mb-0">{{ post.title }}</h5>
- </div>
-                           </a>
-                     </div>
-                 {% endif %}
-             {% endfor %}
-         </div>
-     </div>
+                            <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius img-fourth-loop">
+                            <div class="d-flex align-items-baseline mt-2">
+                                <p class="mb-0 just-text">{{ post.title }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
+    <div class="col-sm-12 col-md-6 col-lg-6 container-fluid">
+        <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                {% for post in carro_one_posts %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <a href="{% url 'posts:detail_text' post.id %}">
+                      <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
+                          <span class="font-textual-genre-carro">{{ post.section_name}}</span>
+                      </div>
+                        <img class="img-carro img-fluid img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+                    </a>
+                    <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+                        <h5 class="just-text">{{ post.title }}</h5>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Próximo</span>
+            </a>
+        </div>
+    </div>
+</div>
 
-     <div class="container-fluid p-0">
+     <div class="container-fluid p-2">
       <section class="colunistas mt-1" style="background-color: #f8f9fa;">
           <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
   
@@ -72,7 +78,7 @@
                                 </div>                        
                           {% endif %}
                           <div class="card-body p-0">
-                              <h5 class="card-title font-weight-bold font-opinion-posts">{{ opinion.user.first_name }} {{ opinion.user.last_name }} 
+                              <h5 class="card-title">{{ opinion.user.first_name }} {{ opinion.user.last_name }} 
                                 <span>
                                 {% if opinion.user.user_linkedin %}
                                 <a href="{{ opinion.user.user_linkedin }}"><i class="fab fa-linkedin"></span>
@@ -83,7 +89,7 @@
                                 {% endif %}
                               </h5> 
                               </span>
-                              <p class="card-text font-opinion-posts">{{ opinion.title }}</p>
+                              <p class="card-text font-opinion-posts just-text">{{ opinion.title }}</p>
                           </div></a>
                       
                   </div>
@@ -97,36 +103,34 @@
   
   </div> 
 
-     <div class="row mt-2">
+     <div class="row mt-2 container-fluid p-2">
       <div class="col-sm-12 col-md-6 col-lg-6">
           <div class="row">
-              {% for post in latest_posts %}
-                  {% if forloop.counter > 5 and forloop.counter <= 9 %}
+              {% for post in latest_posts_second_row %}
                       <div class="col-sm-6 col-md-6 col-lg-6 mb-3">
                           <a href="{% url 'posts:detail_text' post.id %}">
                               <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                                   <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                               </div>
-                              <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius">
+                              <img src="{{ post.image.url }}" alt="imagem menor" class="img-fluid thumb img-border-radius img-fourth-loop">
                               <div class="d-flex align-items-baseline">
-                                  <h5 class="mb-0">{{ post.title }}</h5>
+                                  <p class="mb-0 just-text">{{ post.title }}</p>
                               </div>
                           </a>
                       </div>
-                  {% endif %}
               {% endfor %}
           </div>
       </div>
   
-      <div class="col-sm-12 col-md-6 col-lg-6">
-          <div id="carouselExampleIndicators1" class="carousel slide mt-3" data-ride="carousel">
+      <div class="col-sm-12 col-md-6 col-lg-6 container-fluid">
+          <div id="carouselExampleIndicators2" class="carousel slide mt-3" data-ride="carousel">
               <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+                  <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
               </ol>
               <div class="carousel-inner">
-                  {% for post in carro_final_posts %}
+                  {% for post in carro_second_posts %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}">
                       <a href="{% url 'posts:detail_text' post.id %}">
                         <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
@@ -135,22 +139,22 @@
                           <img class="img-carro img-fluid img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
                       </a>
                       <div class="d-none d-md-block col-sm-12 text-start text-overlay">
-                          <h5>{{ post.title }}</h5>
+                          <h5 class="">{{ post.title }}</h5>
                       </div>
                   </div>
                   {% endfor %}
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+              <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Anterior</span>
               </a>
-              <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+              <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Próximo</span>
               </a>
           </div>
       </div>
   </div>
-  
+
 {% endblock %}
 

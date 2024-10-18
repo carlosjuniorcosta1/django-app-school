@@ -1,0 +1,30 @@
+{% extends 'base.html' %}  <!-- Supondo que você tenha um template base -->
+
+{% block content %}
+    <div class="container mt-4">        
+        <h5>Atualizar Ilustração</h5>        
+        <div class="post-details">
+            <h2>{{ object.title }}</h2>  <!-- Título do Post -->
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="image"></label>
+                <input type="file" id="image" name="image" class="form-control-file">
+                <input type="hidden" name="is_illustration_done" id="is_illustration_done" value="True">
+                <input type="hidden" name="illustrator" value="{{ request.user.id }}">
+
+            </div>
+            {% if form.image.errors %}
+            <div class="text-danger">
+                {{ form.image.errors }}
+            </div>
+        {% endif %}
+    
+
+            <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+            <a href="{% url 'posts:illustrations_asked' %}" class="btn btn-secondary mt-3">Cancelar</a> <!-- Link para voltar para a lista de posts -->
+        </form>
+    </div>
+{% endblock %}

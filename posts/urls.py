@@ -11,6 +11,8 @@ from .views.culture.games_views import CultureGamesListView
 from .views.culture.food_views import CultureFoodListView
 from .views.culture.arts_views import CultureArtsListView
 from .views.health_views import HealthListView
+from .views.ilustrattor_views import ListIllustrationsAsked, UpdateIllustration, DetailIllustration
+
 
 app_name = 'posts'
 
@@ -30,6 +32,9 @@ urlpatterns = [
     path('culture_news/games', CultureGamesListView.as_view(), name="list_games"),
     path('health_news/', HealthListView.as_view(), name="index_health"),
     path('food_recipe_news/', CultureFoodListView.as_view(), name="list_food"),
-    path('arts_students_users/', CultureArtsListView.as_view(), name="list_arts")
+    path('arts_students_users/', CultureArtsListView.as_view(), name="list_arts"),
+    path('illustrations_asked/', ListIllustrationsAsked.as_view(), name='illustrations_asked'),
+    path('illustrations_asked/update/<int:pk>/', UpdateIllustration.as_view(), name='update_image_illustration'),
+    path('illustrations_asked/detail/<int:pk>/', DetailIllustration.as_view(), name="detail_illustration"),
 
 ]

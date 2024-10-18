@@ -26,6 +26,7 @@ class Essay(models.Model):
                               [FileExtensionValidator(allowed_extensions=
                                                        ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])], blank=True, null=True)
     total_grade = models.IntegerField(blank=True, null=True)
+    is_finished = models.BooleanField(null=True, blank=True)
 
 
     audio_feedback = models.FileField(upload_to="audio/", 

@@ -45,7 +45,12 @@
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'review_essay:list_essay_editors' %}">Corrigir</a>
       </li>
+      {% endif %}
+      {% if user.is_artist %}
 
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'posts:illustrations_asked' %}">Ilustrar</a>
+      </li>
       {% endif %}
 
 

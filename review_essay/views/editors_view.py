@@ -5,8 +5,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
-
 class ListEssayForEditors(ListView):
     model = Essay
     template_name = 'review_essay/review_essay_list.html'
@@ -21,7 +19,8 @@ class ListEssayForEditors(ListView):
 class UpdateEssayEditor(UpdateView):
     model = Essay
     fields = ["c1", "about_c1", "c2", "about_c2", "c3", "about_c3", "c4", "about_c4", "c5",
-               "about_c5", "correction_image", "audio_feedback", 'is_reviewed', 'total_grade'] 
+               "about_c5", "correction_image", "audio_feedback", 
+               'is_reviewed', 'is_finished', 'total_grade'] 
     template_name = "review_essay/review_essay_edit_essay.html"
     success_url = reverse_lazy('review_essay:list_essay_editors')
 
@@ -32,8 +31,9 @@ class UpdateEssayEditor(UpdateView):
 
     def form_valid(self, form): 
         if 'mark_as_reviewed' in self.request.POST:
+            form.instance.is_reviewed = True    
+        elif 'mark_as_finished' in self.request.POST:
+            form.instance.is_finished = True
             form.instance.is_reviewed = True
-        else:
-            form.instance.is_reviewed = False 
-
+      
         return super().form_valid(form)

@@ -6,13 +6,12 @@ from django.db.models import Q
 
 class CultureArtsListView(ListView):
     model = Post
-    template_name = "posts/culture/culture_arts.html"
-    
+    template_name = "posts/culture/culture_arts.html"    
     def get_queryset(self):
         queryset = Post.objects.filter(section_name__section_name="cultura_lazer",
                                        section_name__subsection_name="artes",
                                         textual_genre__textual_genre__in=['ilustracao', 'tirinha']
-                                      , status="approved"  ).order_by('-created')
+                                      , status="approved").order_by('-created')
         form = CultureForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get('filter_by')
@@ -31,10 +30,17 @@ class CultureArtsListView(ListView):
                 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['culture_arts_posts'] = self.get_queryset()
         context['form'] = CultureForm(self.request.GET)
 
+        context['culture_arts_posts'] = self.get_queryset()
+        context['illustrated_posts'] = Post.objects.filter(            
+            is_illustration_done=True 
+        )
         return context 
+
+
+
+
 
 
 

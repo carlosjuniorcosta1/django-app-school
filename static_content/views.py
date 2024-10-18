@@ -30,21 +30,12 @@ class IndexListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_posts'] = Post.objects.exclude(section_name__section_name='opiniao').filter(status="approved").order_by('-created')[:10]
-        context['carro_final_posts'] = Post.objects.exclude(section_name__section_name='opiniao').order_by('-created')[10:13]
-
-
-        context['health_posts'] = Post.objects.filter(section_name__section_name='saude').filter(status="approved").order_by('-created')[:4]
-        context['brazil_posts'] = Post.objects.filter(section_name__section_name="brasil").filter(status="approved").order_by('-created')[:2]
-        context['culture_posts'] = Post.objects.filter(section_name__section_name="cultura_lazer").filter(status="approved").order_by('-created')[:2]
-        context['games_posts'] = Post.objects.filter(section_name__section_name="cultura_lazer",
-                                                     section_name__subsection_name="games").filter(status="approved").order_by('-created')[:2]
-        context['literature_posts'] = Post.objects.filter(section_name__section_name="cultura_lazer",
-                                                     section_name__subsection_name="literatura").filter(status="approved").order_by('-created')[:2]
-        context['cinema_tv_posts'] = Post.objects.filter(section_name__section_name="cultura_lazer",
-                                                     section_name__subsection_name="cinema_tv").filter(status="approved").order_by('-created')[:2]
-        context['opinion_posts'] = Post.objects.filter(section_name__section_name='opiniao').filter(status="approved").order_by('-created')[:5]                           
-        context['world_posts'] = Post.objects.filter(section_name__section_name='mundo').filter(status="approved").order_by('-created')[:2]
+        context['latest_posts'] = Post.objects.exclude(section_name__section_name='opiniao').filter(status="approved").order_by('-created')[:4]
+        context['carro_one_posts'] = Post.objects.exclude(section_name__section_name='opiniao').order_by('-created')[4:7]
+        context['opinion_posts'] = Post.objects.filter(section_name__section_name='opiniao').filter(status="approved").order_by('-created')[:5]
+        context['latest_posts_second_row'] = Post.objects.exclude(section_name__section_name='opiniao').filter(status="approved").order_by("-created")[7:11]
+        context['carro_second_posts'] = Post.objects.exclude(section_name__section_name='opiniao').order_by('-created')[11:14]
+                 
         context['form'] = IndexForm(self.request.GET) 
         return context 
     

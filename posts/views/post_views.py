@@ -10,7 +10,7 @@ from django.db.models import Q
 
 class PostCreateView(CreateView, LoginRequiredMixin):
     model = Post
-    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name', 'image_illustrator']
+    fields = ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name', 'image_illustrator', 'is_asking_for_illustration']
     success_url = reverse_lazy("posts:detail_text")
 
     def form_valid(self, form):
@@ -85,7 +85,8 @@ class PostDetailView(DetailView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 'section_name', 'image_illustrator']
+    fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 
+               'section_name',  "is_asking_for_illustration"]
     
     def get_success_url(self):
         print(f"Post updated with ID:{ self.object.pk}")  

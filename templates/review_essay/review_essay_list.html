@@ -1,31 +1,47 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_review_essay.css' %}">
+
+{% endblock %}
 
 {% block content %}
+
 {% if request.user.is_essay_editor %}
 
-<div class="container mt-5">
-    <h2 class="mb-4">Redações submetidas</h2>
+<div class="container mt-5" id="desktop-version">
+    <h2 class="mb-4">Correções</h2>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Usuário</th>
-                <th>Tema da redação</th>
-                <th>Status</th>
+                <th class="border-right">Usuário</th>
+                <th class="border-right">Tema</th>
+                <th class="border-right">Correção</th>
+                <th>Enviado</th>
             </tr>
         </thead>
         <tbody>
             {% for essay in essays %}
             <tr>
-                <td>
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.user.first_name }} {{essay.user.last_name}}</a> <!-- Nome do usuário -->
+                <td class="border-right" style="max-width: 60px;">
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.user.first_name }} {{ essay.user.last_name }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.essay_topic }}</td> </a>    <!-- Tema da redação -->
-                <td>
-                    {% if essay.is_reviewed %}        <!-- Verifica se está corrigida -->
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-success"> <i class="fas fa-check-circle"></i> Corrigida </a>
+                <td class="border-right">
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}">{{ essay.essay_topic }}</a>
+                </td>
+                <td class="border-right" style="max-width: 80px;">
+                    {% if essay.is_reviewed %}
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-success"><i class="fas fa-check-circle"></i> Iniciou</a>
                     {% else %}
-                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-danger" >   <i class="fas fa-exclamation-circle"></i> Não Corrigida </a>
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-danger"><i class="fas fa-exclamation-circle"></i> Não</a>
+                    {% endif %}
+                </td>
+                <td style="max-width: 80px;">
+                    {% if essay.is_finished %}
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-success"><i class="fas fa-check-circle"></i> Sim</a>
+                    {% else %}
+                    <a href="{% url 'review_essay:detail_essay' essay.id %}" class="text-danger"><i class="fas fa-exclamation-circle"></i> Não</a>
                     {% endif %}
                 </td>
             </tr>
@@ -33,6 +49,41 @@
         </tbody>
     </table>
 </div>
+
+<!-- Cards para a versão mobile -->
+<div class="container mt-4 d-sm-block d-md-none" id="mobile-cards">
+    <h3 class="mb-3 text-center">Correções</h3>
+    <div class="row">
+        {% for essay in essays %}
+        <div class="col-12 mb-3">
+            <div class="card">
+                <a href="{% url 'review_essay:detail_reviewed_essay' essay.id %}"><div class="card-body">
+                    <h5 class="card-subtitle mb-2 "><i class="fas fa-pencil-alt"></i>
+                        {{ essay.essay_topic }}</h5>
+                    <p class="card-title"><i class="fas fa-user"></i>
+                        {{ essay.user.first_name }} {{ essay.user.last_name }}<p>
+                 
+                    <p class="card-text">
+                        {% if essay.is_reviewed %}
+                        <span class="text-success"><i class="fas fa-check-circle"></i> Correção iniciada</span>
+                        {% else %}
+                        <span class="text-danger"><i class="fas fa-exclamation-circle"></i> Aguardando correção</span>
+                        {% endif %}
+                    </p>
+                    <p class="card-text">
+                        {% if essay.is_finished %}
+                        <span class="text-success"><i class="fas fa-check-circle"></i> Enviou</span>
+                        {% else %}
+                        <span class="text-danger"><i class="fas fa-exclamation-circle"></i> Não enviou</span>
+                        {% endif %}
+                    </p>
+                </div></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% else %}
 
 <div class="alert alert-warning text-center" role="alert">
@@ -43,3 +94,5 @@
 {% endif %}
 
 {% endblock %}
+
+

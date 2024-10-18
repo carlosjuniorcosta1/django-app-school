@@ -46,8 +46,8 @@ class ListUserEssay(ListView):
     template_name = "review_essay/review_essay_list_user_essays.html"
 
     def get_queryset(self):
-        queryset = Essay.objects.filter(user=self.request.user, is_reviewed=True)
-        return super().get_queryset()
+        queryset = Essay.objects.filter(user=self.request.user, is_finished=True)
+        return queryset
     
 class DetailUserReviewedEssay(DetailView):
     template_name = 'review_essay/review_detail_corrected_essay.html'

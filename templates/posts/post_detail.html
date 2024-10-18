@@ -115,9 +115,25 @@
 
 {% if post.image %}
     <div class="text-center">
-        <figure>
+        <figure class="">
             <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-2 img-border-radius">
+            {% if post.is_illustration_done %}
+            <figcaption class="mt-2">Ilustrado por {{ post.illustrator.first_name}} {{post.illustrator.last_name}}
+                {% if post.illustrator.user_instagram %}
+                <a href="{{post.illustrator.user_instagram }}" target="_blank" class="mx-1">
+                    <i class="fab fa-2x fa-instagram"></i>  <!-- Ícone do Instagram -->
+                </a>
+                {% endif %}
+                {% if post.illustrator.user_linkedin %}
+                <a href="{{post.illustrator.user_linkedin}}" target="_blank" class="mx-1">
+                    <i class="fab fa-2x fa-linkedin"></i>  <!-- Ícone do LinkedIn -->
+                </a>
+                {% endif %}
+            </figcaption>
+            {% else %}
             <figcaption>{{ post.title }}</figcaption>
+            {% endif %}
+
         </figure>
     </div>
 {% endif %}
@@ -145,6 +161,10 @@
 {% if user.is_authenticated and user == post.user %}
     <a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
     <a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
+{% endif %}
+{% if user.is_artist and post.is_illustration_done == False  and post.is_asking_for_illustration == True%}
+<a href="{% url 'posts:update_image_illustration' post.id %}" class="fas fa-2x fa-paint-brush mr-2 ml-2 p-2" title="Ilustrar a publicação de {{user.first_name}} {{user.last_name}}"></a>
+
 {% endif %}
 </div>
 

@@ -94,11 +94,13 @@
                             {% if user.is_artist %}
                             <p><strong></strong>Ilustrador(a)</p>
                             {% endif %}
+                            {% if user.is_essay_editor %}
+                            <p><strong></strong>Corretor(a)</p>
+                            {% endif %}
                             {% if user.is_premium %}
                             <p><strong>Acesso e correções: Usuário premium</strong></p>
                             {% else %}    
-                            <p>Acesso e correções: limitado</p>
-                    
+                            <p>Acesso e correções: limitado</p>                    
                             {% endif %}
                         </div>
                     </div>
