@@ -123,14 +123,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleHideTextField() {
         const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
         const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
-        const selectAskForIllustration = document.getElementById('ask-for-illustration')
+
         if (selectedGenre === 'tirinha' || selectedGenre === 'ilustração') {
             mainTextField.style.display = 'none';
-            subtitleSelect.style.display = 'none'; 
+            subtitleSelect.style.display = 'none';
         } else {
             mainTextField.style.display = 'block';
             subtitleSelect.style.display = 'block';
-
         }
 
         if (selectedSection === 'ilustrações') {
@@ -221,11 +220,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById("submit-button").addEventListener("click", function(event) {
-    const imageInput = document.getElementById("id_image");
-    const imageFile = imageInput.files.length; // 
+    const imageInput = document.querySelector(".custom-file a");
+    
+
+
+    const imageFile = imageInput.files.length; // Verifica se há um arquivo
+    console.log(imageInput)
+
 
     if (imageFile === 0) {
-        event.preventDefault(); 
+        event.preventDefault(); // Impede o envio do formulário
         
         // Mostra a mensagem de erro
         const errorMessage = document.getElementById("image-error-message");
@@ -236,29 +240,3 @@ document.getElementById("submit-button").addEventListener("click", function(even
         errorMessage.style.display = "none"; // Esconde a mensagem de erro
     }
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const genreSelect = document.getElementById('id_textual_genre');
-    const sectionSelect = document.getElementById('id_section_name')
-    const askForIllustration = document.getElementById('ask-for-illustration');
-
-    function toggleIllustrationMenu() {
-        const selectedGenreValue = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
-        const selectedSectionValue = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase()
-        if (selectedGenreValue === "tirinha" || selectedGenreValue === "ilustração") {
-            askForIllustration.style.display = "none";  
-        } else {
-            askForIllustration.style.display = "block";  
-        }
-        if(selectedSectionValue === "ilustrações"){
-            askForIllustration.style.display = "none"; 
-        }
-    }
-
-    genreSelect.addEventListener('change', toggleIllustrationMenu);
-    sectionSelect.addEventListener('change', toggleIllustrationMenu);
-
-    toggleIllustrationMenu();
-});
-

@@ -1,21 +1,23 @@
-<nav class="navbar navbar-expand-lg bg-light menu-items">
-      
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mx-auto justify-content-center">
-        <li class="nav-item active nav-item-divider">
-          <a class="nav-link" href="{% url 'index' %}">Início</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light menu-items">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        </li>
-        <li class="nav-item active nav-item-divider">
-          <a class="nav-link" href="{% url 'posts:list_texts' %}">Últimas</a>
-        </li>
-          
-        {% if user.is_authenticated %}
-        <li class="nav-item active nav-item-divider">
-          <a class="nav-link" href="{% url 'posts:create_post' %}">Publicar</a>
-        </li>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mx-auto justify-content-center">
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'index' %}">Início</a>
+      </li>
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'posts:list_texts' %}">Últimas</a>
+      </li>
+
+      {% if user.is_authenticated %}
+      <li class="nav-item active nav-item-divider">
+        <a class="nav-link" href="{% url 'posts:create_post' %}">Publicar</a>
+      </li>
       {% endif %}
-  
+
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'posts:index_opinion' %}">Opinião</a>
       </li>
@@ -25,7 +27,6 @@
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'posts:index_world' %}">Mundo</a>
       </li>
-     
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'posts:index_culture' %}">Cultura</a>
       </li>
@@ -35,39 +36,28 @@
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'quizes:list-quiz-dj' %}">Enem</a>
       </li>
-
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'review_essay:list_user_essays' %}">Redação</a>
       </li>
 
       {% if user.is_essay_editor %}
-
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'review_essay:list_essay_editors' %}">Corrigir</a>
       </li>
       {% endif %}
-      {% if user.is_artist %}
 
+      {% if user.is_artist %}
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'posts:illustrations_asked' %}">Ilustrar</a>
       </li>
       {% endif %}
 
-
-
-
       <li class="nav-item active nav-item-divider">
         <a class="nav-link" href="{% url 'api_bncc:list-bncc-el-school' %}">Professor</a>
       </li>
       <li class="nav-item active nav-item-divider">
-        <a class="nav-link" href="{% url 'about' %}"> Sobre <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'about' %}">Sobre <span class="sr-only">(current)</span></a>
       </li> 
-
-    </div>
-  </nav>
-
-
-   
- 
- 
-  
+    </ul>
+  </div>
+</nav>

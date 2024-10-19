@@ -1,46 +1,98 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_culture_arts.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <!-- Seção Cultura e Artes -->
-    <h2 class="mb-4">Cultura e Artes</h2>
-    <div class="row">
-        {% for post in culture_arts_posts %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.subtitle }}</p>
-                    <a href="{% url 'posts:detail_text' post.pk %}" class="btn btn-primary">Ver mais</a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Publicado em {{ post.created|date:"d/m/Y" }} por {{ post.user.first_name }}</small>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p>Sem posts culturais e de artes disponíveis no momento.</p>
-        {% endfor %}
-    </div>
-
-    <!-- Seção Ilustrações Recentes -->
-    <h2 class="mt-5 mb-4">Ilustrações solicitadas</h2>
+<div class="container-fluid mt-5">
+    <h2 id="animated-title" class="animated-title text-start"></h2>
     <div class="row">
         {% for post in illustrated_posts %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <img src="{{ post.image.url }}" class="card-img-top" alt="Ilustração do post">
-                <div class="card-body">
-                    <p class="card-text">Ilustrado por {{ post.illustrator.first_name }} {{ post.illustrator.last_name }}</p>
+        {% if forloop.counter < 9 %}
+        <div class="col-md-4 mb-4 animation-card border-bottom p-2">
+            <div class="card shadow">
+                
+                <!-- Cabeçalho verde do card -->
+                <div class="card-header bg-success text-white text-center">
+                    <h5 class="mb-0">{{post.textual_genre}} de {{post.user.first_name}} {{post.user.last_name}}</h5>
                 </div>
-                <div class="card-footer">
-                    <small class="text-muted">Ilustrado em {{ post.updated|date:"d/m/Y" }}</small>
+
+                <div class="card hover-3d">
+                    <a href="{% url 'posts:detail_text' post.id %}">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="Ilustração do post">
+                    </a>
+                    <div class="card-footer">
+                        <p class="card-text text-center">
+                        Ilustração de {{ post.illustrator.first_name }} {{ post.illustrator.last_name }}
+                        {% if post.illustrator.user_instagram %}
+                        <a href="{{ post.illustrator.user_instagram }}" target="_blank" class="mx-1">
+                            <i class="fab fa-2x fa-instagram"></i>
+                        </a>
+                        {% endif %}
+                        {% if post.illustrator.user_linkedin %}
+                        <a href="{{ post.illustrator.user_linkedin }}" target="_blank" class="mx-1">
+                            <i class="fab fa-2x fa-linkedin"></i>
+                        </a>
+                        {% endif %}
+
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endif %}
+
         {% empty %}
         <p>Sem ilustrações recentes disponíveis no momento.</p>
         {% endfor %}
     </div>
+
+    {% if culture_arts_posts_comic %}
+    <h2 id="animated-title-2" class="animated-title-comic mt-2"></h2>
+
+    <div class="row">
+        {% for post in culture_arts_posts_comic %}
+        {% if forloop.counter < 9 %}
+
+        <div class="col-md-6 mb-2 animation-card-2">
+            <div class="card hover-3d mb-3">
+                <!-- Cabeçalho verde do card para a seção Comic -->
+                <div class="card-header  text-center">
+                    <h5 class="mb-0">{{post.title}}</h5>
+                </div>
+                <a href="{% url 'posts:detail_text' post.id %}">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="Ilustração do post">
+                </a>
+                <div class="card-footer">
+                    <p class="card-text text-center">
+                    Por {{ post.illustrator.first_name }} {{ post.illustrator.last_name }}
+                    {% if post.illustrator.user_instagram %}
+                    <a href="{{ post.illustrator.user_instagram }}" target="_blank" class="mx-1">
+                        <i class="fab fa-2x fa-instagram"></i>
+                    </a>
+                    {% endif %}
+                    {% if post.illustrator.user_linkedin %}
+                    <a href="{{ post.illustrator.user_linkedin }}" target="_blank" class="mx-1">
+                        <i class="fab fa-2x fa-linkedin"></i>
+                    </a>
+                    {% endif %}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% empty %}
+        <p>Sem ilustrações recentes disponíveis no momento.</p>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
+{% endblock %}
+
+{% block script_js %}
+<script src="{% static 'admin/js/script_culture_arts.js' %}"></script>
 {% endblock %}

@@ -34,7 +34,7 @@ urlpatterns = [
     path('food_recipe_news/', CultureFoodListView.as_view(), name="list_food"),
     path('arts_students_users/', CultureArtsListView.as_view(), name="list_arts"),
     path('illustrations_asked/', ListIllustrationsAsked.as_view(), name='illustrations_asked'),
-    path('illustrations_asked/update/<int:pk>/', UpdateIllustration.as_view(), name='update_image_illustration'),
+    path('illustrations_asked_update/<int:pk>/', UpdateIllustration.as_view(), name='update_image_illustration'),
     path('illustrations_asked/detail/<int:pk>/', DetailIllustration.as_view(), name="detail_illustration"),
 
 ]

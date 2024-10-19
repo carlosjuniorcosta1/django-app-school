@@ -32,10 +32,18 @@ class CultureArtsListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = CultureForm(self.request.GET)
 
-        context['culture_arts_posts'] = self.get_queryset()
+        context['culture_arts_posts_comic'] = Post.objects.filter(section_name__section_name="cultura_lazer",
+                                       section_name__subsection_name="artes",
+                                        textual_genre__textual_genre__in=['tirinha']
+                                      , status="approved").order_by('-created')
+        context['culture_arts_posts_illustration'] = Post.objects.filter(section_name__section_name="cultura_lazer",
+                                       section_name__subsection_name="artes",
+                                        textual_genre__textual_genre__in=['ilustracao']
+                                      , status="approved").order_by('-created')
         context['illustrated_posts'] = Post.objects.filter(            
-            is_illustration_done=True 
-        )
+            is_illustration_done=True )
+        
+
         return context 
 
 

@@ -32,6 +32,8 @@ class PostCreateView(CreateView, LoginRequiredMixin):
         context['is_artist'] = user.is_artist
         context['is_columnist'] = user.is_columnist
         context['is_artist'] = user.is_artist
+        context['is_post_created'] = hasattr(self, 'object') and self.object is not None
+
         
         return context
     def get_success_url(self):
@@ -87,6 +89,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 
                'section_name',  "is_asking_for_illustration"]
+    template_name = 'posts/post_update.html'
     
     def get_success_url(self):
         print(f"Post updated with ID:{ self.object.pk}")  
@@ -98,6 +101,10 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         self.object.updated = timezone.now()  
         self.object.save()
         return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_illustration_done'] = self.object.is_illustration_done 
+        return context
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post

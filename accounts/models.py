@@ -16,6 +16,8 @@ class CustomUser(AbstractUser):
     user_youtube = models.URLField( null=True, blank=True)
     user_facebook = models.URLField(null=True, blank=True)
     is_premium = models.BooleanField(null=True, blank=True)
+    has_accepted_terms = models.BooleanField(default=False)
+
 
 
     def __str__(self):

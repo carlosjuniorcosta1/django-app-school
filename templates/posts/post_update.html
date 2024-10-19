@@ -1,0 +1,153 @@
+{% load static %}
+{% load form_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'admin/css/styles_post_form.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+{% block content %}
+
+<div class="container py-5">
+    <h2 class="text-center mb-4"><i class="fas fa-edit"></i> Editar seu texto</h2>
+
+
+<form action="" method="POST" class="form-group" id="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label for="id_title" class="form-label">
+            <i class="fas fa-heading"></i> Título
+        </label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+            </div>
+            {{ form.title|add_class:"form-control form-control-lg" }}
+        </div>
+    </div>
+    
+    <div class="mb-4" id="box-subtitle">
+        <label for="id_subtitle" class="form-label">
+            <i class="fas fa-quote-right"></i> Subtítulo 
+        </label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+            </div>
+            {{ form.subtitle|add_class:"form-control form-control-lg" }}
+        </div>
+    </div>
+    <div class="mb-4" data-is-artist="{{is_artist}}" id="idArtist">
+        <label for="id_textual_genre" class="form-label"><i class="fas fa-book"></i> Gênero Textual</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
+            </div>
+            {{ form.textual_genre|add_class:"form-control" }}
+        </div>
+    </div>
+    
+    <!-- Exibição do gênero selecionado -->
+    <div id="selected-genre" class="mt-3" style="display: none;">
+       <span id="genre-display"></span>
+    </div>
+    
+
+ 
+    <div class="mb-4">
+        <label for="id_section_name" class="form-label"><i class="fas fa-newspaper"></i> Seção</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-columns"></i></span>
+            </div>
+            {{ form.section_name|add_class:"form-control" }}
+        </div>
+    </div>
+
+    <div class="mb-4 hide-ilustrator" id="box-main-text">
+        <label for="id_main_text" class="form-label">
+            <i class="fas fa-keyboard"></i> Digite seu texto
+        </label>
+        {{ form.main_text|add_attrs:"class=form-control mb-2 rounded border shadow bg-light,id=id_main_text" }}
+    </div>
+    {% if is_illustration_done == False %}
+    illustration is not done 
+
+    {% endif %}
+    
+    <div class="custom-file mb-4 hide-ilustrator" >
+        <label for="id_image" class="btn btn-outline-dark">
+            <i class="fas fa-upload"></i> Escolher imagem
+        </label>
+        {{ form.image|add_attrs:"class=custom-file-input,id=id_image" }}
+        <h5 id="image-filename" class="mt-2"></h5> 
+    </div>
+    <div id="image-error-message" class="alert alert-danger mt-3" style="display: none;">
+        Por favor, selecione uma imagem antes de enviar.
+    </div>
+
+    <div class="text-right hide-ilustrator " id="submit-button">
+        <button type="submit" class="btn btn-dark">
+            <i class="fas fa-paper-plane"></i> Enviar
+        </button>  
+    </div>
+    {% if is_illustration_done == False %}
+    <div class="mb-4">
+        <label class="form-label"><i class="fas fa-paint-brush"></i>Solicitar ilustração</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="is_asking_for_illustration" id="id_asking_yes" value="True">
+            <label class="form-check-label" for="id_asking_yes">
+                Sim
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="is_asking_for_illustration" id="id_asking_no" value="False">
+            <label class="form-check-label" for="id_asking_no">
+                Não
+            </label>
+        </div>
+    </div>
+    {% endif %}
+
+
+</form>  
+
+
+
+
+<div id="preview-container" class="mt-4">
+    <h4 class="font-title-preview" id="preview-title"></h4>
+    <h5 class="font-subtitle-preview" id="preview-subtitle"></h5>
+    <small>{{ first_name|title }} {{ last_name|title }}</small> 
+    <p class="font-paragraph-preview" id="preview-text"></p>
+    <div class="d-flex justify-content-center text-center">
+        <img id="preview-image" class="img-fluid" src="#" alt="Preview da imagem" style="display: none; max-width: auto; height: auto;">
+    </div>
+</div>
+
+<div id="ingredients-container" class="mt-4" style="display: none;">
+    <h5 class="">Ingredientes:</h5>
+    <ul id="ingredients-preview" class="list-unstyled"></ul>
+</div>
+
+<div id="preparation-container" class="mt-4" style="display: none;">
+    <h5><i class="fas fa-oven"></i> Modo de Preparo:</h5>
+    <ul id="preparation-preview" class="list-unstyled"></ul>
+</div>
+
+</div>
+
+    
+{% endblock %}
+   
+{% block script_js %}
+<script src="{% static 'admin/js/script_update_post.js' %}"></script>
+{% endblock %}

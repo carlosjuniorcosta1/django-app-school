@@ -109,7 +109,9 @@
 
 <hr>
 <h2 class="font-title-preview mt-3">{{post.title}}</h2>
+{% if post.subtitle %}
 <p class="font-subtitle-preview">{{post.subtitle}}</p>
+{% endif %}
 <small>em {{post.created}}</small> <small class="font-count-views">{{post.textual_genre}}</small>
 <br><br>
 
@@ -166,6 +168,7 @@
 <a href="{% url 'posts:update_image_illustration' post.id %}" class="fas fa-2x fa-paint-brush mr-2 ml-2 p-2" title="Ilustrar a publicação de {{user.first_name}} {{user.last_name}}"></a>
 
 {% endif %}
+
 </div>
 
 

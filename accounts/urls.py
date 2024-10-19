@@ -6,6 +6,7 @@ from .views.update_view import UpdateProfileView
 from .views.dashboard_view import UserPostsListView
 from .views.list_post_user_view import UserSharedPostsListView
 
+
 urlpatterns = [
     path('login', login_logout_view.login, name='login'),
     path('register', login_logout_view.register, name='register'),
@@ -20,6 +21,8 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
     path('update_profile',UpdateProfileView.as_view(), name="update_profile" ),
     path('user/<int:user_id>/posts/', UserSharedPostsListView.as_view(template_name='user_posts/list_user_posts.html'), name="list_user_posts" ),
+    path('user/terms/', login_logout_view.terms_of_acceptance, name="terms_of_acceptance"),
+
 
 
 

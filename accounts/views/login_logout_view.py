@@ -15,6 +15,12 @@ def register(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
         user_picture = request.FILES.get('user_picture')
+        has_accepted_terms = bool(request.POST.get('has_accepted_terms'))
+
+        if not has_accepted_terms:
+            messages.error(request, "Você deve aceitar os termos e condições.")
+            return render(request, 'registration/register.html')
+
         if password == password2:
             if User.objects.filter(username= username).exists():
                 messages.error(request, "Usuário já existente")
@@ -22,14 +28,17 @@ def register(request):
 
             if User.objects.filter(email=email).exists():
                     messages.error(request, "Email já está cadastrado")
-                    return render(request, 'registration/register.html')
+                    return render(request, 'registration/register.html')         
+
+            
             else:
                 user = User.objects.create_user(
                         username=username, 
                         password=password,
                         email=email,
                         first_name=first_name,
-                        last_name=last_name
+                        last_name=last_name,
+                        has_accepted_terms = has_accepted_terms
                     )
                 if user_picture:
                     user.user_picture = user_picture
@@ -68,5 +77,5 @@ def logout(request):
     return render(request, 'static_content/index.html')
 
 
-
-    
+def terms_of_acceptance(request):
+    return render(request, 'registration/term_of_acceptance.html')
