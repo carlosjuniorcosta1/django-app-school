@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="desktop-version">
 <div class="row">
   <div class="col-md-4 col-sm-12">
     <form action="{% url 'posts:list_texts' %}" method="GET" class="form-group">
@@ -165,6 +166,100 @@
           {% endif %}
         </ul>
       </nav>
+    </div>
+
+    <!--aqui eu pus a mobile version-->
+<div class="mobile-version" >
+      <div class="">
+        <div class="col-12">
+          <form action="{% url 'posts:list_texts' %}" method="GET" class="form-group">
+            <div class="form-row align-items-center">
+              <div class="col">
+                {{ form.filter_by|add_attrs:"class=form-control" }}
+              </div>
+              <div class="col">
+                {{ form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar" }}
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Filtrar" class="btn btn-success">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="row">
+        {% for text in object_list %}
+          <div class="col-12 mb-3">
+            <div class="card">
+              <div class="card-body d-flex justify-content-between">
+                <div>
+                  <h5 class="card-title">
+                    <a href="{% url 'posts:detail_text' text.id %}" class="font-weight-bold">{{ text.title|slice:":50" }}...</a>
+                  </h5>
+                  <p class="card-text">
+                    <small class="text-muted">por {{ text.user }}</small>
+                  </p>
+                  <p class="card-text">
+                    <span class="badge badge-secondary">{{ text.textual_genre }}</span>
+                    <span class="badge badge-info">{{ text.section_name }}</span>
+                  </p>
+                  {% if user.is_authenticated and user == text.user %}
+                  <a href="{% url 'posts:update_post' text.id %}" class="btn btn-sm btn-dark">
+                    <i class="fas fa-edit"></i> Editar
+                  </a>
+                  {% endif %}
+                  <p class="card-text text-muted">
+                    {% if text.updated %}
+                      Atualizado em: {{ text.updated|date:"d/m/Y - H:i" }}
+                    {% else %}
+                      Publicado em: {{ text.created|date:"d/m/Y - H:i" }}
+                    {% endif %}
+                  </p>
+                </div>
+                <div>
+                  {% if text.user.user_picture %}
+                  <img src="{{ text.user.user_picture.url }}" alt="Imagem de {{ text.user }}" class="img-avatar-post-list" >
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <nav>
+        <ul class="pagination justify-content-center page-form">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link page-form btn btn-dark" href="?page=1" aria-label="Primeira">
+              <span aria-hidden="true">&laquo;&laquo;</span> Primeira
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-form btn btn-dark" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span> Anterior
+            </a>
+          </li>
+          {% endif %}
+      
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link page-form btn btn-dark" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+              <span aria-hidden="true">&raquo;</span> Próxima
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-form btn btn-dark" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+              <span aria-hidden="true">&raquo;&raquo;</span> Última
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+
     
 
 {% endblock %}

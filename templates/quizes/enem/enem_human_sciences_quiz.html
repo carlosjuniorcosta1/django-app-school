@@ -6,13 +6,10 @@
 <link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
 {% endblock %}
 
-{% block script_js %}
-<script src="{% static 'admin/js/quiz_dj.js' %}"></script>
-{% endblock %} 
 
 {% block content %}
 
-<div class="row">
+<div class="row" data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
     <div class="col-md-4 col-sm-12">
       <form action="{% url 'quizes:enem-human-sciences-quiz' %}" method="GET" class="form-group">
         <div class="form-row align-items-center">
@@ -30,6 +27,11 @@
     </div>
 </div>
 
+<div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
+    <strong>Atenção!</strong> Você não é premium ainda. Para continuar com este quiz, por favor, adquira a assinatura premium.
+</div>
+
+
 <div class="container mt-2">
     <div class="row mb-2">
         <div class="col-12 d-flex justify-content-between align-items-center">
@@ -44,7 +46,13 @@
         {% for question in questions %}
         <div class="mb-1 text-question card">
             <div class="card-body format-questions">
-                <p>{{ question.id }}- <span>(Enem-{{ question.year }})</span> {{ question.context }}</p>
+                {% if not is_filter_used %}
+                <p>{{ forloop.counter0|add:questions.start_index }} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+                {% else %}
+                <p>{{ forloop.counter}} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+                {% endif %}
+      
+
                 {% if question.has_image %}
                 {% for img_url in question.get_image_urls %}
                     <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
@@ -70,6 +78,7 @@
             </div>
         </div>
         {% endfor %}
+    
         <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
     </form>
 
@@ -115,3 +124,7 @@
 </div>
 
 {% endblock %}
+
+{% block script_js %}
+<script src="{% static 'admin/js/quiz_dj.js' %}"></script>
+{% endblock %} 

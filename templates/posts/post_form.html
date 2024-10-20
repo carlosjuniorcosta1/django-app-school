@@ -80,11 +80,8 @@
                 </label>
                 {{ form.main_text|add_attrs:"class=form-control mb-2 rounded border shadow bg-light,id=id_main_text" }}
             </div>
-            {% if is_illustration_done == False %}
-            illustration is not done 
-
-            {% endif %}
-            
+       
+            sumir esse menu se o textual genre selecionado for tirinha ou ilustracao
             <div class="custom-file mb-4 hide-ilustrator" >
                 <label for="id_image" class="btn btn-outline-dark">
                     <i class="fas fa-upload"></i> Escolher imagem

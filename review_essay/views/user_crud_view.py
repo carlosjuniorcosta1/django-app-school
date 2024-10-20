@@ -2,6 +2,8 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from ..models import Essay
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
 
 
 
@@ -41,13 +43,20 @@ class DetailEssay(DetailView):
     context_object_name = "essay"
 
 
-class ListUserEssay(ListView):
+class ListUserEssay(LoginRequiredMixin,ListView ):
     model = Essay
     template_name = "review_essay/review_essay_list_user_essays.html"
+    login_url = 'accounts:login'
 
-    def get_queryset(self):
+    def get_queryset(self):      
         queryset = Essay.objects.filter(user=self.request.user, is_finished=True)
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Verificando se o usuário é premium
+        context['is_premium'] = self.request.user.is_premium
+        return context
     
 class DetailUserReviewedEssay(DetailView):
     template_name = 'review_essay/review_detail_corrected_essay.html'

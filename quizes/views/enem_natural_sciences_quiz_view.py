@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemNaturalSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_natural_sciences_quiz.html"
-    paginate_by = 30   
+    paginate_by = 2 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=4)
         form = QuestionForm(self.request.GET)
@@ -35,18 +35,29 @@ class EnemNaturalSciencesQuizListView(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         questions = self.get_queryset()
-        paginator = Paginator(questions, self.paginate_by)
-        page = self.request.GET.get('page')
-        try:
-            questions_paginated = paginator.page(page)
-        except PageNotAnInteger:
-            questions_paginated = paginator.page(1)
-        except EmptyPage:
-            questions_paginated = paginator.page(paginator.num_pages)
+        form = QuestionForm(self.request.GET)        
+
+        is_filter_used = form.is_valid() and (form.cleaned_data.get('filter_by') and form.cleaned_data.get('search_term'))
+        if is_filter_used:
+            context['questions'] = questions
+        else:
+
+            paginator = Paginator(questions, self.paginate_by)
+            page = self.request.GET.get('page')
+            try:
+                questions_paginated = paginator.page(page)
+            except PageNotAnInteger:
+                questions_paginated = paginator.page(1)
+            except EmptyPage:
+                questions_paginated = paginator.page(paginator.num_pages)
         
-        context['questions'] = questions_paginated
+            context['questions'] = questions_paginated
+
         context['form'] = QuestionForm(self.request.GET)
         context['total_questions'] = questions.count()
+        context['is_filter_used'] = is_filter_used
+
+
  
         return context
     

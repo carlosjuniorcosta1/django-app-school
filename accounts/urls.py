@@ -6,6 +6,7 @@ from .views.update_view import UpdateProfileView
 from .views.dashboard_view import UserPostsListView
 from .views.list_post_user_view import UserSharedPostsListView
 
+app_name = 'accounts'
 
 urlpatterns = [
     path('login', login_logout_view.login, name='login'),

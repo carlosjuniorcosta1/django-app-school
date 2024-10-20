@@ -34,3 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    let preVerificationDiv = document.getElementById('preVerification');
+    let isPremium = preVerificationDiv.getAttribute('data-is-premium') 
+    let buttonSubmit = document.getElementById('buttonSubmit')
+
+    let noPremium = document.getElementById('no-premium')
+
+    console.log("Valor de isPremium:", isPremium);
+    
+
+    if (isPremium !== 'true') {
+        noPremium.style.display = 'block';
+        buttonSubmit.style.display = 'none';  
+
+        return; // 
+    }
+});

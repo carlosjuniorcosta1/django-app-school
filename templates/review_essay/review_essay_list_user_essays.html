@@ -7,6 +7,10 @@
 {% endblock %}
 
 {% block content %}
+
+{% if is_premium %}
+
+
 <div class="container-fluid">
     <h2 class="mt-4 mb-3">
         <i class="fas fa-pencil-alt"></i> Redaçoes corrigidas
@@ -201,4 +205,23 @@
         });
     });
 </script>
+{% else %}
+<div class="alert alert-info d-flex align-items-center p-4 shadow-lg" role="alert" style="border-radius: 10px;">
+    <div>
+        <!-- Ícone do Font Awesome -->
+        <i class="fas fa-star text-warning fs-3 me-3"></i>
+    </div>
+    <div>
+        <h5 class="mb-2 fw-bold">Benefício Premium</h5>
+        <p class="mb-0">
+            Para que os professores corrijam sua redação e também gravem um áudio sobre ela para te dar um retorno, 
+            você precisa se tornar um <strong>usuário premium</strong>.
+        </p>
+    </div>
+</div>
+
+
+{% endif %}
+
 {% endblock %}
+

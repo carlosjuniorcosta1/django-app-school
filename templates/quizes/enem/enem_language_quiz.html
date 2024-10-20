@@ -11,7 +11,7 @@
 {% endblock %} 
 {% block content %}
 
-<div class="row">
+<div class="row"  data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
     <div class="col-md-4 col-sm-12">
       <form action="{% url 'quizes:enem-language-quiz' %}" method="GET" class="form-group">
         <div class="form-row align-items-center">
@@ -28,6 +28,9 @@
       </form>
     </div>
   </div>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
+    <strong>Atenção!</strong> Você não é premium ainda. Para continuar com este quiz, por favor, adquira a assinatura premium.
+</div>
 
 
 
@@ -54,7 +57,12 @@
     {% for question in questions %}
     <div class="mb-1 text-question card">
         <div class="card-body format-questions">
-        <p>{{ question.id }}- <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+          {% if not is_filter_used %}
+          <p>{{ forloop.counter0|add:questions.start_index }} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+          {% else %}
+          <p>{{ forloop.counter}} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+          {% endif %}
+
         {% if question.has_image %}
         {% for img_url in question.get_image_urls %}
             <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">

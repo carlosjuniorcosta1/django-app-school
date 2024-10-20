@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const allGenres = Array.from(genreSelect.options);
     const allowedGenresForIllustrations = ['tirinha', 'ilustração'];
-    
+
     function capitalizeFirstLetter(text) {
         if (text.length === 0) return text;
         return text.charAt(0).toUpperCase() + text.slice(1);
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectGenreByName('artigo');
                 showPreview();
             }     
-        
         } else if (selectedGenre === 'artigo') {
             selectSectionByName('opinião');
             showPreview();
@@ -73,111 +72,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function addChronicleOption() {
-        let optionExists = false;
-        for (let i = 0; i < genreSelect.options.length; i++) {
-            if (genreSelect.options[i].text.toLowerCase() === 'crônica') {
-                optionExists = true;
-                break;
-            }
-        }
-        if (!optionExists) {
-            const option = new Option('Crônica', 'crônica');
-            genreSelect.add(option);
-        }
-    }
-
-    function removeChronicleOption() {
-        for (let i = 0; i < genreSelect.options.length; i++) {
-            if (genreSelect.options[i].text.toLowerCase() === 'crônica') {
-                genreSelect.remove(i);
-                break;
-            }
-        }
-    }
-
-    function selectSectionByName(sectionName) {
-        for (let i = 0; i < sectionSelect.options.length; i++) {
-            if (sectionSelect.options[i].text.toLowerCase() === sectionName) {
-                sectionSelect.selectedIndex = i;
-                break;
-            }
-        }
-    }
-
-    function selectGenreByName(genreName) {
-        for (let i = 0; i < genreSelect.options.length; i++) {
-            if (genreSelect.options[i].text.toLowerCase() === genreName) {
-                genreSelect.selectedIndex = i;
-                break;
-            }
-        }
-    }
-
-    function insertRecipeTemplate() {
-        if (mainTextInput.value.trim() === '') {
-            mainTextInput.value = "Ingredientes:\n \n \nModo de preparo:\n \n \n \n";
-        }
-    }
-
-    function toggleHideTextField() {
-        const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
-        const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
-        const selectAskForIllustration = document.getElementById('ask-for-illustration')
-        if (selectedGenre === 'tirinha' || selectedGenre === 'ilustração') {
-            mainTextField.style.display = 'none';
-            subtitleSelect.style.display = 'none'; 
-        } else {
-            mainTextField.style.display = 'block';
-            subtitleSelect.style.display = 'block';
-
-        }
-
-        if (selectedSection === 'ilustrações') {
-            mainTextField.style.display = 'none';
-            subtitleSelect.style.display = 'none';
-
-            genreSelect.innerHTML = ''; 
-            allowedGenresForIllustrations.forEach(function (genre) {
-                allGenres.forEach(function (option) {
-                    if (option.text.toLowerCase() === genre) {
-                        genreSelect.appendChild(option); 
-                    }
-                });
-            });
-        } else {
-            genreSelect.innerHTML = ''; 
-            allGenres.forEach(function (option) {
-                genreSelect.appendChild(option); 
-            });
-            mainTextField.style.display = 'block';
-            subtitleSelect.style.display = 'block';
-        }
-    }
-
-    if (artistAtt == 'False') {
-        textualGenreSelect.addEventListener('change', function () {
-            const textTextualGenre = textualGenreSelect.options[textualGenreSelect.selectedIndex].text;
-            if (textTextualGenre === "Ilustração" || textTextualGenre === "Tirinha") {
-                selectedGenre.innerHTML = "Você ainda não tem permissão de ilustrador. Solicite-a ao administrador via email e mostre seu trabalho antes.";
-                selectedGenre.style.display = "block";
-                for (let i = 0; i < hideFields.length; i++) {
-                    hideFields[i].style.display = 'none';
-                }
-                textualGenreSelect.selectedIndex = 0; 
-            } else {
-                selectedGenre.style.display = "none";
-                for (let i = 0; i < hideFields.length; i++) {
-                    hideFields[i].style.display = "block";
-                }
-            }
-        });
-    }
-
     titleInput.addEventListener('input', function () {
         const capitalizedTitle = capitalizeFirstLetter(titleInput.value);
         previewTitle.textContent = capitalizedTitle;
         titleInput.value = capitalizedTitle; 
+    });
+
+    subtitleInput.addEventListener('input', function () {
+        const capitalizedSubtitle = capitalizeFirstLetter(subtitleInput.value);
+        previewSubtitle.textContent = capitalizedSubtitle;
+        subtitleInput.value = capitalizedSubtitle; 
     });
 
     mainTextInput.addEventListener('input', function () {
@@ -227,13 +131,11 @@ document.getElementById("submit-button").addEventListener("click", function(even
     if (imageFile === 0) {
         event.preventDefault(); 
         
-        // Mostra a mensagem de erro
         const errorMessage = document.getElementById("image-error-message");
-        errorMessage.style.display = "block"; // Torna a mensagem visível
+        errorMessage.style.display = "block"; // 
     } else {
-        // Se houver imagem, esconde a mensagem de erro (caso tenha sido exibida anteriormente)
         const errorMessage = document.getElementById("image-error-message");
-        errorMessage.style.display = "none"; // Esconde a mensagem de erro
+        errorMessage.style.display = "none"; 
     }
 });
 

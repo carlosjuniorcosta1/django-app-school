@@ -74,7 +74,7 @@ def login(request):
 def logout(request):
     if request.method == "POST":
         auth.logout(request)
-    return render(request, 'static_content/index.html')
+        return redirect('index')
 
 
 def terms_of_acceptance(request):
