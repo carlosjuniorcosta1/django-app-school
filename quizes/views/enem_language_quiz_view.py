@@ -14,9 +14,7 @@ class EnemLanguageQuizListView(ListView):
     paginate_by = 2  # Número de questões a serem paginadas se nenhum filtro for aplicado
 
     def get_queryset(self) -> QuerySet:
-        """
-        Retorna o queryset de questões, aplicando filtros se forem passados.
-        """
+     
         queryset = Question.objects.filter(quiz_subject=1)  # Ajuste conforme necessário para a consulta inicial
         form = QuestionForm(self.request.GET)
 
@@ -38,9 +36,7 @@ class EnemLanguageQuizListView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        """
-        Adiciona os dados necessários ao contexto, como o formulário de pesquisa, as questões paginadas ou não, e o total de questões.
-        """
+    
         context = super().get_context_data(**kwargs)
         questions = self.get_queryset()
         form = QuestionForm(self.request.GET)        

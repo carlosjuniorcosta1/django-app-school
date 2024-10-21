@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let preVerificationDiv = document.getElementById('preVerification');
     let isPremium = preVerificationDiv.getAttribute('data-is-premium') 
     let buttonSubmit = document.getElementById('buttonSubmit')
+    let paginationButtons = document.getElementById('pagination-buttons')
 
     let noPremium = document.getElementById('no-premium')
 
@@ -48,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (isPremium !== 'true') {
         noPremium.style.display = 'block';
-        buttonSubmit.style.display = 'none';  
+        buttonSubmit.style.display = 'none'; 
+        paginationButtons.style.display = 'none' 
 
         return; // 
     }

@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     // Título a ser animado
-    var titleText2 = "Tirinhas independentes"; // Altere para o seu título
+    var titleText2 = "Tirinhas"; // Altere para o seu título
     var titleContainer2 = $('#animated-title-2')
     $('.animation-card-2').each(function(index) {
         $(this).hide().delay(index * 400).fadeIn(3000);
@@ -26,5 +26,21 @@ $(document).ready(function() {
         setTimeout(function() {
             titleContainer2.append(letter);
         }, index * 300); 
+    });
+});
+
+
+
+
+
+
+
+
+
+
+document.querySelectorAll('.card-flip').forEach(card => {
+    card.addEventListener('click', function() {
+        // Alterna a classe 'flip' no card clicado
+        this.classList.toggle('flip');
     });
 });

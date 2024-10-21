@@ -92,6 +92,7 @@
     <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
   
 </form>
+{% if is_premium %}
 <div class="pagination mt-4 d-flex justify-content-center align-items-center">
   {% if questions.has_previous %}
   <a href="?page=1" class="btn btn-outline-secondary mx-1" title="Primeira Página">&laquo;&laquo;</a>
@@ -130,7 +131,9 @@
   {% else %}
   <span class="btn btn-outline-secondary mx-1 disabled" title="Última Página">&raquo;&raquo;</span>
   {% endif %}
+
 </div>
+{% endif %}
 </div>
 
 

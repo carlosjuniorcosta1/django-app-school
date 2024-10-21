@@ -9,6 +9,7 @@ from django.db.models import Q
 class IndexListView(ListView):
     model = Post
     template_name= "static_content/index.html"
+    
 
     def get_queryset(self):
         queryset = Post.objects.all()   
@@ -39,12 +40,6 @@ class IndexListView(ListView):
         context['form'] = IndexForm(self.request.GET) 
         return context 
     
-
-
-
-
-
-
 
 
 def about(request):
