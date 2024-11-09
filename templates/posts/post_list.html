@@ -33,11 +33,11 @@
             <div class="card-header">
                 <ul class="list-group list-group-flush list-inline">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a class="font-weight-bold font-card-header" href="{% url 'posts:detail_text' text.id %}">{{ text.title|slice:":100" }} [...]</a>
+                        <a class="font-weight-bold font-card-header" href="{% url 'posts:detail_text' text.id %}">{{ text.title|truncatewords:"10" }}</a>
                         <br> <small class="font-italic">por {{ text.user }}</small>
                     </li>
                     <li class="list-elements d-flex align-items-center justify-content-between">
-                        <a  class="font-main-text" href="{% url 'posts:detail_text' text.id %}">{{text.main_text|slice:":150"}} [...]</a>       
+                        <a  class="font-main-text" href="{% url 'posts:detail_text' text.id %}">{{text.main_text|truncatewords:'10'}} [...]</a>       
 
 
                     {% if user.is_authenticated and user == text.user %}

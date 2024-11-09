@@ -8,10 +8,21 @@
 
 {% block content %}
 
+<style>
+    #canvas {
+      border: 1px solid black;
+    }
+    #textBox {
+      position: absolute;
+      z-index: 10;
+      background-color: transparent;
+    }
+  </style>
+
 <div class="container-fluid mt-3 col-sm-12 col-xm-12">
     <div class="row">
 
-        <div class="row mb-3">
+        <div class="row mb-3 sticky-top" style="z-index: 1030; top:0">
             <div class="col-12 d-flex justify-content-start align-content-start">
                 <a href="{% url 'review_essay:list_essay_editors' %}" class="btn btn-secondary m-1">
                     <i class="fas fa-arrow-left"></i> 
@@ -19,29 +30,46 @@
                 <button id="btn-draw" class="btn btn-dark m-1">
                     <i class="fas fa-pencil-alt"></i> 
                 </button>
-                <button id="btn-text" class="btn btn-info m-1">
+                <button id="textBoxButton" class="btn btn-info m-1">
                     <i class="fas fa-font"></i> 
                 </button>
-                <button id="btn-undo" class="btn btn-warning m-1">
+                <button id="undoButton" class="btn btn-warning m-1">
                     <i class="fas fa-undo"></i> 
                 </button>
-                <button id="btn-clear" class="btn btn-danger m-1">
-                    <i class="fas fa-eraser"></i>
-                </button>
-                <button id="btn-save" class="btn btn-primary m-1">
+               
+                <button id="downloadButton" class="btn btn-success m-1">
                     <i class="fas fa-download"></i>
                 </button>
-            
+                   
+            <label for="increaseFontButton" class="form-label m-1">
+               <button class="btn btn-dark"><i class="fas fa-text-height"></i></button> 
+            </label>
+<select id="increaseFontButton" class="form-select form-select-sm m-1">
+    <option value="14">14px</option>
+    <option value="16">16px</option>
+    <option value="18">18px</option>
+    <option value="20">20px</option>
+    <option value="24">24px</option>
+    <option value="28">28px</option>
+    <option value="32">32px</option>
+</select>
+<button class="btn btn-white">
+            <input type="color" id="colorPicker" value="#000000" />
+
+        </button>
     
             </div>
         <div class="col-12 col-sm-12">
             <canvas id="canvas" width="1000" height="1400" style="border:1px solid #000; display: block; margin: 0 auto;"></canvas>
             <input type="hidden" id="canvas_image_data" name="canvas_image_data">
 
+            <input type="text" id="textBox" placeholder="Digite aqui" />
+
            
             <form method="POST" enctype="multipart/form-data" class="mt-4" id="form-grade-editor">
                 {% csrf_token %}
-                
+
+
                 <!-- Campo C1 -->
                 <div class="form-group">
                     <label for="id_c1" class="form-label">
@@ -131,6 +159,7 @@
                         <i class="fas fa-image"></i> Imagem da correção
                     </label>
 
+
                     {% if essay.correction_image %}
                     <p><strong>Imagem de correção enviada:</strong> {{ essay.correction_image.name }}</p>
                 {% endif %}
@@ -153,17 +182,14 @@
 
             <p id="recordingTime" style="font-weight: bold; display: none;">Tempo de gravação: 0s</p>
 
-            <!-- Campo oculto para armazenar o áudio gravado -->
             <input type="file" id="audioFile" name="audio_feedback" accept="audio/*" style="display: none;" class="form-control">
             {% if essay.audio_feedback %}
             <p class=""><strong>Áudio já gravado:</strong> {{ essay.audio_feedback.name }}</p>         
         {% endif %}
 
-            <!-- Player para ouvir o áudio gravado antes do envio -->
             <audio id="audioPlayer" controls style="display: none;" class="mt-2"></audio>
             
-           </div>
-                
+           </div>                
                 
                 <!-- Botão de envio -->
                 <button id="sendCorrection" type="submit" class="btn btn-success mt-2" name="mark_as_reviewed">
@@ -208,376 +234,157 @@ img.src = "{{ essay.essay_image.url }}";
 
 {% block script_js %}
 <script>
+const textBox = document.getElementById('textBox');
+const undoButton = document.getElementById('undoButton')
+const textBoxButton = document.getElementById('textBoxButton');
+const downloadButton = document.getElementById('downloadButton');
+
+let currentFontSize = 14;
+
+const increaseFontButton = document.getElementById("increaseFontButton");
 img.onload = function() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height); }
 
-    let isDrawing = false;
-    let isTextMode = false;
-    let isDrawingMode = false;
-    let isDraggingTextBox = false;
-    let selectedTextBox = null;
-    let offsetX = 0, offsetY = 0;
-    let textBoxes = [];
-    let actions = [];
-    let currentPath = [];
+let isDragging = false;
+let offsetX, offsetY;
 
-    // Função para calcular a largura do texto e ajustar o tamanho da caixa de texto
-    function adjustTextareaWidth(textBox) {
-        const span = document.createElement('span');
-        span.style.font = '20px Arial';
-        span.style.visibility = 'hidden';
-        span.style.whiteSpace = 'nowrap';
-        span.style.padding = '5px'
-        span.textContent = textBox.value;
-        document.body.appendChild(span);
+let currentColor = colorPicker.value; // 
 
-        const textWidth = span.offsetWidth;
-        textBox.style.width = textWidth + 'px';
+colorPicker.addEventListener('input', (event) => {
+  currentColor = event.target.value; //
+});
 
-        document.body.removeChild(span);
+increaseFontButton.addEventListener("change", function () {
+            currentFontSize = parseInt(increaseFontButton.value)
+            console.log(currentFontSize) 
+            textBox.style.fontSize = `${currentFontSize}px`; 
+        });
+
+
+let textEntries = []
+
+function showtextBox(x, y) {
+  textBox.style.left = `${canvas.offsetLeft + x}px`;
+  textBox.style.top = `${canvas.offsetTop + y}px`;
+  textBox.style.display = "block";
+  textBox.focus();
+}
+function addTextToCanvas() {
+  const text = textBox.value;
+  const x = parseInt(textBox.style.left) - canvas.offsetLeft;
+  const y = parseInt(textBox.style.top) - canvas.offsetTop;
+
+  textEntries.push({text,  x, y, color: currentColor, fontSize: currentFontSize})
+
+ctx.font = `${currentFontSize}px Arial`
+  ctx.fillStyle = currentColor; 
+  ctx.fillText(text, x, y);
+
+  textBox.value = ""; 
+  textBox.style.display = "none"; 
+}
+
+function redrawCanvas(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    textEntries.forEach(entry => {
+        ctx.font = `${entry.currentFontSize}px Arial`
+        ctx.fillStyle = entry.color,
+        ctx.fillText(entry.text, entry.x, entry.y)
+    })
     }
+canvas.addEventListener("click", function(event) {
+  const x = event.offsetX;
+  const y = event.offsetY;
+  showtextBox(x, y);
+});
 
-    // Evento para criar a caixa de texto
-    canvas.addEventListener('mousedown', function(e) {
-        if (isTextMode) {
-            isDraggingTextBox = true;
+document.addEventListener('mousedown', function(event) {
+  if (event.target === textBox) {
+    isDragging = true;
+    offsetX = event.offsetX;
+    offsetY = event.offsetY;
+  }
+});
 
-            const textBox = document.createElement('textarea');
-            textBox.style.position = 'absolute';
-            textBox.style.left = e.pageX + 'px';
-            textBox.style.top = e.pageY + 'px';
-            textBox.style.height = '30px';
-            textBox.style.font = '20px Arial';
-            textBox.style.color = 'red';
-            textBox.style.background = 'transparent';
-            textBox.style.border = '1px dashed #000';
-            textBox.style.whiteSpace = 'nowrap';
-            textBox.style.resize = 'none'; // Impedir redimensionamento manual
-            textBox.style.overflow = 'hidden';
-            document.body.appendChild(textBox);
+document.addEventListener('mousemove', function(event) {
+  if (isDragging) {
+    const x = event.pageX - offsetX;
+    const y = event.pageY - offsetY;
+    textBox.style.left = `${x}px`;
+    textBox.style.top = `${y}px`;
+  }
+});
 
-            offsetX = e.pageX - canvas.offsetLeft;
-            offsetY = e.pageY - canvas.offsetTop;
+document.addEventListener('mouseup', function() {
+  isDragging = false;
+});
 
-            textBoxes.push(textBox);
+textBox.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    addTextToCanvas();
+  }
+});
 
-            actions.push({ type: 'add', element: textBox });
+undoButton.addEventListener('click', function(){
+    if(textEntries.length > 0) {
+        textEntries.pop();
+        redrawCanvas()
+    }
+})
 
-            textBox.addEventListener('mousedown', function(event) {
-                selectedTextBox = textBox;
-                offsetX = event.pageX - selectedTextBox.offsetLeft;
-                offsetY = event.pageY - selectedTextBox.offsetTop;
-                isDraggingTextBox = true;
-            });
+textBoxButton.addEventListener('click', function() {
+    if (textBox.style.display === "none") {
+      showtextBox(50, 50); 
+    } else {
+      textBox.style.display = "none"
+    }
+  });
 
-            document.addEventListener('mouseup', function() {
-                isDraggingTextBox = false;
-            });
+  downloadButton.addEventListener('click', function(){
+    const dataURL = canvas.toDataURL('image/png');
 
-            document.addEventListener('mousemove', function(event) {
-                if (isDraggingTextBox && selectedTextBox) {
-                    selectedTextBox.style.left = (event.pageX - offsetX) + 'px';
-                    selectedTextBox.style.top = (event.pageY - offsetY) + 'px';
-                }
-            });
+    const downloadLink = document.createElement('a')
+    downloadLink.href = dataURL
+    downloadLink.download = "correction_{{essay.user.first_name}}{{essay.user.last_name}}.png"
+    downloadLink.click()   
+    
+  })
+document.getElementById("btn-draw").addEventListener('click', function(){
+    canvasImageDataInput = document.getElementById('canvas_image_data')
 
-            // Aumentar a largura da caixa de texto conforme a digitação
-            textBox.addEventListener('input', function() {
-                adjustTextareaWidth(textBox);
-            });
+    textEntries.forEach( entry => {
+        console.log(`Texto: ${entry.text} x: ${entry.x} y: ${entry.y}`)
+        ctx.fillText(entry.text, entry.x, entry.y);
 
-            // Adicionar o texto no canvas ao pressionar Enter
-            textBox.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    const text = textBox.value;
-                    const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
-                    const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
+    })
+    dataURL = canvas.toDataURL('image/png')
+    canvasImageDataInput.value = dataURL
+    
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
 
-                    // Adicionar o texto no canvas
-                    ctx.font = '20px Arial';
-                    ctx.fillStyle = 'red';
-                    ctx.fillText(text, x, y);
-
-                    document.body.removeChild(textBox);
-
-                    actions.push({ type: 'text', text, x, y });
-                }
-            });
-        } else if (isDrawingMode) {
-            isDrawing = true;
-            currentPath = [{ x: e.offsetX, y: e.offsetY }];
-            ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        }
-    });
-
-    canvas.addEventListener('mousemove', function(e) {
-        if (isDrawing && isDrawingMode) {
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            currentPath.push({ x: e.offsetX, y: e.offsetY });
-        }
-    });
-
-    document.addEventListener('mouseup', function() {
-        if (isDrawing) {
-            isDrawing = false;
-            actions.push({ type: 'draw', path: currentPath.slice() });
-        }
-    });
-
-    document.getElementById('btn-text').addEventListener('click', function() {
-        isTextMode = true;
-        isDrawingMode = false;
-    });
-
-    document.getElementById('btn-draw').addEventListener('click', function() {
-        isDrawingMode = true;
-        isTextMode = false;
-    });
-
-    document.getElementById('btn-clear').addEventListener('click', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        textBoxes.forEach(function(box) {
-            document.body.removeChild(box);
-        });
-        textBoxes = [];
-        actions = [];
-    });
-
-    document.getElementById('btn-save').addEventListener('click', function() {
-        textBoxes.forEach(function(textBox) {
-        const text = textBox.value;
-        const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
-        const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
-
-        ctx.font = '20px Arial';
-        ctx.fillStyle = 'red';
-        ctx.fillText(text, x, y);
-    });
-        const dataURL = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = dataURL;
-        link.download = 'correcao_redacao_{{essay.user.first_name}}_{{essay.user.last_name}}.png';
-        link.click();
-    });
-
-    document.getElementById('btn-undo').addEventListener('click', function() {
-        if (actions.length > 0) {
-            const lastAction = actions.pop();
-
-            if (lastAction.type === 'add') {
-                document.body.removeChild(lastAction.element);
-                textBoxes.pop();
-            } else if (lastAction.type === 'draw') {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                actions.forEach(function(action) {
-                    if (action.type === 'draw') {
-                        ctx.beginPath();
-                        ctx.moveTo(action.path[0].x, action.path[0].y);
-
-                        action.path.forEach(function(point) {
-                            ctx.lineTo(point.x, point.y);
-                        });
-
-                        ctx.stroke();
-                    } else if (action.type === 'text') {
-                        ctx.font = '20px Arial';
-                        ctx.fillStyle = 'red';
-                        ctx.fillText(action.text, action.x, action.y);
-                    }
-                });
-            }
-        }
-    });
-
-// Evento para o botão de salvar a imagem no campo oculto
-document.getElementById('sendCorrection').addEventListener('click', function() {
-    const canvasImageDataInput = document.getElementById('canvas_image_data');
-    if (canvasImageDataInput) {
-        textBoxes.forEach(function(textBox) {
-            const text = textBox.value;
-            const x = parseInt(textBox.style.left, 10) - canvas.offsetLeft;
-            const y = parseInt(textBox.style.top, 10) - canvas.offsetTop;
-
-            ctx.font = '20px Arial';
-            ctx.fillStyle = 'red';
-            ctx.fillText(text, x, y);
-        });
-        const dataURL = canvas.toDataURL('image/png');
-        canvasImageDataInput.value = dataURL;
-
-        // Converter o canvas em Blob para simular um arquivo de imagem
-        const byteString = atob(dataURL.split(',')[1]);
-        const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);        }
 
         const blob = new Blob([ab], { type: mimeString });
+        const file = new File([blob], 'correction_{{essay.user.first_name}}_{{essay.user.last_name}}.png', { type: mimeString });
 
-        // Criar um objeto File a partir do Blob
-        const file = new File([blob], 'correction.png', { type: mimeString });
-
-        // Criar um objeto DataTransfer para simular o upload do arquivo
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
-
-        // Atribuir o arquivo ao campo de upload de arquivo
+        console.log(dataTransfer)
         const fileInput = document.getElementById('correction_image');
         fileInput.files = dataTransfer.files;
-    } else {
-        console.error("O campo oculto 'canvas_image_data' não foi encontrado.");
-    }
-});
-let mediaRecorder;
-  let audioChunks = [];
-  let recordingTime = 0; // Variável para armazenar o tempo de gravação em segundos
-  let timerInterval; // Variável para armazenar o intervalo do temporizador
 
-  const recordButton = document.getElementById('recordButton');
-  const stopButton = document.getElementById('stopButton');
-  const deleteButton = document.getElementById('deleteButton'); // Botão para apagar o áudio
-  const audioPlayer = document.getElementById('audioPlayer');
-  const audioFile = document.getElementById('audioFile');
-  const recordingTimeDisplay = document.getElementById('recordingTime'); // Elemento de exibição do tempo de gravação
+})
 
-  // Verificar se o navegador suporta a gravação de mídia
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Quando o botão de gravação for clicado
-    recordButton.addEventListener('click', () => {
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.start();
+  
+  
 
-          // Resetar o tempo e começar o temporizador
-          recordingTime = 0;
-          recordingTimeDisplay.textContent = `Tempo de gravação: 0s`;
 
-          // Exibir o temporizador quando a gravação começa
-          recordingTimeDisplay.style.display = 'block';
 
-          // Iniciar o temporizador
-          timerInterval = setInterval(() => {
-            recordingTime++;
-            recordingTimeDisplay.textContent = `Tempo de gravação: ${recordingTime}s`;
-          }, 1000); // Atualizar a cada 1 segundo
-
-          recordButton.disabled = true;
-          stopButton.disabled = false;
-          
-          mediaRecorder.ondataavailable = event => {
-            audioChunks.push(event.data);
-          };
-
-          mediaRecorder.onstop = () => {
-            clearInterval(timerInterval); // Parar o temporizador quando a gravação terminar
-
-            // Esconder o temporizador quando a gravação parar
-            recordingTimeDisplay.style.display = 'none';
-
-            const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
-            audioChunks = [];
-
-            // Criar uma URL para o áudio gravado
-            const audioURL = URL.createObjectURL(audioBlob);
-            audioPlayer.src = audioURL;
-            audioPlayer.style.display = 'block';
-
-            // Converter o Blob para File e anexar ao input
-            const file = new File([audioBlob], "audio_feedback.mp3", { type: 'audio/mpeg' });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            audioFile.files = dataTransfer.files;
-
-            // Mostrar o campo de arquivo para enviar
-            audioFile.style.display = 'block';
-            
-            // Exibir o botão de apagar o áudio
-            deleteButton.style.display = 'inline-block';
-          };
-        });
-    });
-
-    // Quando o botão de parar for clicado
-    stopButton.addEventListener('click', () => {
-      mediaRecorder.stop();
-      recordButton.disabled = false;
-      stopButton.disabled = true;
-    });
-
-    // Função para apagar o áudio gravado
-    deleteButton.addEventListener('click', () => {
-      audioPlayer.src = '';
-      audioPlayer.style.display = 'none'; // Esconder o player de áudio
-      audioFile.value = ''; // Limpar o campo de input
-      deleteButton.style.display = 'none'; // Esconder o botão de apagar
-    });
-  } else {
-    alert('O seu navegador não suporta gravação de áudio.');
-  }
- 
-  $(document).ready(function() {
-    let submitButton = null;
-
-    $("button[name='mark_as_finished']").on("click", function() {
-        submitButton = "mark_as_finished";
-    });
     
-
-    $("button[name='mark_as_reviewed']").on("click", function() {
-        submitButton = "mark_as_reviewed";
-    });
-
-    $("#form-grade-editor").on("submit", function(e) {
-        let isValid = true;
-
-        if (submitButton === "mark_as_finished") {
-            $(".required-field").each(function() {
-                if ($(this).val().trim() === "") {
-                    $(this).attr("placeholder", "Campo obrigatório");
-                    $(this).addClass("error error-highlight");
-                    isValid = false;
-                } else {
-                    $(this).removeClass("error error-highlight");
-
-                }
-            });
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        }
-    });
-});
-
-document.getElementById('sendToStudent').addEventListener('click', function (event) {
-    var audioFileInput = document.getElementById('audioFile');
-    var existingAudio = "{{ essay.audio_feedback }}"; 
-    var recordedAudio = audioFileInput.files.length > 0;
-
-    if (!existingAudio && !recordedAudio) {
-        event.preventDefault();  // 
-
-        var recordingTimeMessage = document.getElementById('recordingTime');
-        recordingTimeMessage.style.display = 'block';  
-        audioFileInput.style.display = 'block';  // 
-        audioFileInput.style.backgroundColor = '#ffcccc';  // 
-    }
-});
-
-
 </script>
 {% endblock %}

@@ -2,6 +2,14 @@
 {% load static %}
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_list_user_posts.css' %}">
+<style>
+    /* Define a height fixed for images and use object-fit to make sure they fill the area correctly */
+    .card img {
+        height: 200px; /* Adjust the height as needed */
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+        width: 100%;
+    }
+</style>
 {% endblock %}
 {% block content %}
 
@@ -10,7 +18,7 @@
     <div class="row">
         {% for post in posts %}
         <div class="col-lg-3 col-md-4 mb-4 col-sm-12">
-            <div class="card h-100 shadow-sm">
+            <div class="card shadow-sm">
                 <div class="card text-white bg-success mb-0">
                     <div class="card-body text-center">
                         <p class="mb-0">{{ post.textual_genre }}</p>
@@ -87,19 +95,5 @@
         {% endfor %}
     </div>
 </div>
-
-<!-- Media Queries para Responsividade -->
-<style>
-    @media (max-width: 768px) {
-        .social-icons {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        .social-icons a {
-            margin: 0 10px;
-        }
-    }
-</style>
 
 {% endblock %}

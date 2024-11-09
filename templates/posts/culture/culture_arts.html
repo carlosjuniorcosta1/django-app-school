@@ -8,51 +8,40 @@
 {% block content %}
 <div class="container-fluid mt-5">
     <h2 id="animated-title" class="animated-title"></h2>
+
+    <!-- Seção anterior com ilustrações -->
     <div class="row">
         {% for post in illustrated_posts %}
-        {% if forloop.counter <= 3 %}
+        {% if forloop.counter <= 12 %}
         <div class="col-md-4 mb-4 animation-card">
             <div class="card-flip">
                 <div class="card front" id="id-card-front">
-                    <div class="card-header text-center">
-                        <h5 class="mb-0"> {{ post.illustrator.first_name }} {{ post.illustrator.last_name }}
-                            {% if post.illustrator.user_instagram %}
-                            <a href="{{ post.illustrator.user_instagram }}" target="_blank" class="mx-1">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            {% endif %}
-                            {% if post.illustrator.user_linkedin %}
-                            <a href="{{ post.illustrator.user_linkedin }}" target="_blank" class="mx-1">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            {% endif %}
-                        </h5>
-                    </div>
                     <div class="card-body p-0">
-                        <div class="img-container" style="position: relative; width: 100%; padding-top: 75%;">
+                        <div class="img-container">
                             <img src="{{ post.image.url }}" alt="Imagem do Post" class="img-fluid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div class="card-footer text-white bg-info text-center">
-                            Ilustrou {{post.textual_genre|lower}} de {{post.user.first_name}} {{post.user.last_name}}
-                        </div>
                     </div>
-                 
                 </div>
                 <div class="card back">
                     <div class="card-body" id="id-card-back">
                         <img class="img-avatar-back" src="{{ post.user.user_picture.url }}" alt="">
+                        {{ post.illustrator.first_name }} {{ post.illustrator.last_name }}
                         {% if post.illustrator.user_instagram %}
                         <a href="{{ post.illustrator.user_instagram }}" target="_blank" class="mx-1">
-                            <i class="fab fa-2x fa-instagram"></i>
-                        </a>                      
+                            <i class="fab fa-instagram"></i>
+                        </a>
                         {% endif %}
                         {% if post.illustrator.user_linkedin %}
                         <a href="{{ post.illustrator.user_linkedin }}" target="_blank" class="mx-1">
-                            <i class="fab fa-2x fa-linkedin"></i>
+                            <i class="fab fa-linkedin"></i>
                         </a>
                         {% endif %}
                         <div class="speech-bubble">
-                            <p class="comment-illustrator">{{ post.main_text|truncatewords:'10' }}</p>
+                            <a href="{% url 'posts:detail_text' post.id %}">
+                                <p class="comment-illustrator" title="Ver a publicação">{{ post.subtitle_illustrator }}
+                                    <span>- <i class="fas fa-hand-pointer" title="Ver a publicação"></i></span>
+                                </p>
+                            </a>
                             <span class="arrow"></span>
                         </div>
                     </div>
@@ -62,7 +51,43 @@
         {% endif %}
         {% endfor %}
     </div>
+
+    <h2 id="animated-title-2" class="animated-title"></h2>
+    <div class="row mt-4">
+        {% for post in culture_arts_posts_comic %}
+        {% if forloop.counter <= 4 %}
+        <div class="col-md-6 col-sm-12 mb-2 animation-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mt-3">
+                    </div>
+
+                    <div class="img-container mt-3">
+                        <img src="{{ post.image.url }}" alt="Imagem da tirinha" class="img-fluid">
+                    </div>
+
+                    <!-- Informações do Autor -->
+                    <div class="mt-2">
+                        <p>Autor: {{ post.user.first_name }} {{ post.user.last_name }}</p>
+                        {% if post.user.user_instagram %}
+                        <a href="{{ post.user.user_instagram }}" target="_blank" class="mx-1">
+                            <i class="fab fa-2x fa-instagram"></i>
+                        </a>
+                        {% endif %}
+                        {% if post.user.user_linkedin %}
+                        <a href="{{ post.user.user_linkedin }}" target="_blank" class="mx-1">
+                            <i class="fab fa-2x fa-linkedin"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}
 
 {% block script_js %}

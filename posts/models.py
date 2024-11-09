@@ -89,7 +89,7 @@ class Post(models.Model):
     is_asking_for_illustration = models.BooleanField(null=True, blank=True, default=False)
     is_illustration_done = models.BooleanField(default=False, null=True, blank=True)
     illustrator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='illustrated_posts')
-
+    subtitle_illustrator = models.CharField(max_length=35, blank=True, null=True)
 
    
     def __str__(self):

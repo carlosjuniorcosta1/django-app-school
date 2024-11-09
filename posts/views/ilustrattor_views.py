@@ -31,7 +31,7 @@ class DetailIllustration(DetailView):
 
 class UpdateIllustration(UpdateView):
     model = Post 
-    fields = ['image', 'is_illustration_done', 'illustrator']
+    fields = ['image', 'is_illustration_done', 'illustrator', 'subtitle_illustrator']
     template_name = 'posts/illustrations/update_image_illustration.html'
     success_url = reverse_lazy('posts:detail_text')
     context_object_name = "posts"

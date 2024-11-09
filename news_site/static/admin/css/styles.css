@@ -250,7 +250,7 @@ body {
 
 .img-fourth-loop{
     max-width: 300px;
-    max-height: 300px;
+    max-height: 180px;
     object-fit: cover;
 }
  

@@ -3,6 +3,8 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from ..models import Essay
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+import base64
+from django.core.files.base import ContentFile
 
 
 class ListEssayForEditors(ListView):
@@ -13,7 +15,6 @@ class ListEssayForEditors(ListView):
     def get_queryset(self):
         queryset = Essay.objects.all()
         return queryset
-
 
 
 class UpdateEssayEditor(UpdateView):
@@ -30,6 +31,15 @@ class UpdateEssayEditor(UpdateView):
         return context
 
     def form_valid(self, form): 
+
+
+        correction_image = self.request.FILES.get('correction_image')  # Receber a imagem do canvas
+
+        if correction_image:
+            form.instance.correction_image = correction_image 
+
+
+
         if 'mark_as_reviewed' in self.request.POST:
             form.instance.is_reviewed = True    
         elif 'mark_as_finished' in self.request.POST:

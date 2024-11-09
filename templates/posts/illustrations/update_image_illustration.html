@@ -1,30 +1,36 @@
-{% extends 'base.html' %}  <!-- Supondo que você tenha um template base -->
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="container mt-4">        
         <h5>Atualizar Ilustração</h5>        
         <div class="post-details">
-            <h2>{{ object.title }}</h2>  <!-- Título do Post -->
+            <h2>{{ object.title }}</h2>
         </div>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            
             <div class="form-group">
-                <label for="image"></label>
+                <label for="image">Carregar nova imagem</label>
                 <input type="file" id="image" name="image" class="form-control-file">
-                <input type="hidden" name="is_illustration_done" id="is_illustration_done" value="True">
-                <input type="hidden" name="illustrator" value="{{ request.user.id }}">
-
             </div>
+
+            <input type="hidden" name="is_illustration_done" id="is_illustration_done" value="True">
+            <input type="hidden" name="illustrator" value="{{ request.user.id }}">
+
+            <div class="form-group">
+                <label for="subtitle_illustrator">Comentário sobre sua ilustração</label>
+                <input type="text" id="subtitle_illustrator" name="subtitle_illustrator" class="form-control">
+            </div>
+
             {% if form.image.errors %}
-            <div class="text-danger">
-                {{ form.image.errors }}
-            </div>
-        {% endif %}
-    
-
+                <div class="text-danger">
+                    {{ form.image.errors }}
+                </div>
+            {% endif %}
+        
             <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-            <a href="{% url 'posts:illustrations_asked' %}" class="btn btn-secondary mt-3">Cancelar</a> <!-- Link para voltar para a lista de posts -->
+            <a href="{% url 'posts:illustrations_asked' %}" class="btn btn-secondary mt-3">Cancelar</a>
         </form>
     </div>
 {% endblock %}

@@ -88,7 +88,7 @@ class PostDetailView(DetailView):
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields =  ['title', 'subtitle', 'main_text', 'textual_genre', 'image', 
-               'section_name',  "is_asking_for_illustration"]
+               'section_name',  "is_asking_for_illustration", 'subtitle_illustrator']
     template_name = 'posts/post_update.html'
     
     def get_success_url(self):
