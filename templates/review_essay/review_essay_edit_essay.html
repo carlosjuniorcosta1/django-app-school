@@ -380,6 +380,123 @@ document.getElementById("btn-draw").addEventListener('click', function(){
 
 })
 
+let mediaRecorder;
+let audioChunks = [];
+let recordingTime = 0;
+let timerInterval;
+
+const recordButton = document.getElementById('recordButton');
+const stopButton = document.getElementById('stopButton');
+const deleteButton = document.getElementById('deleteButton');
+const audioPlayer = document.getElementById('audioPlayer');
+const audioFile = document.getElementById('audioFile');
+const recordingTimeDisplay = document.getElementById('recordingTime');
+
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  recordButton.addEventListener('click', () => {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start();
+
+      recordingTime = 0;
+      recordingTimeDisplay.textContent = `Tempo de gravação: 0s`;
+      recordingTimeDisplay.style.display = 'block';
+
+      timerInterval = setInterval(() => {
+        recordingTime++;
+        recordingTimeDisplay.textContent = `Tempo de gravação: ${recordingTime}s`;
+      }, 1000);
+
+      recordButton.disabled = true;
+      stopButton.disabled = false;
+
+      mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        clearInterval(timerInterval);
+        recordingTimeDisplay.style.display = 'none';
+
+        const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+        audioChunks = [];
+        const audioURL = URL.createObjectURL(audioBlob);
+        audioPlayer.src = audioURL;
+        audioPlayer.style.display = 'block';
+
+        const file = new File([audioBlob], "audio_feedback.mp3", { type: 'audio/mpeg' });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        audioFile.files = dataTransfer.files;
+        audioFile.style.display = 'block';
+        deleteButton.style.display = 'inline-block';
+      };
+    });
+  });
+
+  stopButton.addEventListener('click', () => {
+    mediaRecorder.stop();
+    recordButton.disabled = false;
+    stopButton.disabled = true;
+  });
+
+  deleteButton.addEventListener('click', () => {
+    audioPlayer.src = '';
+    audioPlayer.style.display = 'none';
+    audioFile.value = '';
+    deleteButton.style.display = 'none';
+  });
+} else {
+  alert('O seu navegador não suporta gravação de áudio.');
+}
+
+$(document).ready(function() {
+  let submitButton = null;
+
+  $("button[name='mark_as_finished']").on("click", function() {
+    submitButton = "mark_as_finished";
+  });
+
+  $("button[name='mark_as_reviewed']").on("click", function() {
+    submitButton = "mark_as_reviewed";
+  });
+
+  $("#form-grade-editor").on("submit", function(e) {
+    let isValid = true;
+
+    if (submitButton === "mark_as_finished") {
+      $(".required-field").each(function() {
+        if ($(this).val().trim() === "") {
+          $(this).attr("placeholder", "Campo obrigatório");
+          $(this).addClass("error error-highlight");
+          isValid = false;
+        } else {
+          $(this).removeClass("error error-highlight");
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    }
+  });
+});
+
+document.getElementById('sendToStudent').addEventListener('click', function (event) {
+  var audioFileInput = document.getElementById('audioFile');
+  var existingAudio = "{{ essay.audio_feedback }}";
+  var recordedAudio = audioFileInput.files.length > 0;
+
+  if (!existingAudio && !recordedAudio) {
+    event.preventDefault();
+    var recordingTimeMessage = document.getElementById('recordingTime');
+    recordingTimeMessage.style.display = 'block';
+    audioFileInput.style.display = 'block';
+    audioFileInput.style.backgroundColor = '#ffcccc';
+  }
+});
+
+
   
   
 

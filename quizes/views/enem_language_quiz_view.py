@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemLanguageQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_language_quiz.html"
-    paginate_by = 2  # Número de questões a serem paginadas se nenhum filtro for aplicado
+    paginate_by = 1  # Número de questões a serem paginadas se nenhum filtro for aplicado
 
     def get_queryset(self) -> QuerySet:
      
