@@ -26,12 +26,14 @@ class Essay(models.Model):
                               [FileExtensionValidator(allowed_extensions=
                                                        ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'svg'])], blank=True, null=True)
     total_grade = models.IntegerField(blank=True, null=True)
-    is_finished = models.BooleanField(null=True, blank=True)
+    is_finished = models.BooleanField(null=True, blank=True, default=False)
 
 
     audio_feedback = models.FileField(upload_to="audio/", 
                              validators=[FileExtensionValidator(allowed_extensions=['mp3', 'wav', 'ogg'])], 
-                             blank=True, null=True)
+                             blank=True, null=True)    
+    created = models.DateTimeField(auto_now=True, null=True, blank=True)
+
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}, tema: {self.essay_topic}, total: {self.total_grade}'

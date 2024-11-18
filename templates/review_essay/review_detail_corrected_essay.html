@@ -1,47 +1,46 @@
-{% extends 'base.html' %}
+{% extends 'base_essay.html' %}
 {% load static %}
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_review_detail_users.css' %}">
 <style>
-    /* Media Queries para a versão mobile */
     @media (max-width: 768px) {
         .card {
             margin-bottom: 15px;
         }
 
         .text-right {
-            text-align: left; /* Para alinhar texto à esquerda em dispositivos móveis */
+            text-align: left;  
         }
 
         .card-title {
-            font-size: 1.5rem; /* Tamanho do título em dispositivos móveis */
+            font-size: 1.5rem; 
         }
 
         .card-body {
-            padding: 15px; /* Reduzir o padding em dispositivos móveis */
+            padding: 15px; 
         }
 
         .col-md-4 {
-            flex: 0 0 100%; /* Fazer as colunas ocuparem toda a largura */
-            max-width: 100%; /* Para que se adaptem à largura */
+            flex: 0 0 100%; 
+            max-width: 100%; 
         }
 
         .col-md-8 {
-            flex: 0 0 100%; /* Para a coluna de competências ocupar toda a largura */
+            flex: 0 0 100%; 
             max-width: 100%;
         }
 
         .col-md-4.col-12 {
-            margin-top: 15px; /* Espaçamento entre os cards */
+            margin-top: 15px; 
         }
 
         img.img-fluid {
-            max-width: 100%; /* Para garantir que as imagens sejam responsivas */
-            height: auto; /* Manter a proporção */
+            max-width: 100%; 
+            height: auto; 
         }
 
         h2.card-title, h4 {
-            font-size: 1.5rem; /* Ajustar o tamanho dos títulos */
+            font-size: 1.5rem; 
         }
     }
 </style>
@@ -51,17 +50,26 @@
 <div class="container mt-4 col-sm-12 col-xm-12">
     <div class="card col-sm-12 col-xm-12">
         <div class="card-body">
-            <!-- Linha para Título -->
             <div>
                 <h2 class="card-title text-center">
                     Tema: {{ essay.essay_topic }}
                 </h2>
-                <hr class="border-bottom"> <!-- Adiciona uma borda inferior -->
+                <hr class="border-bottom"> 
+            </div>
+            <div class="text-right">
+                <h2 class="card-title">Total: {{ essay.total_grade }}</h2>
+            </div>
+
+            <div class="text-start">
+                <audio controls class="audio-list-essays">
+                    <source src="{{ essay.audio_feedback.url }}" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            
             </div>
             
-            <!-- Imagem corrigida logo após o título -->
             <div class="text-center mt-2">
-                <h4>Imagem da correção</h4>
+                <h4>Correção</h4>
                 {% if essay.correction_image %}
                 <a href="#" data-toggle="modal" data-target="#imageModal">
                     <img src="{{ essay.correction_image.url }}" alt="Imagem Corrigida" class="img-fluid mb-3" style="cursor: pointer;">
@@ -71,7 +79,6 @@
                 {% endif %}
             </div>
 
-            <!-- Modal para exibir a imagem em tela cheia -->
             <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -88,84 +95,73 @@
                 </div>
             </div>
 
-            <!-- Linha para o Total -->
-            <div class="text-right">
-                <h2 class="card-title">Total: {{ essay.total_grade }}</h2>
+<div class="row">
+    <div class="col-12">
+        <!-- C1 -->
+        <div class="mb-3">
+            <div class="card shadow-sm text-center" style="background-color: {% if essay.c1 < 40 %}#f8d7da{% elif essay.c1 < 80 %}#f0b4b9{% elif essay.c1 < 120 %}#e6a1a7{% elif essay.c1 < 160 %}#f5e7b2{% elif essay.c1 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                <div class="card-body">
+                    <h5 class="card-title">C1: {{essay.c1}}</h5>
+                </div>
             </div>
-
-            <!-- Competências e Áudio em uma linha, adaptável para dispositivos móveis -->
-            <div class="row">
-                <!-- Competências em cards pequenos com cores aplicadas de forma discreta -->
-                <div class="col-12 col-md-8 d-flex flex-wrap">
-                    <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c1 < 40 %}#f8d7da{% elif essay.c1 < 80 %}#f0b4b9{% elif essay.c1 < 120 %}#e6a1a7{% elif essay.c1 < 160 %}#f5e7b2{% elif essay.c1 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
-                            <div class="card-body">
-                                <h5 class="card-title">C1</h5>
-                                <p class="card-text">{{ essay.c1 }}</p>
-                            </div>
-                        </div>
-                        <div class="shadow-sm p-2 mb-3 border rounded text-left">
-                            <h6>Comentário C1</h6>
-                            <p>{{ essay.about_c1 }}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c2 < 40 %}#f8d7da{% elif essay.c2 < 80 %}#f0b4b9{% elif essay.c2 < 120 %}#e6a1a7{% elif essay.c2 < 160 %}#f5e7b2{% elif essay.c2 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
-                            <div class="card-body">
-                                <h5 class="card-title">C2</h5>
-                                <p class="card-text">{{ essay.c2 }}</p>
-                            </div>
-                        </div>
-                        <div class="shadow-sm p-2 mb-3 border rounded text-left">
-                            <h6>Comentário C2</h6>
-                            <p>{{ essay.about_c2 }}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c3 < 40 %}#d98286{% elif essay.c3 < 80 %}#fbc687{% elif essay.c3 < 120 %}#f5e7b2{% elif essay.c3 < 160 %}#a3d1f5{% elif essay.c3 <= 200 %}#c4e6a3{% endif %};">
-                            <div class="card-body">
-                                <h5 class="card-title">C3</h5>
-                                <p class="card-text">{{ essay.c3 }}</p>
-                            </div>
-                        </div>
-                        <div class="shadow-sm p-2 mb-3 border rounded text-left">
-                            <h6>Comentário C3</h6>
-                            <p>{{ essay.about_c3 }}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c4 < 40 %}#f8d7da{% elif essay.c4 < 80 %}#f0b4b9{% elif essay.c4 < 120 %}#e6a1a7{% elif essay.c4 < 160 %}#f5e7b2{% elif essay.c4 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
-                            <div class="card-body">
-                                <h5 class="card-title">C4</h5>
-                                <p class="card-text">{{ essay.c4 }}</p>
-                            </div>
-                        </div>
-                        <div class="shadow-sm p-2 mb-3 border rounded text-left">
-                            <h6>Comentário C4</h6>
-                            <p>{{ essay.about_c4 }}</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-4 mb-3">
-                        <div class="card shadow-sm text-center" style="background-color: {% if essay.c5 < 40 %}#f8d7da{% elif essay.c5 < 80 %}#f0b4b9{% elif essay.c5 < 120 %}#e6a1a7{% elif essay.c5 < 160 %}#f5e7b2{% elif essay.c5 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
-                            <div class="card-body">
-                                <h5 class="card-title">C5</h5>
-                                <p class="card-text">{{ essay.c5 }}</p>
-                            </div>
-                        </div>
-                        <div class="shadow-sm p-2 mb-3 border rounded text-left">
-                            <h6>Comentário C5</h6>
-                            <p>{{ essay.about_c5 }}</p>
-                        </div>
-                    </div>
+            <div class="shadow-sm p-2 mt-2 border rounded text-left">
+                <h6 class="text-bold">Comentário:</h6>
+                <p>{{ essay.about_c1 }}</p>
+            </div>
+        </div>
+        <!-- C2 -->
+        <div class="mb-3">
+            <div class="card shadow-sm text-center" style="background-color: {% if essay.c2 < 40 %}#f8d7da{% elif essay.c2 < 80 %}#f0b4b9{% elif essay.c2 < 120 %}#e6a1a7{% elif essay.c2 < 160 %}#f5e7b2{% elif essay.c2 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                <div class="card-body">
+                    <h5 class="card-title">C2: {{essay.c2}}</h5>
                 </div>
-
-                <!-- Card do Áudio -->
-                <div class="col-12 col-md-4 text-center mb-3">
-                    <audio controls>
-                        <source src="{{ essay.audio_feedback.url }}" type="audio/mpeg">
-                        Seu navegador não suporta o elemento de áudio.
-                    </audio>
+            </div>
+            <div class="shadow-sm p-2 mt-2 border rounded text-left">
+                <h6>Comentário:</h6>
+                <p>{{ essay.about_c2 }}</p>
+            </div>
+        </div>
+        <!-- C3 -->
+        <div class="mb-3">
+            <div class="card shadow-sm text-center" style="background-color: {% if essay.c3 < 40 %}#f8d7da{% elif essay.c3 < 80 %}#f0b4b9{% elif essay.c3 < 120 %}#e6a1a7{% elif essay.c3 < 160 %}#f5e7b2{% elif essay.c3 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                <div class="card-body">
+                    <h5 class="card-title">C3: {{essay.c3}}</h5>
                 </div>
+            </div>
+            <div class="shadow-sm p-2 mt-2 border rounded text-left">
+                <h6>Comentário:</h6>
+                <p>{{ essay.about_c3 }}</p>
+            </div>
+        </div>
+        <!-- C4 -->
+        <div class="mb-3">
+            <div class="card shadow-sm text-center" style="background-color: {% if essay.c4 < 40 %}#f8d7da{% elif essay.c4 < 80 %}#f0b4b9{% elif essay.c4 < 120 %}#e6a1a7{% elif essay.c4 < 160 %}#f5e7b2{% elif essay.c4 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                <div class="card-body">
+                    <h5 class="card-title">C4: {{essay.c4}}</h5>
+                </div>
+            </div>
+            <div class="shadow-sm p-2 mt-2 border rounded text-left">
+                <h6>Comentário:</h6>
+                <p>{{ essay.about_c4 }}</p>
+            </div>
+        </div>
+        <!-- C5 -->
+        <div class="mb-3">
+            <div class="card shadow-sm text-center" style="background-color: {% if essay.c5 < 40 %}#f8d7da{% elif essay.c5 < 80 %}#f0b4b9{% elif essay.c5 < 120 %}#e6a1a7{% elif essay.c5 < 160 %}#f5e7b2{% elif essay.c5 < 200 %}#c4e6a3{% else %}#a3d1f5{% endif %};">
+                <div class="card-body">
+                    <h5 class="card-title">C5: {{essay.c5}}</h5>
+                </div>
+            </div>
+            <div class="shadow-sm p-2 mt-2 border rounded text-left">
+                <h6>Comentário:</h6>
+                <p>{{ essay.about_c5 }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            
             </div>
         </div>
     </div>

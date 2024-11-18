@@ -36,7 +36,8 @@ class Section(models.Model):
             ('brasil', 'Brasil'),
             ('cultura_lazer', 'Cultura e Lazer'),
             ('enem', 'Enem'), 
-            ('professor', 'Professor')
+            ('professor', 'Professor'),
+            ('redacao', 'Redação')
 
       ]
     subsection_choices = [

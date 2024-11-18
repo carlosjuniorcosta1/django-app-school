@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_essay.html" %}
 {% load static %}
 {% load form_tags %}
 
@@ -350,7 +350,7 @@ textBoxButton.addEventListener('click', function() {
     downloadLink.click()   
     
   })
-document.getElementById("btn-draw").addEventListener('click', function(){
+document.getElementById("sendCorrection").addEventListener('click', function(){
     canvasImageDataInput = document.getElementById('canvas_image_data')
 
     textEntries.forEach( entry => {
@@ -378,6 +378,9 @@ document.getElementById("btn-draw").addEventListener('click', function(){
         const fileInput = document.getElementById('correction_image');
         fileInput.files = dataTransfer.files;
 
+
+
+    
 })
 
 let mediaRecorder;
@@ -397,7 +400,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.start();
-
       recordingTime = 0;
       recordingTimeDisplay.textContent = `Tempo de gravação: 0s`;
       recordingTimeDisplay.style.display = 'block';

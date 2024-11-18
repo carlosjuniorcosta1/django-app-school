@@ -13,10 +13,9 @@ class ListEssayForEditors(ListView):
     context_object_name = 'essays'
 
     def get_queryset(self):
-        queryset = Essay.objects.all()
+        queryset = Essay.objects.filter(is_finished=False)
         return queryset
-
-
+     
 class UpdateEssayEditor(UpdateView):
     model = Essay
     fields = ["c1", "about_c1", "c2", "about_c2", "c3", "about_c3", "c4", "about_c4", "c5",
@@ -33,16 +32,14 @@ class UpdateEssayEditor(UpdateView):
     def form_valid(self, form): 
 
 
-        correction_image = self.request.FILES.get('correction_image')  # Receber a imagem do canvas
+        correction_image = self.request.FILES.get('correction_image')  
 
         if correction_image:
             form.instance.correction_image = correction_image 
 
-
-
         if 'mark_as_reviewed' in self.request.POST:
             form.instance.is_reviewed = True    
-        elif 'mark_as_finished' in self.request.POST:
+        if 'mark_as_finished' in self.request.POST:
             form.instance.is_finished = True
             form.instance.is_reviewed = True
       

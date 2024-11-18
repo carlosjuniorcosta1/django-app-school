@@ -2,7 +2,6 @@ from django.urls import path
 from .views.editors_view import ListEssayForEditors,  UpdateEssayEditor
 from .views.user_crud_view import CreateEssayReview, DetailEssay, UpdateEssay, ListUserEssay, DetailUserReviewedEssay
 
-
 app_name = 'review_essay'
 
 urlpatterns = [

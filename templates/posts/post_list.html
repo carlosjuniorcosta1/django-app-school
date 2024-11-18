@@ -108,10 +108,10 @@
                              <a href="{% url 'posts:index_cuisine' %}" class="ml-1 font-section-link">{{text.section_name}}</a>
 
 
-                             {% elif text.section_name.section_name == "esportes" %}
+                             {% elif text.section_name.section_name == "redacao" %}
 
-                             <a class="fas fa-running" href=""></a>
-                             <a href="" class="ml-1 font-section-link">Esportes</a>
+                             <a class="fa-solid fa-pen" href=""></a>
+                             <a href="{% url 'posts:index_essay' %}" class="ml-1 font-section-link">Redação</a>
 
                              {% elif text.section_name.section_name == "enem" %}
                              <a class="fas fa-graduation-cap" href=""></a>

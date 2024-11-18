@@ -56,6 +56,8 @@ class EnemNaturalSciencesQuizListView(ListView):
         context['form'] = QuestionForm(self.request.GET)
         context['total_questions'] = questions.count()
         context['is_filter_used'] = is_filter_used
+        context['is_premium'] = self.request.user.is_premium
+
 
 
  

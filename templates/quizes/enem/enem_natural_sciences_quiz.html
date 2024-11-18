@@ -4,9 +4,7 @@
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
 {% endblock %}
-{% block script_js %}
-<script src="{% static 'admin\js\quiz_dj.js' %}"></script>
-{% endblock %} 
+
 {% block content %}
 
 <div class="row"  data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
@@ -133,8 +131,9 @@
 {% endif %}
 </div>
 
-
-
-
-
 {% endblock %}
+
+
+{% block script_js %}
+<script src="{% static 'admin/js/quiz_dj.js' %}"></script>
+{% endblock %} 
