@@ -1,0 +1,56 @@
+.bg-success {
+    background-color: #d4edda !important; 
+    border: 2px dotted rgb(90, 135, 59);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.bg-danger {
+    background-color: #f8d7da !important; 
+    border: 2px dotted rgb(220, 20, 60);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+.form-check {
+    border: 1px solid transparent; 
+    border-radius: 5px;
+}
+
+.bg-success.form-check {
+    border-color: #c3e6cb; 
+}
+
+.bg-danger.form-check {
+    border-color: #f5c6cb; 
+}
+}
+
+
+
+.text-question {
+    text-align: justify;
+    hyphens: auto;
+    font-size: 18px; 
+
+}
+
+label span {
+    hyphens:auto; 
+    font-size:18px; 
+
+}
+
+body {
+    font-family: 'Robotto', sans-serif;
+
+}
+
+    
+
+
+
+

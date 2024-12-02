@@ -15,7 +15,7 @@ class EnemHumanSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_human_sciences_quiz.html"
     quiz_subject_id = 3
-    paginate_by = 2
+    paginate_by = 1
 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=self.quiz_subject_id)

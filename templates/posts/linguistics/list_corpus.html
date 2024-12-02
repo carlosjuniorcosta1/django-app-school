@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Corpora disponíveis</h1>
+    {% if object_list %}
+        <ul class="list-group">
+            {% for post in posts %}
+                <li class="list-group-item">
+                    {{post.textual_genre__textual_genre}}                    
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há posts disponíveis.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -13,6 +13,7 @@ from .views.culture.arts_views import CultureArtsListView
 from .views.health_views import HealthListView
 from .views.ilustrattor_views import ListIllustrationsAsked, UpdateIllustration, DetailIllustration
 from .views.essay_view import IndexEssayListView
+from .views.linguistics_views import ListCorpus
 
 app_name = 'posts'
 
@@ -37,5 +38,6 @@ urlpatterns = [
     path('illustrations_asked_update/<int:pk>/', UpdateIllustration.as_view(), name='update_image_illustration'),
     path('illustrations_asked/detail/<int:pk>/', DetailIllustration.as_view(), name="detail_illustration"),
     path('list_essay_index', IndexEssayListView.as_view(), name='index_essay' ),
+    path('list_corpus', ListCorpus.as_view(), name='list_corpus'),
 
 ]

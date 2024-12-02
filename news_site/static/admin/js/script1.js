@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewTitle = document.getElementById('preview-title');
     const previewSubtitle = document.getElementById('preview-subtitle');
     const previewMainText = document.getElementById('preview-text');
-    const previewContainer = document.getElementById('preview-container'); 
+    const previewContainer = document.getElementById('preview-container');
     const ingredientsContainer = document.getElementById('ingredients-container');
     const preparationContainer = document.getElementById('preparation-container');
     const ingredientsPreview = document.getElementById('ingredients-preview');
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const hideFields = document.getElementsByClassName('hide-ilustrator');
     const mainTextField = document.getElementById('box-main-text');
     const subtitleSelect = document.getElementById('box-subtitle');
+    const askForIllustration = document.getElementById('ask-for-illustration');
 
     const allGenres = Array.from(genreSelect.options);
     const allowedGenresForIllustrations = ['tirinha', 'ilustração'];
@@ -45,6 +46,20 @@ document.addEventListener("DOMContentLoaded", function () {
         previewMainText.style.display = 'none';
     }
 
+    function selectGenreByName(genre) {
+        const genreOption = allGenres.find(option => option.text.toLowerCase() === genre.toLowerCase());
+        if (genreOption) {
+            genreSelect.value = genreOption.value;
+        }
+    }
+
+    function selectSectionByName(section) {
+        const sectionOption = Array.from(sectionSelect.options).find(option => option.text.toLowerCase() === section.toLowerCase());
+        if (sectionOption) {
+            sectionSelect.value = sectionOption.value;
+        }
+    }
+
     function syncFields() {
         const selectedGenre = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
         const selectedSection = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
@@ -55,38 +70,38 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 selectGenreByName('artigo');
                 showPreview();
-            }     
+            }
         } else if (selectedGenre === 'artigo') {
             selectSectionByName('opinião');
             showPreview();
         } else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
-            showPreview(); 
+            showPreview();
         } else if (['tirinha', 'ilustração'].includes(selectedGenre)) {
             selectSectionByName('ilustrações');
-            showPreview(); 
+            showPreview();
         } else if (selectedGenre === 'receita') {
             selectSectionByName('comida');
             insertRecipeTemplate();
-            hidePreview(); 
+            hidePreview();
         }
     }
 
     titleInput.addEventListener('input', function () {
         const capitalizedTitle = capitalizeFirstLetter(titleInput.value);
         previewTitle.textContent = capitalizedTitle;
-        titleInput.value = capitalizedTitle; 
+        titleInput.value = capitalizedTitle;
     });
 
     subtitleInput.addEventListener('input', function () {
         const capitalizedSubtitle = capitalizeFirstLetter(subtitleInput.value);
         previewSubtitle.textContent = capitalizedSubtitle;
-        subtitleInput.value = capitalizedSubtitle; 
+        subtitleInput.value = capitalizedSubtitle;
     });
 
     mainTextInput.addEventListener('input', function () {
         updatePreviewMainText();
-        updateRecipePreview(); 
+        updateRecipePreview();
     });
 
     imageInput.addEventListener('change', function () {
@@ -121,40 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
         syncFields();
         toggleHideTextField();
     });
-});
-
-
-document.getElementById("submit-button").addEventListener("click", function(event) {
-    const imageInput = document.getElementById("id_image");
-    const imageFile = imageInput.files.length; // 
-
-    if (imageFile === 0) {
-        event.preventDefault(); 
-        
-        const errorMessage = document.getElementById("image-error-message");
-        errorMessage.style.display = "block"; // 
-    } else {
-        const errorMessage = document.getElementById("image-error-message");
-        errorMessage.style.display = "none"; 
-    }
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const genreSelect = document.getElementById('id_textual_genre');
-    const sectionSelect = document.getElementById('id_section_name')
-    const askForIllustration = document.getElementById('ask-for-illustration');
 
     function toggleIllustrationMenu() {
         const selectedGenreValue = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
-        const selectedSectionValue = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase()
+        const selectedSectionValue = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
         if (selectedGenreValue === "tirinha" || selectedGenreValue === "ilustração") {
-            askForIllustration.style.display = "none";  
+            askForIllustration.style.display = "none";
         } else {
-            askForIllustration.style.display = "block";  
+            askForIllustration.style.display = "block";
         }
-        if(selectedSectionValue === "ilustrações"){
-            askForIllustration.style.display = "none"; 
+        if (selectedSectionValue === "ilustrações") {
+            askForIllustration.style.display = "none";
         }
     }
 
@@ -164,3 +156,17 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleIllustrationMenu();
 });
 
+document.getElementById("submit-button").addEventListener("click", function(event) {
+    const imageInput = document.getElementById("id_image");
+    const imageFile = imageInput.files.length;
+
+    if (imageFile === 0) {
+        event.preventDefault();
+
+        const errorMessage = document.getElementById("image-error-message");
+        errorMessage.style.display = "block";
+    } else {
+        const errorMessage = document.getElementById("image-error-message");
+        errorMessage.style.display = "none";
+    }
+});

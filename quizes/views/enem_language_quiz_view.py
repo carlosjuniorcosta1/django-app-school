@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemLanguageQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_language_quiz.html"
-    paginate_by = 1  # Número de questões a serem paginadas se nenhum filtro for aplicado
+    paginate_by = 1  
 
     def get_queryset(self) -> QuerySet:
      
@@ -22,7 +22,6 @@ class EnemLanguageQuizListView(ListView):
             filter_by = form.cleaned_data.get('filter_by')
             search_term = form.cleaned_data.get('search_term')
 
-            # Aplica o filtro de acordo com o critério selecionado
             if filter_by == "year":
                 queryset = queryset.filter(year__icontains=search_term)
             elif filter_by == 'word':
@@ -59,6 +58,7 @@ class EnemLanguageQuizListView(ListView):
         context['form'] = form  
         context['total_questions'] = questions.count()  
         context['is_filter_used'] = is_filter_used
+     
         context['is_premium'] = self.request.user.is_premium
 
 

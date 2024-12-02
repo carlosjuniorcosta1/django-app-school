@@ -1,10 +1,5 @@
 from django.urls import path 
-# from .views.view_quiz_js import (
-#     QuizListView,
-#     quiz_view,
-#     quiz_data_view,
-#     save_quiz_view
-# )
+
 from .views.questions_view import  QuestionListView
 from .views.quiz_view import QuizListView
 from .views.enem_language_quiz_view import EnemLanguageQuizListView
@@ -12,6 +7,7 @@ from .views.enem_math_quiz_view import EnemMathQuizListView
 from .views.enem_human_sciences_quiz_view import EnemHumanSciencesQuizListView
 from .views.enem_natural_sciences_quiz_view import EnemNaturalSciencesQuizListView
 from .views.create_question_view import QuestionCreateView
+from .views.enem_human_sciences_ajax import EnemHumanSciencesQuizAjaxListView
 
 
 app_name = 'quizes'
@@ -23,7 +19,9 @@ urlpatterns = [
         path('list/questions/math', EnemMathQuizListView.as_view(), name="enem-math-quiz"),
         path('list/questions/human_sciences', EnemHumanSciencesQuizListView.as_view(), name="enem-human-sciences-quiz"),
         path('list/questions/natural_sciences', EnemNaturalSciencesQuizListView.as_view(), name="enem-natural-sciences-quiz"),
-        path('create_question', QuestionCreateView.as_view(), name='create_question')
+        path('create_question', QuestionCreateView.as_view(), name='create_question'),
+        path('human_sciences/filtered', EnemHumanSciencesQuizAjaxListView.as_view(), name='enem-human-sciences-quiz-ajax'),
+
 
 
      ]

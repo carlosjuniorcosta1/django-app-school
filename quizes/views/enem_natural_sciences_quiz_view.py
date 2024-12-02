@@ -11,7 +11,7 @@ from django.db.models import Q
 class EnemNaturalSciencesQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_natural_sciences_quiz.html"
-    paginate_by = 2 
+    paginate_by = 1 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=4)
         form = QuestionForm(self.request.GET)
@@ -57,9 +57,6 @@ class EnemNaturalSciencesQuizListView(ListView):
         context['total_questions'] = questions.count()
         context['is_filter_used'] = is_filter_used
         context['is_premium'] = self.request.user.is_premium
-
-
-
  
         return context
     

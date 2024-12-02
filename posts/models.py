@@ -73,7 +73,7 @@ class Post(models.Model):
     ('rejected', 'Rejeitado'),
     )
     title = models.CharField(max_length=80)
-    subtitle = models.CharField(max_length=80, null=True, blank=True)
+    subtitle = models.CharField(max_length=81, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     main_text = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now=True)

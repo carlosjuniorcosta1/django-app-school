@@ -43,7 +43,6 @@ class PostCreateView(CreateView, LoginRequiredMixin):
 class PostListView(ListView):
     model = Post
     ordering = ['-created']
-    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -63,6 +62,7 @@ class PostListView(ListView):
                 queryset = queryset.filter(main_text__icontains=search_term)
             elif filter_by == 'user':
                 queryset = queryset.filter(user__first_name__icontains=search_term)
+        queryset = queryset[:10] 
 
         return queryset
 
@@ -78,11 +78,7 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    # def get_object(self):
-    #     post = super().get_object()
-    #     post.post_views += 1
-    #     post.save()
-    #     return post 
+
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -113,6 +109,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
+    
 
 
  

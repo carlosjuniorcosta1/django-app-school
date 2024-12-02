@@ -4,9 +4,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
-
-
-
 class CreateEssayReview(LoginRequiredMixin, CreateView):
     model = Essay
     template_name = 'review_essay/review_essay_post.html'

@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 class EnemMathQuizListView(ListView):
     model = QuizSubject
     template_name = "quizes/enem/enem_math_quiz.html"
-    paginate_by = 2
+    paginate_by = 1
 
     def get_queryset(self) -> QuerySet:
         queryset = Question.objects.filter(quiz_subject=2)
@@ -75,7 +75,6 @@ class EnemMathQuizListView(ListView):
                     'selected': selected_answer.text,
                     'correct': selected_answer.is_correct
                 }
-                print(f"Pergunta: {question.context} - Resposta Selecionada: {selected_answer.text} - Correta: {selected_answer.is_correct}")
 
         context = self.get_context_data()
         context['submitted_answers'] = submitted_answers

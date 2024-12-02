@@ -55,3 +55,51 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // 
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const quizForm = document.getElementById("quiz-form");
+
+    if (!quizForm) return;
+
+    // Verifica se o filtro foi usado com base no atributo data-is-filter-used
+    const isFilterUsed = quizForm.getAttribute("data-is-filter-used") === "true";
+
+    if (isFilterUsed) {
+        quizForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Impede o comportamento padrão de envio do formulário
+
+            const formData = new FormData(quizForm);
+            const actionUrl = quizForm.getAttribute("action");
+
+            fetch(actionUrl, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Erro ao processar a solicitação.");
+                    }
+                    return response.text();
+                })
+                .then((html) => {
+                    // Substitui o conteúdo do formulário
+                    const container = document.querySelector(".container");
+                    container.innerHTML = html;
+
+                    // Rola até a pergunta
+                    const firstQuestion = document.querySelector(".text-question");
+                    if (firstQuestion) {
+                        firstQuestion.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                })
+                .catch((error) => console.error("Erro ao enviar o formulário:", error));
+        });
+    }
+});

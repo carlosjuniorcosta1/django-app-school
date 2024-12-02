@@ -8,31 +8,29 @@
 
 
 {% block content %}
-
-<div class="row" data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
+<div class="row"  data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
     <div class="col-md-4 col-sm-12">
-      <form action="{% url 'quizes:enem-human-sciences-quiz' %}" method="GET" class="form-group">
-        <div class="form-row align-items-center">
-          <div class="col">
+<form id="ajax-filter-form" action="{% url 'quizes:enem-human-sciences-quiz-ajax' %}" method="GET" class="form-group">
+    <div class="form-row align-items-center"">
+        <div class="col">
             {{ form.filter_by|add_attrs:"class=form-control" }}
-          </div>
-          <div class="col">
-            {{ form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar" }}
-          </div>
-          <div class="col-auto">
-            <input type="submit" value="Filtrar" class="btn btn-success">
-          </div>
         </div>
-      </form>
+        <div class="col">
+            {{ form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar" }}
+        </div>
+        <div class="col-auto">
+            <button type="button" id="ajax-search-btn" class="btn btn-success">Filtrar</button>
+        </div>
     </div>
+</form>
+</div>
 </div>
 
 <div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
     <strong>Atenção!</strong> Você não é premium ainda. Para continuar com este quiz, por favor, adquira a assinatura premium.
 </div>
 
-
-<div class="container mt-2">
+<div class="container">
     <div class="row mb-2">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <h2 class="display-4 font-weight-bold text-secondary border-bottom pb-2 mb-4">
@@ -41,7 +39,7 @@
         </div>
     </div>
 
-    <form id="quiz-form" action="" method="POST"> 
+    <form id="quiz-form" action="" method="POST"  data-is-filter-used="{{ is_filter_used|yesno:'true,false' }}"> 
         {% csrf_token %}
         {% for question in questions %}
         <div class="mb-1 text-question card">
@@ -58,13 +56,13 @@
                     <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
                 {% endfor %}
                 {% endif %}
-                <p>{{ question.question }}</p>
+                <p class="font-weight-bold">{{ question.question }}</p>
                 {% for answer in question.get_answers %}
                     <div class="quiz-question form-check d-flex align-items-center ">
                         <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{ question.id }}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
-                        <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">
+                        <label class="form-check-label border-bottom mt-2 mb-1" for="question{{ question.id }}_answer{{ answer.id }}">
                             {% if answer.has_image_alt %}
-                           {{answer.alternative}})<img src="{{ answer.text }}" alt="">
+                           {{answer.alternative}})<img src="{{ answer.answer_image }}" alt="">
                             {% else %}
                             {{answer.alternative}})
                             {{ answer.text }}
@@ -74,12 +72,17 @@
                             {% endif %}
                         </label>             
                     </div>
+               
                 {% endfor %}
             </div>
+   
+
         </div>
         {% endfor %}
+
     
         <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
+
     </form>
 {% if is_premium %}
     <div class="pagination mt-4 d-flex justify-content-center align-items-center" id="pagination-buttons">
