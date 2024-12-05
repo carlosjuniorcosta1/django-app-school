@@ -80,5 +80,3 @@ class EnemNaturalSciencesQuizListView(ListView):
         context['submitted_answers'] = submitted_answers
 
         return render(request, self.template_name, context)
-
-

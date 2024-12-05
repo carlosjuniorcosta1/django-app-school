@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     option.innerHTML = `
                         <input type="radio" name="answer-${question.id}" id="answer-${question.id}-${index}" value="${answer.is_correct}" class="form-check-input">
-                        <label for="answer-${question.id}-${index}"class="form-check-label d-flex align-items-center">
-                            ${answerText ?`${answer.alternative})<span class=border-bottom mb-1 mt-2 text-answer>${answerText}</span>` : (answer.images && answer.images.length > 0 ? answer.images.map(image => `
+                        <label for="answer-${question.id}-${index}" class="form-check-label d-flex align-items-center ml-2">
+                            ${answerText ?`${answer.alternative}<span class=border-bottom mb-1 mt-2 text-answer>) ${answerText}</span>` : (answer.images && answer.images.length > 0 ? answer.images.map(image => `
                                 <img src="${image}" alt="Imagem da Resposta" class="answer-image img-fluid" />
                             `).join("") : "Texto não disponível")}
                         </label>

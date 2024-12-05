@@ -9,7 +9,7 @@ class EnemHumanSciencesQuizAjaxListView(ListView):
     model = Question
     quiz_subject_id = 3
     template_name = 'quizes/enem/enem_human_sciences_ajax.html'
-    paginate_by = 200
+    paginate_by = 50
 
     def get_queryset(self):
         queryset = Question.objects.filter(quiz_subject=self.quiz_subject_id)
