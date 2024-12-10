@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_quiz_enem_new.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="display-4 font-weight-bold text-secondary border-bottom pb-2 mb-4">
+        Ciências da Natureza  
+        </h2> 
+
+    <!-- Filtro -->
+    <form id="searchForm" class="form-inline mb-4">
+        <div class="form-group mr-2">
+            <label for="filter_by" class="mr-2">Filtrar por</label>
+            <select name="filter_by" id="filter_by" class="form-control">
+                <option value="word">Palavra</option>
+                <option value="year">Ano</option>
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <input
+                type="text"
+                name="search_term"
+                id="search_term"
+                class="form-control"
+                placeholder="Filtrar"
+            >
+        </div>
+        <button type="submit" class="btn btn-success">Buscar</button>
+    </form>
+
+    <div id="questionsContainer" class="mb-4">
+    </div>
+
+    <!-- Paginação -->
+    <nav id="paginationContainer" class="d-flex justify-content-center"></nav>
+</div>
+
+{% endblock %}
+{% block script_js %}
+
+<script src="{% static 'admin/js/script_quiz_enem_new.js' %}"></script>
+{% endblock %}

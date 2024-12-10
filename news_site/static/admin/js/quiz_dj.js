@@ -62,12 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!quizForm) return;
 
-    // Verifica se o filtro foi usado com base no atributo data-is-filter-used
     const isFilterUsed = quizForm.getAttribute("data-is-filter-used") === "true";
 
     if (isFilterUsed) {
         quizForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Impede o comportamento padrão de envio do formulário
+            event.preventDefault(); // 
 
             const formData = new FormData(quizForm);
             const actionUrl = quizForm.getAttribute("action");
@@ -86,11 +85,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     return response.text();
                 })
                 .then((html) => {
-                    // Substitui o conteúdo do formulário
                     const container = document.querySelector(".container");
                     container.innerHTML = html;
 
-                    // Rola até a pergunta
                     const firstQuestion = document.querySelector(".text-question");
                     if (firstQuestion) {
                         firstQuestion.scrollIntoView({
@@ -100,6 +97,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 })
                 .catch((error) => console.error("Erro ao enviar o formulário:", error));
+        });
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".text-question.card");
+    if (cards.length > 0) {
+        const lastCard = cards[cards.length - 1];
+
+        const topOffset = lastCard.getBoundingClientRect().top + window.scrollY; 
+        window.scrollTo({
+            top: topOffset, 
+            behavior: "smooth", 
         });
     }
 });

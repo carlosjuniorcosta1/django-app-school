@@ -1,14 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
+
+
     const searchForm = document.getElementById("searchForm");
+
     const questionsContainer = document.getElementById("questionsContainer");
     const paginationContainer = document.getElementById("paginationContainer");
 
     const urlParams = new URLSearchParams(window.location.search);
-    const initialFilterBy = urlParams.get("filter_by") || "";
+    const initialFilterBy = urlParams.get("filter_by") || "word";
     const initialSearchTerm = urlParams.get("search_term") || "";
     document.getElementById("filter_by").value = initialFilterBy;
     document.getElementById("search_term").value = initialSearchTerm;
-
     searchForm.addEventListener("submit", function (e) {
         e.preventDefault();
         performSearch(1);
@@ -57,6 +60,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                         <ul id="answers-${question.id}" class="list-group"></ul>
                         <button type="button" class="btn btn-primary mt-2" onclick="checkAnswer(${question.id})">Responder</button>
+                        <a class="btn btn-success mt-2 ml-4" id="buttonScrollDown">
+
+                        <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                               <a class="btn btn-success mt-2 ml-1" id="buttonScrollUp">
+                        
+                        <i class="fa-solid fa-arrow-up"></i>
+                        </a>
                     </div>
                 `;
                 questionsContainer.appendChild(questionDiv);
@@ -68,13 +79,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     const answerText = answer.text && answer.text.trim() !== "" ? answer.text : null;
 
                     option.innerHTML = `
-                        <input type="radio" name="answer-${question.id}" id="answer-${question.id}-${index}" value="${answer.is_correct}" class="form-check-input">
-                        <label for="answer-${question.id}-${index}"class="form-check-label d-flex align-items-center">
-                            ${answerText ?`${answer.alternative})<span class=border-bottom mb-1 mt-2 text-answer>${answerText}</span>` : (answer.images && answer.images.length > 0 ? answer.images.map(image => `
-                                <img src="${image}" alt="Imagem da Resposta" class="answer-image img-fluid" />
-                            `).join("") : "Texto não disponível")}
-                        </label>
-                    `;
+                    <input type="radio" name="answer-${question.id}" id="answer-${question.id}-${index}" value="${answer.is_correct}" class="form-check-input">
+                    <label for="answer-${question.id}-${index}" class="form-check-label d-flex align-items-center">
+                        ${answerText ? `${answer.alternative}) <span class="border-bottom mb-1 mt-2 text-answer" style="margin-left: 0.5em;">${answerText}</span>` : 
+                        (answer.images && answer.images.length > 0 ? answer.images.map(image => `
+                           <span> ${answer.alternative}) </span> <img src="${image}" alt="Imagem da Resposta" class="answer-image img-fluid border-bottom mb-1 mt-2" />
+                        `).join("") : "Texto não disponível")}
+                    </label>
+                `;
+                
                     answersContainer.appendChild(option);
                 });
             });
@@ -82,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderPagination(currentPage, totalPages) {
-        paginationContainer.innerHTML = ""; // Limpa a paginação anterior
+        paginationContainer.innerHTML = ""; 
 
         if (totalPages > 1) {
             if (currentPage > 1) {
@@ -126,4 +139,70 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const initialPage = urlParams.get("page") || 1;
     performSearch(initialPage);
+});
+
+
+document.addEventListener('click', function(e){
+    const cards = document.querySelectorAll(".text-question.card");
+
+    if(e.target.closest("#buttonScrollDown")){
+        console.log('cliquei')
+    }
+
+
+
+
+}
+)
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("click", function (e) {
+        if (e.target.closest("#buttonScrollDown")) {
+            const currentCard = e.target.closest(".card");
+
+            if (currentCard) {
+                const nextCard = currentCard.nextElementSibling;
+
+                if (nextCard) {
+                    const nextCardBody = nextCard.querySelector(".card-body");
+
+                    if (nextCardBody) {
+                        nextCardBody.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    } 
+                } else {
+                    alert("Não há mais questões!");
+                }
+            }
+        }
+    });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("click", function (e) {
+        if (e.target.closest("#buttonScrollUp")) {
+            const currentCard = e.target.closest(".card");
+
+            if (currentCard) {
+                const lastCard = currentCard.previousElementSibling;
+
+                if (lastCard) {
+                    const lastCardBody = lastCard.querySelector(".card-body");
+
+                    if (lastCardBody) {
+                        lastCardBody.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }
+                } else {
+                    alert("Não há mais questões!");
+                }
+            }
+        }
+    });
 });

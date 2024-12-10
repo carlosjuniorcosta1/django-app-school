@@ -11,7 +11,7 @@
 
 <div class="row"  data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
     <div class="col-md-4 col-sm-12">
-      <form action="{% url 'quizes:enem-language-quiz' %}" method="GET" class="form-group">
+      <form action="{% url 'quizes:enem-languages-quiz-ajax' %}" method="GET" class="form-group">
         <div class="form-row align-items-center">
           <div class="col">
             {{form.filter_by|add_attrs:"class=form-control"}}

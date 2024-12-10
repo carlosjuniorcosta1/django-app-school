@@ -29,9 +29,6 @@ class Answer(models.Model):
     alternative = models.CharField(max_length=1, blank=True, null=True)
     answer_image = models.TextField(blank=True, null=True)
 
-
-
-
     def __str__(self):
         return f"question: answer {self.text[:200]}"
     
