@@ -35,24 +35,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
 document.addEventListener('DOMContentLoaded', function() {
     let preVerificationDiv = document.getElementById('preVerification');
-    let isPremium = preVerificationDiv.getAttribute('data-is-premium') 
-    let buttonSubmit = document.getElementById('buttonSubmit')
-    let paginationButtons = document.getElementById('pagination-buttons')
+    let isPremium = preVerificationDiv ? preVerificationDiv.getAttribute('data-is-premium') : 'false';
 
-    let noPremium = document.getElementById('no-premium')
+    let buttonSubmit = document.getElementById('buttonSubmit');
+    let paginationButtons = document.getElementById('pagination-buttons');
+    let noPremium = document.getElementById('no-premium');
 
-    console.log("Valor de isPremium:", isPremium);
-    
+    console.log("Valor de isPremium:", isPremium); 
 
     if (isPremium !== 'true') {
-        noPremium.style.display = 'block';
-        buttonSubmit.style.display = 'none'; 
-        paginationButtons.style.display = 'none' 
-
-        return; // 
+        if (noPremium) noPremium.style.display = 'block'; 
+        if (buttonSubmit) buttonSubmit.style.display = 'none'; 
+        if (paginationButtons) paginationButtons.style.display = 'none'; 
+        if (preVerificationDiv) preVerificationDiv.style.display = 'none'; 
     }
 });
 

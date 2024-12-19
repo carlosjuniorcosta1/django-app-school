@@ -1,138 +1,182 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load form_tags %}
+
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
 {% endblock %}
 
 {% block content %}
-
-<div class="row"  data-is-premium="{{is_premium|yesno:'true,false'}}"  id="preVerification">
-    <div class="col-md-4 col-sm-12">
-      <form action="{% url 'quizes:enem-natural-sciences-quiz-ajax' %}" method="GET" class="form-group">
-        <div class="form-row align-items-center">
-          <div class="col">
-            {{form.filter_by|add_attrs:"class=form-control"}}
-          </div>
-          <div class="col">
-            {{form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar"}}
-          </div>
-          <div class="col-auto">
-            <input type="submit" value="Filtrar" class="btn btn-success">
-          </div>
-        </div>
-      </form>
+<div class="row mb-1" data-is-premium="{{is_premium|yesno:'true,false'}}" id="preVerification">
+    <div class="col-md-6 col-sm-12">
+        <form id="ajax-filter-form" action="{% url 'quizes:enem-natural-sciences-quiz-ajax' %}" method="GET" class="form-group">
+            <div class="form-row align-items-center">
+                <div class="col">
+                    {{ form.filter_by|add_attrs:"class=form-control" }}
+                </div>
+                <div class="col">
+                    {{ form.search_term|add_attrs:"class=form-control, placeholder=Pesquisar" }}
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'quizes:enem-human-sciences-quiz-ajax' %}">
+                    <button type="button" id="ajax-search-btn" class="btn btn-success">Filtrar</button>
+                </a>
+                </div>
+            </div>
+        </form>
     </div>
-  </div>
-  <div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
+
+    <div class="col-md-3 col-sm-12 w-50">
+        <form action="{% url 'quizes:enem-natural-sciences-quiz' %}" method="GET" class="form-group d-flex justify-content-end">
+          <label for="goto-question" class="mr-2"></label> 
+            <input type="number" id="goto-question" name="page" min="1" max="{{ total_questions }}" class="form-control mr-2" placeholder="Questão">
+            <button type="submit" class="btn btn-success">Ir</button>
+        </form>
+    </div>
+</div>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
     <strong>Atenção!</strong> Você não é premium ainda. Para continuar com este quiz, por favor, adquira a assinatura premium.
 </div>
 
 
-<div class="container mt-4">
-    <div class="row mb-4">
+</div>
+</div>
+
+
+
+<div class="container">
+    <div class="row mb-1">
         <div class="col-12 d-flex justify-content-between align-items-center">
-            <h2 class="display-4 font-weight-bold text-secondary border-bottom pb-2 mb-4">
-                Ciências da Natureza
-            </h2>
-         
+            <h3 class="font-weight-bold text-secondary border-bottom pb-2 mb-1">
+              Ciências da Natureza
+                
+            </h3> 
+            <h5>{{questions.number}} de {{total_questions}}</h5> 
         </div>
     </div>
 
-
-<form id="quiz-form" action="" method="POST"> 
-    {% csrf_token %}
-    
-    {% for question in questions %}
-    <div class="mb-1 text-question card">
-        <div class="card-body format-questions">
-          {% if not is_filter_used %}
-          <p>{{ forloop.counter0|add:questions.start_index }} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
-          {% else %}
-          <p>{{ forloop.counter}} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
-          {% endif %}
-
-        {% if question.has_image %}
-        {% for img_url in question.get_image_urls %}
-            <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
-        {% endfor %}
+    <form id="quiz-form" action="" method="POST"  data-is-filter-used="{{ is_filter_used|yesno:'true,false' }}"> 
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="mb-1 text-question card">
+            <div class="card-body format-questions">
+                {% if not is_filter_used %}
+                <p>{{ forloop.counter0|add:questions.start_index }} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+                {% else %}
+                <p>{{ forloop.counter}} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
+                {% endif %}
       
-        {% endif %}
-        <p>{{question.question}}</p>
-     
- 
-        {% for answer in question.get_answers %}
-            <div class="quiz-question form-check d-flex align-items-center ">
-                <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{question.id}}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
-                <label class="form-check-label" for="question{{ question.id }}_answer{{ answer.id }}">
-                    {% if answer.has_image_alt %}
-                    <img src="{{answer.text}}" alt="">
-                    
-                    {% else %}
-                    {{answer.alternative}})
-                    {{ answer.text }} 
-                    {% endif %}
-                    {% if answer.is_correct %}
-                <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
-                {% endif %}</label>             
-            </div> 
-           
+
+                {% if question.has_image %}
+                {% for img_url in question.get_image_urls %}
+                    <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
+                {% endfor %}
+                {% endif %}
+                <p class="font-weight-bold">{{ question.question }}</p>
+                {% for answer in question.get_answers %}
+                    <div class="quiz-question form-check d-flex align-items-center ">
+                        <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{ question.id }}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
+                        <label class="form-check-label border-bottom mt-2 mb-1" for="question{{ question.id }}_answer{{ answer.id }}" style="hyphens: auto;">
+                            {% if answer.has_image_alt %}
+                           {{answer.alternative}})<img src="{{ answer.answer_image }}" alt="">
+                            {% else %}
+                            {{answer.alternative}})
+                            {{ answer.text }}
+                            {% endif %}
+                            {% if answer.is_correct %}
+                            <span class="correct-answer-indicator" id="correct-answer-indicator"></span>
+                            {% endif %}
+                        </label>             
+                    </div>
+               
+                {% endfor %}
+            </div>
+   
+
+        </div>
         {% endfor %}
-       
-    </div>
-</div>
- 
 
-    {% endfor %}
-  
-    <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
-  
-</form>
+        <div class="d-flex justify-content-between align-items-start mt-3">
+            <button id="buttonSubmit" class="btn btn-primary" type="submit">Responder</button>
+       {% if is_premium %}     
+      <div class="d-flex align-items-end">
+            {% if questions.has_previous %}
+            <a href="?page={{ questions.previous_page_number }}" class="btn btn-success mr-3">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            {% else %}
+            <span class="btn btn-success disabled mr-3">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+
+            {% endif %}
+
+            {% if questions.has_next %}
+            <a href="?page={{ questions.next_page_number }}" class="btn btn-success">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            {% else %}
+            <span class="btn btn-success disabled">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            {% endif %}
+        </div>
+        </div>
+
+        {% endif %}
+
+        
+        
+
+    </form>
 {% if is_premium %}
-<div class="pagination mt-4 d-flex justify-content-center align-items-center">
-  {% if questions.has_previous %}
-  <a href="?page=1" class="btn btn-outline-secondary mx-1" title="Primeira Página">&laquo;&laquo;</a>
-  {% else %}
-  <span class="btn btn-outline-secondary mx-1 disabled" title="Primeira Página">&laquo;&laquo;</span>
-  {% endif %}
+    <div class="pagination mt-4 d-flex justify-content-center align-items-center" id="pagination-buttons">
+        {% if questions.has_previous %}
+        <a href="?page=1" class="btn btn-outline-secondary mx-1" title="Primeira Página">&laquo;&laquo;</a>
+        {% else %}
+        <span class="btn btn-outline-secondary mx-1 disabled" title="Primeira Página">&laquo;&laquo;</span>
+        {% endif %}
 
-  {% if questions.has_previous %}
-  <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1" title="Página Anterior">&laquo;</a>
-  {% else %}
-  <span class="btn btn-outline-secondary mx-1 disabled" title="Página Anterior">&laquo;</span>
-  {% endif %}
+        {% if questions.has_previous %}
+        <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1" title="Página Anterior">&laquo;</a>
+        {% else %}
+        <span class="btn btn-outline-secondary mx-1 disabled" title="Página Anterior">&laquo;</span>
+        {% endif %}
 
-  {% with current_page=questions.number %}
-  {% for num in questions.paginator.page_range %}
-      {% if num > current_page|add:"-3" and num < current_page|add:"+3" or num == 1 or num == questions.paginator.num_pages %}
-          {% if num == current_page %}
-          <span class="btn btn-outline-primary mx-1">{{ num }}</span>
-          {% else %}
-          <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1">{{ num }}</a>
-          {% endif %}
-      {% elif num == current_page|add:"-4" or num == current_page|add:"+4" %}
-          <span class="btn btn-outline-secondary mx-1 disabled">...</span>
-      {% endif %}
-  {% endfor %}
-  {% endwith %}
+        {% with current_page=questions.number %}
+        {% for num in questions.paginator.page_range %}
+            {% if num > current_page|add:"-3" and num < current_page|add:"+3" or num == 1 or num == questions.paginator.num_pages %}
+                {% if num == current_page %}
+                <span class="btn btn-outline-primary mx-1">{{ num }}</span>
+                {% else %}
+                <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1">{{ num }}</a>
+                {% endif %}
+            {% elif num == current_page|add:"-4" or num == current_page|add:"+4" %}
+                <span class="btn btn-outline-secondary mx-1 disabled">...</span>
+            {% endif %}
+        {% endfor %}
+        {% endwith %}
 
-  {% if questions.has_next %}
-  <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1" title="Próxima Página">&raquo;</a>
-  {% else %}
-  <span class="btn btn-outline-secondary mx-1 disabled" title="Próxima Página">&raquo;</span>
-  {% endif %}
+        {% if questions.has_next %}
+        <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1" title="Próxima Página">&raquo;</a>
+        {% else %}
+        <span class="btn btn-outline-secondary mx-1 disabled" title="Próxima Página">&raquo;</span>
+        {% endif %}
 
-  {% if questions.has_next %}
-  <a href="?page={{ questions.paginator.num_pages }}" class="btn btn-outline-secondary mx-1" title="Última Página">&raquo;&raquo;</a>
-  {% else %}
-  <span class="btn btn-outline-secondary mx-1 disabled" title="Última Página">&raquo;&raquo;</span>
-  {% endif %}
-</div>
-{% endif %}
+
+        {% if questions.has_next %}
+        <a href="?page={{ questions.paginator.num_pages }}" class="btn btn-outline-secondary mx-1" title="Última Página">&raquo;&raquo;</a>
+        {% else %}
+        
+        <span class="btn btn-outline-secondary mx-1 disabled" title="Última Página">&raquo;&raquo;</span>
+        {% endif %}
+        {% endif %}
+
+    </div>
 </div>
 
 {% endblock %}
-
 
 {% block script_js %}
 <script src="{% static 'admin/js/quiz_dj.js' %}"></script>

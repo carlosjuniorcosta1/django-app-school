@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                         <i class="fa-solid fa-arrow-up"></i>
                         </a>
+                        <p style="display:none" id="showAlertQuestion"> </p>
                     </div>
                 `;
                 questionsContainer.appendChild(questionDiv);
@@ -148,9 +149,6 @@ document.addEventListener('click', function(e){
     if(e.target.closest("#buttonScrollDown")){
         console.log('cliquei')
     }
-
-
-
 
 }
 )

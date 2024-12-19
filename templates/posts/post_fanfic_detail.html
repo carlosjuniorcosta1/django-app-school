@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_post_form.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'admin/css/styles_post_detail.css' %}" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-3 font-news">
+        <h2 class="font-weight-bold font-section-title">
+            Fanfics      
+        </h2> 
+        
+         
+        <div class="d-flex align-items-end">
+            <span class="mr-2">{{ post.user.first_name }} {{ post.user.last_name }}</span>
+            {% if post.user.user_picture %}
+                <a href="{% url 'accounts:list_user_posts' post.user.id %}">
+                    <img class="img-fluid rounded-circle img-avatar-column" 
+                         src="{{ post.user.user_picture.url }}" 
+                         alt="Avatar de {{ post.user.first_name }}" 
+                         style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #171718;">
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:list_user_posts' post.user.id %}">
+                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center img-avatar-column"
+                         style="width: 80px; height: 80px; font-size: 20px; border: 1px solid #171718; background-color: #d9d9d9;">
+                        {{ post.user.first_name|slice:":1"|upper }}{{ post.user.first_name|slice:"1:3"|lower }}
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-end align-items-end flex-sm-row">
+        {% if post.user.user_linkedin %}
+        <a href="{{ post.user.user_linkedin }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="Perfil no LinkedIn">
+            <i class="fab fa-linkedin fa-2x"></i>
+        </a>
+        {% endif %}
+        {% if post.user.user_instagram %}
+        <!-- Instagram -->
+         
+        <a href="{{ post.user.user_instagram }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Perfil no Instagram">
+            <i class="fab fa-instagram fa-2x"></i>
+        </a>
+        {% endif %}
+        {% if post.user.user_facebook %}
+        <a href="{{ post.user.user_facebook }}" target="_blank" class="text-primary mx-2" data-toggle="tooltip" title="Perfil no Facebook">
+            <i class="fab fa-facebook fa-2x"></i>
+        </a>
+        {% endif %}
+
+        {% if post.user.user_youtube %}        
+        <!-- YouTube -->
+        <a href="{{ post.user_youtube }}" target="_blank" class="text-danger mx-2" data-toggle="tooltip" title="Canal no YouTube">
+            <i class="fab fa-youtube fa-2x"></i>
+        </a>
+        {% endif %}
+
+
+    </div>
+</div>
+
+<hr>
+<h2 class="font-title-preview mt-3">{{post.title}}</h2>
+{% if post.subtitle %}
+<p class="font-subtitle-preview">{{post.subtitle}}</p>
+{% endif %}
+<small>em {{post.created}}</small> <small class="font-count-views">{{post.textual_genre}}</small>
+<br><br>
+
+{% if post.image %}
+    <div class="text-center">
+        <figure class="">
+            <img src="{{ post.image.url }}" alt="Imagem do post" class="img-fluid img-headline mt-2 img-border-radius">
+            {% if post.is_illustration_done %}
+            <figcaption class="mt-2">Ilustrado por {{ post.illustrator.first_name}} {{post.illustrator.last_name}}
+                {% if post.illustrator.user_instagram %}
+                <a href="{{post.illustrator.user_instagram }}" target="_blank" class="mx-1">
+                    <i class="fab fa-2x fa-instagram"></i>  <!-- Ícone do Instagram -->
+                </a>
+                {% endif %}
+                {% if post.illustrator.user_linkedin %}
+                <a href="{{post.illustrator.user_linkedin}}" target="_blank" class="mx-1">
+                    <i class="fab fa-2x fa-linkedin"></i>  <!-- Ícone do LinkedIn -->
+                </a>
+                {% endif %}
+            </figcaption>
+            {% else %}
+            <figcaption>{{ post.title }}</figcaption>
+            {% endif %}
+
+        </figure>
+    </div>
+{% endif %}
+
+<div class="font-paragraph-preview">
+    {{ post.main_text|linebreaks }}
+</div>
+<br>
+<p class="font-italic">{{post.user.presentation}}</p>
+
+<div class="d-flex justify-content-end mt-2">
+    <i class="fas fa-share"></i>
+    <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" target="_blank" class="mx-2" data-toggle="tooltip" title="Compartilhar no WhatsApp">
+        <i class="fab fa-whatsapp fa-2x text-success"></i>
+    </a>
+    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="mx-2" data-toggle="tooltip" title="Compartilhar no Twitter">
+        <i class="fab fa-twitter fa-2x text-primary"></i>
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="mx-2" data-toggle="tooltip" title="Compartilhar no Facebook">
+        <i class="fab fa-facebook fa-2x text-primary"></i>
+    </a>
+   
+</div>
+
+{% if user.is_authenticated and user == post.user %}
+    <a href="{% url 'posts:update_post' post.id %}" class="fas fa-2x fa-edit mr-2 ml-2 p-2"></a>
+    <a href="{% url 'posts:delete_post' pk=post.pk %}" class="fas fa-2x fa-trash mr-2 ml-2 p-2"></a>
+{% endif %}
+{% if user.is_artist and post.is_illustration_done == False  and post.is_asking_for_illustration == True%}
+<a href="{% url 'posts:update_image_illustration' post.id %}" class="fas fa-2x fa-paint-brush mr-2 ml-2 p-2" title="Ilustrar a publicação de {{user.first_name}} {{user.last_name}}"></a>
+
+{% endif %}
+
+</div>
+
+
+
+</div>
+
+{% endblock %}

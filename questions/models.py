@@ -1,5 +1,7 @@
 from django.db import models
 from quizes.models import QuizSubject
+from accounts.models import CustomUser as User
+
 
 class Question(models.Model):
     context = models.CharField(max_length=5000, null=True, blank=True)
@@ -32,4 +34,8 @@ class Answer(models.Model):
     def __str__(self):
         return f"question: answer {self.text[:200]}"
     
+
+
+
+
 

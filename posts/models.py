@@ -102,11 +102,34 @@ class Post(models.Model):
         max_size = 2 * 1024 * 1024  
         if self.image.size > max_size:
             raise ValidationError("A imagem não pode ser maior que 2MB")
- 
     
-    
+    @property
+    def is_fanfic(self):
+        return self.textual_genre and self.textual_genre.textual_genre == 'fanfic'
+        
 
+class Chapter(models.Model):
+  post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='chapters', blank=True, null=True)
+  title = models.CharField(max_length=100, blank=True, null=True)
+  content = models.TextField(blank=True, null=True)
+  created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+  chapter_number = models.PositiveIntegerField(blank=True, null=True)
+
+  class Meta:
+     ordering = ['chapter_number']
+
+
+  def __str__(self):
+     return f"Capítulo {self.chapter_number}: {self.title}"  
     
+  def save(self, *args, **kwargs):
+    if not self.chapter_number:
+        max_order = Chapter.objects.filter(post=self.post).aggregate(
+            max_order=models.Max('chapter_number')
+        )['max_order'] or 0  
+        self.chapter_number = max_order + 1 
+    super().save(*args, **kwargs)
+
 
 
 

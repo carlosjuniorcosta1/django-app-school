@@ -17,3 +17,5 @@ df.loc[df['has_image_alt'] == 1, 'text' ] = ''
 
 
 df.to_csv('df_answers.csv')
+
+

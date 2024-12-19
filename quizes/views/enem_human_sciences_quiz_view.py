@@ -68,17 +68,15 @@ class EnemHumanSciencesQuizListView(ListView):
         quiz = self.object
         questions = quiz.question_set.all()
         submitted_answers = {}
-
         for question in questions:
             selected_answer_id = request.POST.get(f"question{question.id}", None)
             if selected_answer_id:
-                selected_answer = Answer.objects.get(id=selected_answer_id)
+                selected_answer = Answer.objects.get(id=selected_answer_id)     
+
                 submitted_answers[question.context] = {
                     'selected': selected_answer.text,
                     'correct': selected_answer.is_correct
-                }
-                print(f"Pergunta: {question.context} - Resposta Selecionada: {selected_answer.text} - Correta: {selected_answer.is_correct}")
-
+                }  
         context = self.get_context_data()
         context['submitted_answers'] = submitted_answers
 

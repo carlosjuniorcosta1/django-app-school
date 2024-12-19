@@ -1,0 +1,50 @@
+{% load static %}
+{% load form_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'admin/css/styles_chapter_form.css' %}">
+    <title>Criar Capítulo</title>
+</head>
+<body>
+    <div class="container py-5">
+        <h2 class="text-center mb-4"><i class="fas fa-book"></i> Criar capítulo {{ next_chapter_number }} de {{fanfic_title}}</h2>
+
+        <form action="" method="POST" class="form-group" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="id_title" class="form-label"><i class="fas fa-heading"></i> Título do capítulo</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-book"></i></span>
+                    </div>
+                    {{ form.title|add_class:"form-control form-control-lg" }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="id_title" class="form-label"><i class="fas fa-heading"></i>Texto do capítulo </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-book"></i></span>
+                    </div>
+                    {{ form.content|add_class:"form-control form-control-lg" }}
+                </div>
+            </div>
+
+          
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Salvar Capítulo
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
