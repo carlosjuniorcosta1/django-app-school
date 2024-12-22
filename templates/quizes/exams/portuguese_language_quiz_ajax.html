@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin/css/styles_quiz_enem_new.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-1">
+    <div class="form-row align-items-center mb-3">
+        <div class="col-md-6 mb-2 d-flex justify-content-start">
+            <a href="javascript:history.back()" class="btn btn-secondary btn-sm w-25">
+                ← Voltar
+            </a>
+        </div>
+
+        <div class="col-12">
+            <form id="searchForm" class="form-row align-items-center">
+                <div class="col-12 col-sm-auto mb-2">
+                    <select name="filter_by" id="filter_by" class="form-control form-control-sm w-100">
+                        <option value="word" >Palavra</option>
+                        <option value="examining_board">Banca</option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-auto mb-2">
+                    <input
+                        type="text"
+                        name="search_term"
+                        id="search_term"
+                        class="form-control form-control-sm w-100"
+                        placeholder="Filtrar"
+                    >
+                </div>
+                <div class="col-12 col-sm-auto">
+                    <button type="submit" class="btn btn-success btn-sm w-100">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h3 class="font-weight-bold text-secondary border-bottom pb-1 mb-1 mt-2">
+        Língua Portuguesa
+    </h3> 
+
+    <div id="questionsContainer" class="mb-4"></div>
+
+    <nav id="paginationContainer" class="d-flex justify-content-center"></nav>
+</div>
+{% endblock %}
+
+{% block script_js %}
+<script src="{% static 'admin/js/script_quiz_exams.js' %}"></script>
+{% endblock %}

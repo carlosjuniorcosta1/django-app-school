@@ -11,6 +11,8 @@ from .views.enem_human_sciences_ajax import EnemHumanSciencesQuizAjaxListView
 from .views.enem_natural_sciences_ajax import EnemNaturalSciencesQuizAjaxListView
 from .views.enem_language_ajax import EnemLanguagesQuizAjaxListView
 from .views.enem_math_ajax import EnemMathQuizAjaxListView
+from .views.portuguese_language_view import PortugueseLanguageQuizListView
+from .views.portuguese_language_ajax import PortugueseLanguageQuizAjaxListView
 
 
 app_name = 'quizes'
@@ -27,6 +29,10 @@ urlpatterns = [
         path('natural_sciences/filtered', EnemNaturalSciencesQuizAjaxListView.as_view(), name='enem-natural-sciences-quiz-ajax'),
         path('languages/filtered', EnemLanguagesQuizAjaxListView.as_view(), name='enem-languages-quiz-ajax'),
         path('math/filtered', EnemMathQuizAjaxListView.as_view(), name='enem-math-quiz-ajax'),
+        path('list/questions/portuguese', PortugueseLanguageQuizListView.as_view(), name='portuguese-language-quiz'),
+        path('portuguese/filtered', PortugueseLanguageQuizAjaxListView.as_view(), name='portuguese-language-quiz-ajax'),
+
+
 
 
 
