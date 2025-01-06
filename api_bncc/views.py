@@ -5,8 +5,7 @@ from .models import ElementarySchoolBncc, HighSchoolBncc
 from api_bncc.forms.list_bncc_form import ListBnccFormElSchool
 
 class ElementarySchoolBnccListView(ListView):
-    template_name = 'api/api_bncc/bncc_list_es.html'
-    
+    template_name = 'api/api_bncc/bncc_list_es.html'    
 
     def get_queryset(self):
         queryset =  ElementarySchoolBncc.objects.all()

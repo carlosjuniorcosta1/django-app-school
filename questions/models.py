@@ -4,7 +4,7 @@ from accounts.models import CustomUser as User
 
 class Question(models.Model):
     context = models.CharField(max_length=5000, null=True, blank=True)
-    question = models.CharField(max_length=1705, null=True, blank=True)
+    question = models.CharField(max_length=1706, null=True, blank=True)
     quiz_subject = models.ForeignKey(QuizSubject, on_delete=models.CASCADE, null=True, blank=True)
     question_image = models.TextField(blank=True, null=True)
     year= models.IntegerField(blank=True, null=True)
@@ -31,6 +31,11 @@ class Answer(models.Model):
     has_image_alt = models.BooleanField(blank=True, null=True)   
     alternative = models.CharField(max_length=1, blank=True, null=True)
     answer_image = models.TextField(blank=True, null=True)
+
+    def count_alternatives(self):
+        if self.question:
+            return self.question.answer_set.count()
+        return 0
 
 
 

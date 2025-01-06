@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3">
+    <h3 class="mb-4">Editar Contexto da questão</h3>
+        <p>{{ object.question }}</p>  
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'quizes:portuguese-language-quiz' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

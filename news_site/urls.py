@@ -29,6 +29,7 @@ urlpatterns = [
     path('api_bncc/', include('api_bncc.urls')),
     path('quizes/', include('quizes.urls', namespace='quizes')),
     path('review_essay/', include('review_essay.urls', namespace="review_essay")),
+    path('questions/', include('questions.urls', namespace='questions')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -13,3 +13,9 @@ class QuizListView(ListView):
 
 
 
+
+class QuizExamListView(ListView):
+    model = QuizSubject
+    fields = ['quiz_subject']
+    template_name = "quizes/exams/list_exam_quizes.html"
+

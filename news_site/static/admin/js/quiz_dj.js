@@ -111,3 +111,65 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+function getCSRFToken() {
+    let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    return csrfToken;
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".delete-btn").forEach(function(button) {
+        button.addEventListener("click", function() {
+            console.log("Botão de exclusão clicado!"); 
+
+            const questionId = this.dataset.id; 
+            console.log("ID da questão capturado:", questionId); 
+
+            if (!questionId) {
+                console.error("Erro: O ID da questão não foi encontrado no atributo data-id.");
+                return;
+            }
+
+            const url = `/questions/api/${questionId}/delete`; 
+            console.log("URL para exclusão:", url); 
+
+            if (confirm("Tem certeza de que deseja apagar esta questão?")) {
+                console.log("Confirmação de exclusão aceita."); 
+
+                fetch(url, {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRFToken": getCSRFToken(), 
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => {
+                    console.log("Resposta do servidor recebida:", response.status); 
+                    if (!response.ok) {
+                        throw new Error("Erro ao processar a solicitação de exclusão.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dados recebidos do servidor:", data); 
+                    if (data.message) {
+                        alert(data.message);
+                        this.closest(".text-question").remove();
+                        console.log("Questão removida do DOM."); 
+                    } else {
+                        alert("Ocorreu um erro ao tentar apagar a questão.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao processar a solicitação:", error);
+                    alert("Não foi possível apagar a questão. Tente novamente.");
+                });
+            } else {
+                console.log("Exclusão cancelada pelo usuário."); 
+            }
+        });
+    });
+});
+

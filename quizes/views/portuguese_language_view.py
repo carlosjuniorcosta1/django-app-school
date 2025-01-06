@@ -24,7 +24,7 @@ class PortugueseLanguageQuizListView(ListView):
             search_term = form.cleaned_data.get('search_term')
 
             if filter_by == "examining_board":
-                queryset = queryset.filter(year__icontains=search_term)
+                queryset = queryset.filter(examining_board__icontains=search_term)
             elif filter_by == 'word':
                 queryset = queryset.filter(
                     Q(context__icontains=search_term) |
@@ -81,3 +81,4 @@ class PortugueseLanguageQuizListView(ListView):
 
         return render(request, self.template_name, context)
     
+

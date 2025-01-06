@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.db.models import Q
 from django.core.paginator import Paginator
 from questions.models import Question
-from quizes.forms.enem_quiz_question_form import QuestionForm
+from quizes.forms.enem_quiz_question_form import QuestionExamForm
 
 class PortugueseLanguageQuizAjaxListView(ListView):
     model = Question
@@ -13,13 +13,13 @@ class PortugueseLanguageQuizAjaxListView(ListView):
 
     def get_queryset(self):
         queryset = Question.objects.filter(quiz_subject=self.quiz_subject_id)
-        form = QuestionForm(self.request.GET)
+        form = QuestionExamForm(self.request.GET)
         if form.is_valid():
             filter_by = form.cleaned_data.get("filter_by")
             search_term = form.cleaned_data.get("search_term")
 
-            if filter_by == "year":
-                queryset = queryset.filter(year__icontains=search_term)
+            if filter_by == "examining_board":
+                queryset = queryset.filter(examining_board__icontains=search_term)
             elif filter_by == "word":
                 queryset = queryset.filter(
                     Q(context__icontains=search_term) |
@@ -30,7 +30,6 @@ class PortugueseLanguageQuizAjaxListView(ListView):
         return queryset
 
     def render_to_response(self, context, **response_kwargs):
-        # Verifica se a requisição é AJAX
         if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
             questions = context["object_list"]
 

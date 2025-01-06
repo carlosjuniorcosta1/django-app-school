@@ -1,7 +1,7 @@
 from django.urls import path 
 
 from .views.questions_view import  QuestionListView
-from .views.quiz_view import QuizListView
+from .views.quiz_view import QuizListView, QuizExamListView
 from .views.enem_language_quiz_view import EnemLanguageQuizListView
 from .views.enem_math_quiz_view import EnemMathQuizListView
 from .views.enem_human_sciences_quiz_view import EnemHumanSciencesQuizListView
@@ -31,6 +31,7 @@ urlpatterns = [
         path('math/filtered', EnemMathQuizAjaxListView.as_view(), name='enem-math-quiz-ajax'),
         path('list/questions/portuguese', PortugueseLanguageQuizListView.as_view(), name='portuguese-language-quiz'),
         path('portuguese/filtered', PortugueseLanguageQuizAjaxListView.as_view(), name='portuguese-language-quiz-ajax'),
+        path('list/quizes/exams', QuizExamListView.as_view(), name="list-exam-quizes" ),
 
 
 

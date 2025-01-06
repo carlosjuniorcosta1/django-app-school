@@ -53,21 +53,36 @@
         </div>
     </div>
 
+
+
     <form id="quiz-form" action="" method="POST"  data-is-filter-used="{{ is_filter_used|yesno:'true,false' }}"> 
         {% csrf_token %}
         {% for question in questions %}
         <div class="mb-1 text-question card">
             <div class="card-body format-questions">
+                
                 {% if not is_filter_used %}
                 <p>{{ forloop.counter0|add:questions.start_index }} -
                     {% if question.examining_board %}
                      <span>({{question.examining_board}}) - </span>
-                     {% if question.context and question.question %}
+                     {% endif %}
+                
+                     {% if question.context %}
                      {{question.context}}</p>
-                     <p class="font-weight-bold">{{question.question}}</p>
                      {% endif %}
+
+                     {% if question.question %}
+                     <span class="">{{question.question}}</span>
                      {% endif %}
-                {% endif %}
+
+                     {% if user.is_superuser %}
+                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning">Editar Contexto</a>
+
+
+                     <button type="button" class="btn btn-danger delete-btn" data-id="{{ question.id }}">Apagar</button>
+
+                 {% endif %}
+                {% endif %}          
       
 
                 {% if question.has_image %}
@@ -81,8 +96,12 @@
                         <label class="form-check-label border-bottom mt-2 mb-1" for="question{{ question.id }}_answer{{ answer.id }}" style="hyphens: auto;">
                             {% if answer.has_image_alt %}
                            {{answer.alternative}})<img src="{{ answer.answer_image }}" alt="">
-                            {% else %}
+                            {% else %} 
+                            {% if answer.count_alternatives != 2 %}                 
                             {{answer.alternative}})
+                            {% endif %}                        
+
+
                             {{ answer.text }}
                             {% endif %}
                             {% if answer.is_correct %}

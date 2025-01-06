@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Criar Pergunta{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Inserir nova questão</h1>
+    <form id="createQuestionForm" method="POST" action="{% url 'questions:api-create-question' %}">
+        {% csrf_token %}
+        
+        <!-- Campo para Pergunta -->
+        <div class="form-group">
+            <label for="context">Texto da Pergunta:</label>
+            <textarea id="context" name="context" rows="4" class="form-control" required></textarea>
+        </div>
+
+        <!-- Campo para Questão -->
+        <div class="form-group">
+            <label for="question">Questão:</label>
+            <textarea id="question" name="question" rows="4" class="form-control" required></textarea>
+        </div>
+
+
+
+        <!-- Campo para Ano -->
+        <div class="form-group">
+            <label for="year">Ano:</label>
+            <input id="year" name="year" type="number" class="form-control">
+        </div>
+
+        <!-- Campo para Banca -->
+        <div class="form-group">
+            <label for="examining_board">Banca:</label>
+            <input id="examining_board" name="examining_board" type="text" class="form-control">
+        </div>
+
+        <!-- Campo para Assunto -->
+        <div class="form-group">
+            <label for="quiz_subject">Matéria:</label>
+            <select id="quiz_subject" name="quiz_subject" class="form-control">
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.quiz_subject_hum }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Container para Respostas -->
+        <div id="answersContainer" class="mb-4">
+            <h3>Respostas</h3>
+            <div class="answer">
+                <div class="form-group">
+                    <label for="answer_0_text">Texto da alternativa 1:</label>
+                    <textarea id="answer_0_text" name="answers[0][text]" rows="2" class="form-control" required></textarea>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="answer_0_is_correct" name="answers[0][is_correct]" class="form-check-input">
+                    <label for="answer_0_is_correct" class="form-check-label">É a correta?</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão para adicionar novas respostas -->
+        <button type="button" id="addAnswerButton" class="btn btn-primary mb-4">Inserir alternativa</button>
+
+        <!-- Botão para enviar -->
+        <button type="submit" class="btn btn-success btn-block mb-3">Criar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script_js %}
+<script>
+    let answerIndex = 1;
+
+    document.getElementById("addAnswerButton").addEventListener("click", function () {
+        const container = document.getElementById("answersContainer");
+        const newAnswer = document.createElement("div");
+        newAnswer.classList.add("answer", "mb-3");
+        newAnswer.innerHTML = `
+            <div class="form-group">
+                <label for="answer_${answerIndex}_text">Texto da alternativa ${answerIndex + 1}:</label>
+                <textarea id="answer_${answerIndex}_text" name="answers[${answerIndex}][text]" rows="2" class="form-control" required></textarea>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="answer_${answerIndex}_is_correct" name="answers[${answerIndex}][is_correct]" class="form-check-input">
+                <label for="answer_${answerIndex}_is_correct" class="form-check-label">É a correta?</label>
+            </div>
+        `;
+        container.appendChild(newAnswer);
+        answerIndex++;
+    });
+
+    document.getElementById("createQuestionForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const data = {
+            context: formData.get("context"),
+            question: formData.get("question"),
+            spec_topic: formData.get("spec_topic"),
+            year: formData.get("year"),
+            examining_board: formData.get("examining_board"),
+            quiz_subject: formData.get("quiz_subject"),
+            answers: []
+        };
+
+        for (let i = 0; i < answerIndex; i++) {
+            const text = formData.get(`answers[${i}][text]`);
+            const isCorrect = formData.get(`answers[${i}][is_correct]`) === "on";
+            if (text) {
+                data.answers.push({ text, is_correct: isCorrect });
+            }
+        }
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert("Pergunta criada com sucesso!");
+                form.reset();
+                document.getElementById("answersContainer").innerHTML = "";
+                answerIndex = 1;
+            } else {
+                const errorData = await response.json();
+                alert("Erro ao criar pergunta. Verifique os dados.");
+            }
+        } catch (err) {
+            alert("Erro ao conectar com o servidor.");
+        }
+    });
+</script>
+{% endblock %}
