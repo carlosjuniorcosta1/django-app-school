@@ -76,7 +76,7 @@
                      {% endif %}
 
                      {% if user.is_superuser %}
-                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning">Editar Contexto</a>
+                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning">Editar contexto</a>
 
 
                      <button type="button" class="btn btn-danger delete-btn" data-id="{{ question.id }}">Apagar</button>
@@ -85,7 +85,7 @@
                 {% endif %}          
       
 
-                {% if question.has_image %}
+                {% if question.question_image %}
                 {% for img_url in question.get_image_urls %}
                     <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
                 {% endfor %}

@@ -45,7 +45,7 @@ class QuestionDeleteView(DestroyAPIView):
 
 class QuestionUpdateView(UpdateView):
     model = Question
-    fields = ['context']  
+    fields = ['context', 'question', 'quiz_subject', 'question_image', 'year', 'examining_board']  
     template_name = 'quizes/exams/update_question.html' 
     success_url = reverse_lazy('quizes:portuguese-language-quiz')  
 

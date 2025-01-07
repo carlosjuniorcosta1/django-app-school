@@ -69,7 +69,7 @@
                   <a href="{% url 'posts:detail_text' opinion.id %}" class="format-link-index"><div class="col-sm-12 col-md-6 col-lg-3 mb-1 text-center">
                         {% if opinion.user.user_picture %}
                         <div class="">
-                        <img src="{{ opinion.user.user_picture }}" class="rounded-circle shadow-lg mx-auto mb-2 img-avatar-column" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #171718;">
+                        <img src="{{ opinion.user.user_picture.url }}" class="rounded-circle shadow-lg mx-auto mb-2 img-avatar-column" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #171718;">
                     </div>
                         {% elif not opinion.user.user_picture %}
                         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto font-opinion-posts img-avatar-column mb-2"
