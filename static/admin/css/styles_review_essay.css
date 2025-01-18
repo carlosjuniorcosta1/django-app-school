@@ -1,0 +1,51 @@
+#canvas-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.text-box {
+  position: absolute;
+  white-space: nowrap;
+  width: auto;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow: hidden;
+  font-size: 16px;
+  background: transparent;
+  color: black;
+  border: 1px dashed black;
+}
+
+
+#canvas {
+  border: 1px solid #000;
+  display: block;
+  max-width: 100%; 
+  height: auto; 
+}
+
+@media (max-width: 768px) { 
+  #canvas {
+      width: 400px; 
+      height: 600px; 
+  }
+}
+
+.error-highlight {
+  background-color: #ffe6e6; /* Rosa claro */
+  border: 2px solid #ff9999; /* Borda rosa */
+}
+
+
+
+@media (max-width: 768px) {
+  #mobile-cards {
+      display: block;
+  }
+  #desktop-version {
+
+    display: none;
+  }
+}
+

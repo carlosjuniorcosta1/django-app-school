@@ -40,7 +40,7 @@ class PortugueseLanguageQuizAjaxListView(ListView):
             questions_data = []
             for question in page_obj.object_list:
                 answers = question.get_answers()
-                question_images = question.get_image_urls()  
+                question_image_url = question.question_image.url if question.question_image else None
 
                 questions_data.append({
                     "id": question.id,
@@ -48,21 +48,21 @@ class PortugueseLanguageQuizAjaxListView(ListView):
                     "question": question.question,
                     "year": question.year,
                     "examining_board": question.examining_board,
-                    "spec_topic": question.spec_topic,
-                    "images": question_images,  
+                    "question_image": question_image_url,  # Adiciona a URL da imagem
                     "answers": [
+                 
+                        
                         {
                             "id": answer.question_id,
                             "text": answer.text,
                             "is_correct": answer.is_correct,
-                            "images": [answer.answer_image] if answer.answer_image else [],
-                            "alternative": answer.alternative
+                            "alternative": answer.alternative,
+                            "answer_image": answer.answer_image.url if answer.answer_image else None,
                         }
                         for answer in answers
                     ],
                 })
 
-     
             return JsonResponse(
                 {
                     "questions": questions_data,

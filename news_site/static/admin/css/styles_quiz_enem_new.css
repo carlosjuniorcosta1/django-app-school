@@ -52,5 +52,46 @@ body {
     
 
 
+.img-answer {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .img-answer {
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .img-answer {
+        max-width: 800px;
+    }
+}
+
+
+.img-question {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .img-answer {
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .img-answer {
+        max-width: 800px;
+    }
+}
+
 
 

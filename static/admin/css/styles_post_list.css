@@ -61,3 +61,45 @@ nav a:hover,
     background-color: rgb(239, 234, 234); 
 }
 
+.mobile-version {
+    display: none;
+}
+
+.desktop-version {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .desktop-version{
+      display: none;
+    }
+    .mobile-version {
+        display: block;
+    }
+  }
+  
+
+  .card {
+    background-color: #f7f7f7; /* Cor de fundo suave */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border: none; /* Remover borda */
+  }
+  .card-title a {
+    color: #333; /* Cor mais discreta para o título */
+  }
+  .card-text small {
+    color: #666; /* Texto mais suave */
+  }
+
+  .btn:hover {
+    background-color: #23272b; /* Cor um pouco mais escura ao passar o mouse */
+  }
+
+  .img-avatar-post-list {
+    height: 75px;
+    width: 75px;
+    filter: grayscale(100%);
+    object-fit: cover;
+    border-radius: 45%;
+   
+}

@@ -1,15 +1,71 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends 'base.html' %}
+
+
+{% block extrahead %}
+<style>
+    .answer-form {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .form-section {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+        font-family: 'Merriweather', serif;
+        font-size: 1.5rem;
+        color: #343a40;
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container mt-3">
-    <h3 class="mb-4">Editar questão</h3>
-        <p>{{ object.question }}</p>  
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'quizes:portuguese-language-quiz' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h2 class="mb-4 text-start text-dark">Editar questão</h2>
+
+
+            <form method="post" enctype="multipart/form-data" class="form-group">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="redirect_to" value="{{ request.META.HTTP_REFERER }}">
+       
+                <div class="form-section mb-4">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="form-section mb-4">
+                    <h4>Respostas</h4>
+                    {{ answer_formset.management_form }}
+                    {% for form in answer_formset %}
+                        <div class="answer-form">
+                            {{ form.as_p }}
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                    <a href="{% url 'quizes:portuguese-language-quiz' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

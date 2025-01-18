@@ -76,30 +76,32 @@
                      {% endif %}
 
                      {% if user.is_superuser %}
-                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning">Editar contexto</a>
+                     <br>
+                     <div class="d-block align-items-start mb-2">
+                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning"><i class="fas fa-edit"></i>
+                     </a>
 
 
-                     <button type="button" class="btn btn-danger delete-btn" data-id="{{ question.id }}">Apagar</button>
+                     <button type="button" class="btn btn-danger delete-btn" data-id="{{ question.id }}"><i class="fas fa-trash"></i>
+                     </button>
+                    </div>
 
                  {% endif %}
-                {% endif %}          
+                {% endif %}         
       
-
                 {% if question.question_image %}
-                {% for img_url in question.get_image_urls %}
-                    <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
-                {% endfor %}
-                {% endif %}
+                    <img src="{{ question.question_image.url }}" alt="Question Image" class="img-fluid img-question d-block mx-auto" data-toggle="modal" data-target="#imageModal{{ question.id }}">
+               {% endif %}
                 {% for answer in question.get_answers %}
                     <div class="quiz-question form-check d-flex align-items-center ">
                         <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{ question.id }}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
                         <label class="form-check-label border-bottom mt-2 mb-1" for="question{{ question.id }}_answer{{ answer.id }}" style="hyphens: auto;">
-                            {% if answer.has_image_alt %}
-                           {{answer.alternative}})<img src="{{ answer.answer_image }}" alt="">
+                            {% if answer.answer_image %}
+                           {{answer.alternative}})<img src="{{ answer.answer_image.url }}" alt="" class="img-fluid img-answer d-block mx-auto" >
                             {% else %} 
                             {% if answer.count_alternatives != 2 %}                 
                             {{answer.alternative}})
-                            {% endif %}                        
+                            {% endif %}                      
 
 
                             {{ answer.text }}
@@ -192,6 +194,29 @@
 
     </div>
 </div>
+{% for question in questions %}
+{% if question.question_image %}
+<div class="modal fade" id="imageModal{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ question.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel{{ question.id }}">Imagem da questão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ question.question_image.url }}" alt="Imagem da Questão" class="img-fluid d-block mx-auto">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
 
 {% endblock %}
 

@@ -228,11 +228,35 @@ df_answers_new['has_image_alt'] = df_answers_new['has_image_alt'].astype('int')
 
 
 
+import pandas as pd
+
+df_apenas_portugues = pd.read_csv('df_questions_new.csv')
+
+
+df_apenas_portugues = df_apenas_portugues.query("examining_board != 'enem'")
+
+df_apenas_portugues.to_csv('questions_apenas_portugues.csv')
+
+df_apenas_portugues.drop('Unnamed: 0', axis =1, inplace=True)
+json_data = df_apenas_portugues.to_json(orient="records", indent=4, force_ascii=False)
+
+
+with open('questoes_so_portugues.txt', 'w', encoding='utf-8') as file:
+    file.write(json_data)
 
 
 
+json_data_answers = df_answers_so_portugues.to_json(orient="records", indent=4, force_ascii=False)
 
 
+with open('respostas_so_portugues.txt', 'w', encoding='utf-8') as file:
+    file.write(json_data_answers)
+
+respostas_agrupadas = respostas.groupby("question_id").apply(
+    lambda group: group[["answer_id", "answer_text"]].to_dict(orient="records")
+).reset_index(name="answers")
+
+df_answers_so_portugues.to_csv('df_respostas_so_portugues.csv')
 
 
 
