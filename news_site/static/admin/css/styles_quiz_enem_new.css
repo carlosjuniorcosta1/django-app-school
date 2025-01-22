@@ -29,14 +29,24 @@
 }
 }
 
-
-
 .text-question {
     text-align: justify;
     hyphens: auto;
     font-size: 20px; 
 
 }
+
+.text-answer {
+    text-align: justify;
+    hyphens: auto;
+    font-size: 20px; 
+    margin-right: 4px;
+
+}
+
+
+
+
 
 label span {
     hyphens:auto; 
@@ -52,23 +62,27 @@ body {
     
 
 
-.img-answer {
-    width: 100%;
-    height: auto;
-    max-width: 300px;
+.img-answer {   
+    max-width: 250px;
+    max-height: 300px;
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+
 }
 
 @media (min-width: 768px) {
     .img-answer {
         max-width: 600px;
+        height: auto;
+        object-fit: cover;
     }
 }
 
 @media (min-width: 1200px) {
     .img-answer {
         max-width: 800px;
+        height: auto;
     }
 }
 

@@ -4,12 +4,14 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from questions.models import Question
 from quizes.forms.enem_quiz_question_form import QuestionExamForm
+from math import ceil
+
 
 class PortugueseLanguageQuizAjaxListView(ListView):
     model = Question
     quiz_subject_id = 5
     template_name = 'quizes/exams/portuguese_language_quiz_ajax.html'
-    paginate_by = 50
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Question.objects.filter(quiz_subject=self.quiz_subject_id)
@@ -33,9 +35,13 @@ class PortugueseLanguageQuizAjaxListView(ListView):
         if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
             questions = context["object_list"]
 
+
             page = self.request.GET.get("page", 1)  
             paginator = Paginator(questions, self.paginate_by)
+
             page_obj = paginator.get_page(page)
+
+
 
             questions_data = []
             for question in page_obj.object_list:
@@ -58,17 +64,22 @@ class PortugueseLanguageQuizAjaxListView(ListView):
                             "is_correct": answer.is_correct,
                             "alternative": answer.alternative,
                             "answer_image": answer.answer_image.url if answer.answer_image else None,
+                            "total_answers": answer.count_alternatives(),
                         }
                         for answer in answers
                     ],
                 })
 
+            total_questions = self.get_queryset().count()
+            total_pages = ceil(total_questions / self.paginate_by)
+
+
             return JsonResponse(
                 {
                     "questions": questions_data,
                     "current_page": page_obj.number,
-                    "total_pages": paginator.num_pages,
-                    "total_questions": paginator.count,
+                    "total_pages": total_pages,
+                    "total_questions": total_questions,
                 },
                 status=200,
             )

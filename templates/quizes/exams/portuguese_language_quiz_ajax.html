@@ -9,8 +9,8 @@
 <div class="container mt-1">
     <div class="form-row align-items-center mb-3">
         <div class="col-md-6 mb-2 d-flex justify-content-start">
-            <a href="javascript:history.back()" class="btn btn-secondary btn-sm w-25">
-                ← Voltar
+          <a href="{% url 'quizes:portuguese-language-quiz' %}" class="btn btn-secondary btn-sm fas fa-arrow-left"></a>
+                
             </a>
         </div>
 
@@ -38,16 +38,35 @@
         </div>
     </div>
 
-    <h3 class="font-weight-bold text-secondary border-bottom pb-1 mb-1 mt-2">
-        Língua Portuguesa
-    </h3> 
 
-    <div id="questionsContainer" class="mb-4"></div>
+    <div class="container">
+        <div class="row mb-1">
+            <div class="col-12 col-sm-12 d-flex justify-content-between align-items-center">
+                <h3 class="font-weight-bold text-secondary border-bottom pb-2 mb-1">
+                    Língua Portuguesa
+                </h3>
+                <p id="total-filtered-questions" class="d-none d-sm-block"></p>
+            </div>
+            <div class="col-12 d-block d-sm-none text-start align-items-start">
+                <p id="total-filtered-questions-mobile"></p>
+            </div>
+        </div>
+    </div>
+    
 
-    <nav id="paginationContainer" class="d-flex justify-content-center"></nav>
+
+    <div id="questionsContainer" class="mb-4">
+
+        
+    </div>
+
+    <div id="paginationContainer" class="d-flex justify-content-center mb-2"></div>
+    
 </div>
 {% endblock %}
 
 {% block script_js %}
-<script src="{% static 'admin/js/script_quiz_exams.js' %}"></script>
+<script type='module' src="{% static 'admin/js/script_quiz_exams.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
+
 {% endblock %}
