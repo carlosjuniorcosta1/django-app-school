@@ -22,7 +22,7 @@ class QuestionNumberForm(forms.Form):
 class QuestionExamForm(forms.Form):
     filter_choices = [
         ("word", "Palavra"),
-        ("examining_board", "Banca")
+        ("examining_board", "Banca"),
         
     ]
 

@@ -17,10 +17,12 @@ export function renderQuestions(questions) {
                 `;
             }
          if(question.question && question.context){
-            questionDiv.innerHTML = `<div class="card-body"><p class=text-question>(${question.examining_board ? question.examining_board.toUpperCase() : "Banca não cadastrada"}) - ${question.context}}</p>`;
+            questionDiv.innerHTML = `<div class="card-body"><p class=text-question><span class=numberQuestion>${question.number}</span> -
+             (${question.examining_board ? question.examining_board.toUpperCase() : "Banca não cadastrada"}) - ${question.context}}</p>`;
         }
         else if(question.question && !question.context){
-            questionDiv.innerHTML = `<div class="card-body"><p class=text-question>(${question.examining_board ? question.examining_board.toUpperCase() : "Banca não cadastrada"}) - ${question.question}</p>`;
+            questionDiv.innerHTML = `<div class="card-body"><p class=text-question><span class=numberQuestion>${question.number}</span> - 
+            (${question.examining_board ? question.examining_board.toUpperCase() : "Banca não cadastrada"}) - ${question.question}</p>`;
 
         }        
             if (question.question) {
@@ -32,11 +34,11 @@ export function renderQuestions(questions) {
                     <div class="d-flex justify-content-between align-items-start mt-1">
                         <button type="button" class="btn btn-primary btn-sm" onclick="checkAnswer(${question.id})">Responder</button>
                         <div class="mr-auto d-flex">
-                            <a class="btn btn-success btn-sm mx-1" id="buttonScrollDown">
-                                <i class="fa-solid fa-arrow-down"></i>
+                            <a class="btn btn-success btn-sm mx-1" id="buttonGreenLast">
+                                <i class="fa-solid fa-arrow-left"></i>
                             </a>
-                            <a class="btn btn-success btn-sm" id="buttonScrollUp">
-                                <i class="fa-solid fa-arrow-up"></i>
+                            <a class="btn btn-success btn-sm" id="buttonGreenNext">
+                                <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>

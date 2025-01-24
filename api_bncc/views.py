@@ -19,7 +19,6 @@ class ElementarySchoolBnccListView(ListView):
             queryset = queryset.filter(**{year_field:True})
             queryset = queryset.order_by('-' + year_field)
 
-
         return queryset
 
         
