@@ -10,8 +10,8 @@
 {% block content %}
 
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mt-3 font-news">
-           <h2 class="font-weight-bold font-section-title">
+    <div class="d-flex justify-content-between align-items-center mt-3 border-bottom">
+           <h1 class="font-section-title font-weight-bold">
             {% if not post.textual_genre.textual_genre == 'fanfic' %}
            {{ post.section_name }}
            {% else %}
@@ -96,7 +96,6 @@
     </div>
 </div>
 
-<hr>
 
 <h2 class="font-title-preview mt-3">{{ post.title }}
     {% if selected_chapter %} 

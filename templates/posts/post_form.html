@@ -19,7 +19,10 @@
         {% if 'update_post_main' in request.path %}
             <h2 class="text-center mb-4"><i class="fas fa-edit"></i> Editar seu texto</h2>
         {% else %}
-            <h2 class="text-center mb-4"><i class="fas fa-pencil-alt"></i> Postar um texto</h2>
+
+        <h2 class="text-center text-uppercase fw-bold  shadow-sm p-2 bg-light rounded">
+
+            Postar um texto</h2>
         {% endif %}
 
         <form action="" method="POST" class="form-group" id="post-form" enctype="multipart/form-data">
@@ -99,7 +102,7 @@
                 </button>  
             </div>
             <div class="mb-4" id="ask-for-illustration">
-                <label class="form-label"><i class="fas fa-paint-brush"></i>Solicitar ilustração</label>
+                <label class="form-label"><i class="fas fa-paint-brush mr-2"></i>Solicitar ilustração</label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="is_asking_for_illustration" id="id_asking_yes" value="True">
                     <label class="form-check-label" for="id_asking_yes">

@@ -3,7 +3,6 @@
 {% load form_tags %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'admin/css/styles_world.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -47,12 +46,22 @@
                 <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
   
               </div>
-              <img class="img-carro img-fluid img-border-radius" src="{{post.image.url}}" alt="{{post.title}}">
+              <img class="img-carro img-fluid d-none d-md-block img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+
+
+              <img class="img-carro-mobile d-block d-md-none img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+
             </a>
-            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+            <div class="col-sm-12 text-center text-overlay d-none d-md-block">
+
               <h5>{{post.title}}</h5>
-              <p>{{post.subtitle}}</p>
             </div>
+            <div class="col-sm-12 text-center text-overlay-mobile d-block d-md-none p-2">
+
+              <p class="font-carro-mobile">{{ post.title }}</p>
+          </div>
+
+
           </div>
           {% endif %}
           {% endfor %}
@@ -87,11 +96,20 @@
                 <span class="font-textual-genre-carro">{{ post.user.first_name}} {{post.user.last_name}}</span>
   
               </div>
-              <img class="img-carro img-fluid img-border-radius" src="{{post.image.url}}" alt="{{post.title}}">
+              <img class="img-carro img-fluid d-none d-md-block img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+
+
+              <img class="img-carro-mobile d-block d-md-none img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+
             </a>
-            <div class="d-none d-md-block col-sm-12 text-start text-overlay">
+            <div class="col-sm-12 text-center text-overlay d-none d-md-block">
+
               <h5>{{post.title}}</h5>
-              <p>{{post.subtitle}}</p>
+            </div>
+            <div class="col-sm-12 text-center text-overlay-mobile d-block d-md-none p-2">
+
+              <p class="font-carro-mobile">{{ post.title }}</p>
+      
             </div>
           </div>
           {% endif %}
@@ -109,15 +127,15 @@
     </div>
   </div>
   
-  <div class="row d-flex mt-3">
+  <div class="row d-flex mt-4">
     {% for post in brazil_posts %}
-      {% if forloop.counter > 7 and forloop.counter <= 10 %}
+      {% if forloop.counter > 7 and forloop.counter <= 15 %}
         <div class="col-md-3 d-flex flex-column align-items-center mb-3">
           <div class="col">
-            <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-world img-border-radius"></a>
+            <a href="{% url 'posts:detail_text' post.id %}"><img src="{{post.image.url}}" alt="" class="img-fluid img-border-radius"></a>
           </div>
           <div class="col">
-            <p>{{post.title}}</p>
+            <p class="just-text">{{post.title}}</p>
           </div>
         </div>
 

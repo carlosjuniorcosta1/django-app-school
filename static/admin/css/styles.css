@@ -1,3 +1,8 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+
+}
 
 a{
     color: black;
@@ -23,7 +28,6 @@ a:hover{
 }
 
 .nav-link:hover{
-    font-size: 1.1em;
     color: rgb(12, 11, 11);
     background:rgb(239, 234, 234); 
      
@@ -36,9 +40,7 @@ a:hover{
 }
 
 
-.menu .container {
-    padding-left: 0px;
-}
+
 
 .thumb {
     width: 100%;
@@ -96,7 +98,7 @@ image img{
   }
 
   
-font-textual-genre-carro-2 {
+.font-textual-genre-carro-2 {
     font-size: 16px;
     font-family: 'Merriweather', serif;
     font-weight: bold;
@@ -162,8 +164,30 @@ font-textual-genre-carro-2 {
     text-align: center;
     color: white; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    background-color: rgb(29, 26, 26);
+    background-color: rgb(29, 26, 26, 0.7);
 }
+
+.text-overlay-mobile {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: rgba(29, 26, 26, 0.7); /* Fundo semi-transparente */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    width: 100%;
+    object-fit: cover;
+    
+}
+
+.img-carro-mobile {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
 
 .img-world {
     border-radius: 10px;
@@ -205,9 +229,11 @@ font-textual-genre-carro-2 {
 }
 
 .font-news {
-    font-family: 'Merriweather', serif;
+    font-family: 'Roboto', sans-serif;
 
 }
+
+
 
 .font-textual-genre-carro {
     font-size: 13px;
@@ -215,13 +241,15 @@ font-textual-genre-carro-2 {
 
 }
 
-body {
-    font-family: 'Merriweather', sans-serif;
 
+
+.font-carro-mobile {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
 }
 
 .img-border-radius {
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 .img-first-index {
@@ -268,5 +296,17 @@ body {
 
 .just-text {
     text-align: justify;
+    hyphens: auto;
+    word-spacing: 0.01em;
+    text-align-last: left;
+    overflow-wrap: break-word;
+    letter-spacing: -0.05em;
+    line-height: 1.4;
 
+
+}
+
+.image-container  {
+    border-top: 2px solid #a0a0af; 
+    margin-top: 10px;
 }

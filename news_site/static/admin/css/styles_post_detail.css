@@ -1,3 +1,9 @@
+
+.font-section-title {
+    font-family: 'Merriweather', serif;
+}
+
+
 .img-headline {
     width: 50%;
     height: 500px;
@@ -15,7 +21,7 @@
 }
 
 .font-paragraph-preview {
-    font-family: 'Merriweather', sans-serif;
+    font-family: 'Merriweather Sans', sans-serif;
     font-size: 22px;
     line-height: 1.5;
     color: #333;

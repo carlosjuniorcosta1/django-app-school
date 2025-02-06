@@ -69,11 +69,16 @@ class PostListView(ListView):
                 queryset = queryset.filter(textual_genre__textual_genre__icontains=search_term)
             elif filter_by == 'section_name':
                 queryset = queryset.filter(section_name__section_name__icontains=search_term)
-            elif filter_by == 'main_text':
-                queryset = queryset.filter(main_text__icontains=search_term)
+         
             elif filter_by == 'user':
                 queryset = queryset.filter(user__first_name__icontains=search_term)
-        queryset = queryset[:10] 
+                
+            elif filter_by == 'title_main_text':
+                queryset = queryset.filter(
+                    Q(title__icontains=search_term) |
+                    Q(main_text__icontains=search_term)
+                )
+        queryset = queryset[:25] 
 
         return queryset
         

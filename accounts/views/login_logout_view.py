@@ -44,7 +44,7 @@ def register(request):
                     user.user_picture = user_picture
                 user.save()
                 auth.login(request, user)
-                return redirect("dashboard")
+                return redirect("accounts:dashboard")
                 
            
         else:

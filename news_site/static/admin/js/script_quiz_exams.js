@@ -140,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Erro na busca:", error);
             });       
 
-
     }
 
 function renderPagination(currentPage, totalPages) {
@@ -171,7 +170,7 @@ function renderPagination(currentPage, totalPages) {
             performSearch(parseInt(currentPage) - 1);
         })
         const prevButton = document.createElement("button");
-        prevButton.classList.add("btn", "btn-sm");
+        prevButton.classList.add("btn", "btn-sm", "btn-number");
         const prevIcon = document.createElement("i");
         prevIcon.classList.add("fas", "fa-arrow-left")
         prevButton.appendChild(prevIcon)
@@ -190,7 +189,7 @@ function renderPagination(currentPage, totalPages) {
         // Páginas anteriores à atual (máximo 5)
         for (let page = startPage; page < parseInt(currentPage); page++) {  // Garantir que currentPage seja um número inteiro
             const pageButton = document.createElement("button");
-            pageButton.classList.add("btn", "btn-sm", "mx-1", "btn-secondary");
+            pageButton.classList.add("btn", "btn-sm", "mx-1", "btn-secondary", 'btn-number');
             pageButton.textContent = page;
             pageButton.addEventListener("click", function () {
                 performSearch(page);
@@ -207,7 +206,7 @@ function renderPagination(currentPage, totalPages) {
         // Páginas seguintes à atual (máximo 5)
         for (let page = parseInt(currentPage) + 1; page <= endPage; page++) {  // Garantir que currentPage seja um número inteiro
             const pageButton = document.createElement("button");
-            pageButton.classList.add("btn", "btn-sm", "mx-1", "btn-secondary");
+            pageButton.classList.add("btn", "btn-sm", "mx-1", "btn-secondary", 'btn-number');
             pageButton.textContent = page;
             pageButton.addEventListener("click", function () {
                 performSearch(page);
@@ -222,7 +221,7 @@ function renderPagination(currentPage, totalPages) {
             performSearch(parseInt(currentPage) + 1);
         })
         const nextButton = document.createElement("button");
-        nextButton.classList.add("btn", "btn-sm");
+        nextButton.classList.add("btn", "btn-sm", "btn-number");
         const nextIcon = document.createElement("i");
         nextIcon.classList.add("fas", "fa-arrow-right"); // Altere 'fa-arrow-right' pelo ícone desejado
         nextButton.appendChild(nextIcon);

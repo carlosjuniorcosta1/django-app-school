@@ -90,7 +90,7 @@
                 {% endif %}         
       
                 {% if question.question_image %}
-                    <img src="{{ question.question_image.url }}" alt="Question Image" class="img-fluid img-question d-block mx-auto" data-toggle="modal" data-target="#imageModal{{ question.id }}">
+                    <img src="{{ question.question_image.url }}" alt="Question Image" class="img-fluid d-block mx-auto" data-toggle="modal" data-target="#imageModal{{ question.id }}">
                {% endif %}
                 {% for answer in question.get_answers %}
                     <div class="quiz-question form-check d-flex align-items-center ">
@@ -158,9 +158,9 @@
         {% endif %}
 
         {% if questions.has_previous %}
-        <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1" title="Página Anterior">&laquo;</a>
+        <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1 btn-number" title="Página Anterior">&laquo;</a>
         {% else %}
-        <span class="btn btn-outline-secondary mx-1 disabled" title="Página Anterior">&laquo;</span>
+        <span class="btn btn-outline-secondary mx-1 disabled btn-number" title="Página Anterior">&laquo;</span>
         {% endif %}
 
         {% with current_page=questions.number %}
@@ -169,18 +169,18 @@
                 {% if num == current_page %}
                 <span class="btn btn-outline-primary mx-1">{{ num }}</span>
                 {% else %}
-                <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1">{{ num }}</a>
+                <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1 btn-number">{{ num }}</a>
                 {% endif %}
             {% elif num == current_page|add:"-4" or num == current_page|add:"+4" %}
-                <span class="btn btn-outline-secondary mx-1 disabled">...</span>
+                <span class="btn btn-outline-secondary mx-1 disabled btn-number">...</span>
             {% endif %}
         {% endfor %}
         {% endwith %}
 
         {% if questions.has_next %}
-        <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1" title="Próxima Página">&raquo;</a>
+        <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1 btn-number" title="Próxima Página">&raquo;</a>
         {% else %}
-        <span class="btn btn-outline-secondary mx-1 disabled" title="Próxima Página">&raquo;</span>
+        <span class="btn btn-outline-secondary mx-1 disabled btn-number" title="Próxima Página">&raquo;</span>
         {% endif %}
 
 

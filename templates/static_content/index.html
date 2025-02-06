@@ -38,11 +38,19 @@
                       <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                           <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                       </div>
-                        <img class="img-carro img-fluid img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+                        <img class="img-carro img-fluid d-none d-md-block img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+                        
+                        <img class="img-carro-mobile d-block d-md-none img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
                     </a>
-                    <div class="d-none d-md-block col-sm-12 text-start text-overlay">
-                        <h5 class="just-text">{{ post.title }}</h5>
+                    <div class="col-sm-12 text-center text-overlay d-none d-md-block">
+                        <h5 class="">{{ post.title }}</h5>
                     </div>
+
+                    <div class="col-sm-12 text-center text-overlay-mobile d-block d-md-none p-2">
+
+                        <p class="font-carro-mobile">{{ post.title }}</p>
+                    </div>
+
                 </div>
                 {% endfor %}
             </div>
@@ -58,18 +66,17 @@
     </div>
 </div>
 
-     <div class="container-fluid p-2">
+     <div class="container-fluid p-1">
       <section class="colunistas" style="background-color: #f8f9fa;">
-          <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
   
-          <div class="container p-3">
+          <div class="container p-1">
               <div class="row justify-content-center ">
                   {% for opinion in opinion_posts %}
                   {% if forloop.counter < 5 %}
                   <a href="{% url 'posts:detail_text' opinion.id %}" class="format-link-index"><div class="col-sm-12 col-md-6 col-lg-3 mb-1 text-center">
                         {% if opinion.user.user_picture %}
-                        <div class="">
-                        <img src="{{ opinion.user.user_picture.url }}" class="rounded-circle shadow-lg mx-auto mb-2 img-avatar-column" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #171718;">
+                        <div class="image-container">
+                        <img src="{{ opinion.user.user_picture.url }}" class="rounded-circle shadow-lg mx-auto mb-2 img-avatar-column mt-2" style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #171718;">
                     </div>
                         {% elif not opinion.user.user_picture %}
                         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto font-opinion-posts img-avatar-column mb-2"
@@ -89,14 +96,14 @@
                                 {% endif %}
                               </h5> 
                               </span>
-                              <p class="card-text font-opinion-posts just-text">{{ opinion.title }}</p>
+                              <p class="card-text just-text">{{ opinion.title }}</p>
                           </div></a>
                       
                   </div>
-                  {% endif %}
+                  {% endif %}   
                   {% endfor %}
               </div>
-          </div>
+        </div>
   
           <hr style="border-top: 2px solid #030a12; width: 80%; margin: auto;">
       </section>
@@ -136,10 +143,19 @@
                         <div class="position-absolute top-0 start-0 p-2 text-white" style="background: rgba(0, 0, 0, 0.5); border-radius:5px">
                             <span class="font-textual-genre-carro">{{ post.section_name}}</span>
                         </div>
-                          <img class="img-carro img-fluid img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+                          <img class="img-carro img-fluid d-none d-md-block img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+                          <img class="img-carro-mobile d-block d-md-none img-border-radius" src="{{ post.image.url }}" alt="{{ post.title }}">
+
                       </a>
-                      <div class="d-none d-md-block col-sm-12 text-start text-overlay">
-                          <h5 class="">{{ post.title }}</h5>
+
+                      <div class="col-sm-12 text-center text-overlay d-none d-md-block">
+                        <h5 class="">{{ post.title }}</h5>
+                    </div>
+
+                    <div class="col-sm-12 text-center text-overlay-mobile d-block d-md-none p-2">
+
+                        <p class="font-carro-mobile">{{ post.title }}</p>
+
                       </div>
                   </div>
                   {% endfor %}

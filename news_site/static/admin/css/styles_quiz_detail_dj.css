@@ -31,7 +31,7 @@ p {
 
     
 body {
-    font-family: 'Robotto', sans-serif;
+    font-family: 'Merriweather', sans-serif;
     font-size: 14px;
     line-height: 1.5;
    
@@ -108,3 +108,9 @@ body {
     }
 }
 
+
+@media (max-width: 768px) { 
+    .btn-number {
+        display: none; /
+    }
+}
