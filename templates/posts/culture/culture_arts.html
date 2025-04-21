@@ -52,41 +52,7 @@
         {% endfor %}
     </div>
 
-    <h2 id="animated-title-2" class="animated-title"></h2>
-    <div class="row mt-4">
-        {% for post in culture_arts_posts_comic %}
-        {% if forloop.counter <= 4 %}
-        <div class="col-md-6 col-sm-12 mb-2 animation-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mt-3">
-                    </div>
 
-                    <div class="img-container mt-3">
-                        <img src="{{ post.image.url }}" alt="Imagem da tirinha" class="img-fluid">
-                    </div>
-
-                    <!-- Informações do Autor -->
-                    <div class="mt-2">
-                        <p>Autor: {{ post.user.first_name }} {{ post.user.last_name }}</p>
-                        {% if post.user.user_instagram %}
-                        <a href="{{ post.user.user_instagram }}" target="_blank" class="mx-1">
-                            <i class="fab fa-2x fa-instagram"></i>
-                        </a>
-                        {% endif %}
-                        {% if post.user.user_linkedin %}
-                        <a href="{{ post.user.user_linkedin }}" target="_blank" class="mx-1">
-                            <i class="fab fa-2x fa-linkedin"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
-</div>
 
 {% endblock %}
 

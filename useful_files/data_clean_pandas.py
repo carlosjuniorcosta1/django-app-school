@@ -259,4 +259,58 @@ respostas_agrupadas = respostas.groupby("question_id").apply(
 df_answers_so_portugues.to_csv('df_respostas_so_portugues.csv')
 
 
+df_port = pd.read_csv('questions_apenas_portugues.csv')
+
+df_enem = pd.read_csv('df_questions_new.csv')
+
+
+df_port.columns = 'Unnamed: 0.1', 'Unnamed: 0', 'question_id', 'context', 'question',
+       'quiz_subject_id', 'question_image', 'year', 'number', 'has_image',
+       'examining_board'
+       
+df_enem.columns = 'Unnamed: 0', 'question_id', 'context', 'question', 'quiz_subject_id',
+       'question_image', 'year', 'number', 'has_image', 'examining_board'
+       
+
+df_enem.drop(['Unnamed: 0', 'number', 'has_image'], axis=1, inplace=True)
+
+
+df_port.drop(['Unnamed: 0.1', 'Unnamed: 0', 'number', 'has_image'], axis=1, inplace=True)
+
+df_an_port = pd.read_csv('df_respostas_so_portugues.csv')
+
+df_an_enem = pd.read_csv('df_answers_new.csv')
+
+df_questions_all = pd.concat([df_port, df_enem], ignore_index=True)
+
+df_answer_all = pd.concat([df_an_enem, df_an_port], ignore_index=True)
+
+
+df_answer_all.drop('Unnamed: 0', axis=1, inplace=True)
+
+
+df_questions_all.to_csv('df_all_questions.csv')
+
+
+
+df_answer_all.to_csv('df_all_answers.csv')
+
+
+
+
+df_all_questions = pd.read_csv('df_all_questions.csv')
+
+
+
+df_all_questions = df_all_questions[~df_all_questions['question_id'].duplicated(keep='first')]
+
+df_all_questions.to_csv('df_all_questions.csv')
+
+df_all_answers
+
+
+
+
+
+
 

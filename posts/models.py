@@ -16,7 +16,6 @@ class Genre(models.Model):
         ('cronica', 'Crônica'),
         ('resumo', 'Resumo'),
         ('tirinha', 'Tirinha'), 
-        ('ilustracao', 'Ilustração')
         
       ]
     textual_genre = models.CharField(max_length=30, choices=genre_choices, blank=True, null=True)
@@ -45,7 +44,6 @@ class Section(models.Model):
        ('cinema_tv', 'Cinema e TV'),
        ('games', 'Jogos'),
        ('comida', 'Comida'),
-       ('artes', 'Ilustrações')
     ]
     
     section_name = models.CharField(max_length=50, choices=section_choices)

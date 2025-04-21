@@ -77,10 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (['conto', 'fanfic'].includes(selectedGenre)) {
             selectSectionByName('literatura');
             showPreview();
-        } else if (['tirinha', 'ilustração'].includes(selectedGenre)) {
-            selectSectionByName('ilustrações');
-            showPreview();
-        } else if (selectedGenre === 'receita') {
+        }  else if (selectedGenre === 'receita') {
             selectSectionByName('comida');
             insertRecipeTemplate();
             hidePreview();
@@ -140,8 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleIllustrationMenu() {
         const selectedGenreValue = genreSelect.options[genreSelect.selectedIndex].text.toLowerCase();
         const selectedSectionValue = sectionSelect.options[sectionSelect.selectedIndex].text.toLowerCase();
-        if (selectedGenreValue === "tirinha" || selectedGenreValue === "ilustração") {
+        if (selectedGenreValue === "tirinha" ) {
             askForIllustration.style.display = "none";
+            mainTextInput.style.display = "none";
+            subtitleInput.parentElement.parentElement.style.display = "none"
         } else {
             askForIllustration.style.display = "block";
         }
@@ -170,3 +169,7 @@ document.getElementById("submit-button").addEventListener("click", function(even
         errorMessage.style.display = "none";
     }
 });
+
+
+
+

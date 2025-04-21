@@ -56,7 +56,7 @@ class QuestionUpdateView(UpdateView):
     model = Question
     fields = ['context', 'question', 'quiz_subject', 'question_image', 'year', 'examining_board']  
     template_name = 'quizes/exams/update_question.html' 
-    success_url = reverse_lazy('quizes:portuguese-language-quiz')  # Pode ser alterado caso não queira redirecionar para essa URL por padrão.
+    success_url = reverse_lazy('quizes:portuguese-language-quiz')  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
