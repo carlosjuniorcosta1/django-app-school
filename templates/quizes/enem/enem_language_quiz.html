@@ -1,13 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load form_tags %}
-
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'admin/css/styles_quiz_detail_dj.css' %}">
 {% endblock %}
-
 {% block content %}
-
 <div id="idFilters">
 <div class="row mb-1" data-is-premium="{{is_premium|yesno:'true,false'}}" id="preVerification">
     <div class="col-md-6 col-sm-12">
@@ -37,48 +34,67 @@
     </div>
 </div>
 </div>
-
 <div class="alert alert-warning alert-dismissible fade show" role="alert" id="no-premium" style="display: none;">
     <strong>Atenção!</strong> Você não é premium ainda. Para continuar com este quiz, por favor, adquira a assinatura premium.
 </div>
-
-
 <div class="container">
     <div class="row mb-1">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <h3 class="font-weight-bold text-secondary border-bottom pb-2 mb-1">
-           Linguagens    
+            Linguagens                
             </h3> 
             <h5>{{questions.number}} de {{total_questions}}</h5> 
         </div>
     </div>
-
     <form id="quiz-form" action="" method="POST"  data-is-filter-used="{{ is_filter_used|yesno:'true,false' }}"> 
         {% csrf_token %}
         {% for question in questions %}
         <div class="mb-1 text-question card">
             <div class="card-body format-questions">
+                
                 {% if not is_filter_used %}
-                <p>{{ forloop.counter0|add:questions.start_index }} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
-                {% else %}
-                <p>{{ forloop.counter}} - <span>(Enem-{{question.year}})</span> {{question.context}}</p>
-                {% endif %}
-      
+                <p>{{ forloop.counter0|add:questions.start_index }} -
+                    {% if question.examining_board %}
+                     <span>({{question.examining_board}}) - </span>
+                     {% endif %}
+                
+                     {% if question.context %}
+                     {{question.context}}</p>
+                     {% endif %}
 
-                {% if question.has_image %}
-                {% for img_url in question.get_image_urls %}
-                    <img src="{{ img_url }}" alt="Question Image" class="img-fluid mb-2">
-                {% endfor %}
-                {% endif %}
-                <p class="font-weight-bold">{{ question.question }}</p>
+                     {% if question.question %}
+                     <span class="">{{question.question}}</span>
+                     {% endif %}
+
+                     {% if user.is_superuser %}
+                     <br>
+                     <div class="d-block align-items-start mb-2">
+                     <a href="{% url 'questions:update-question' question.id %}" class="btn btn-warning"><i class="fas fa-edit"></i>
+                     </a>
+
+
+                     <button type="button" class="btn btn-danger delete-btn" data-id="{{ question.id }}"><i class="fas fa-trash"></i>
+                     </button>
+                    </div>
+
+                 {% endif %}
+                {% endif %}         
+      
+                {% if question.question_image %}
+                    <img src="{{ question.question_image.url }}" alt="Question Image" class="img-fluid d-block mx-auto" data-toggle="modal" data-target="#imageModal{{ question.id }}">
+               {% endif %}
                 {% for answer in question.get_answers %}
                     <div class="quiz-question form-check d-flex align-items-center ">
                         <input class="form-check-input" type="radio" id="question{{ question.id }}_answer{{ answer.id }}" name="question{{ question.id }}" value="{{ answer.id }}" data-is-correct="{% if answer.is_correct %}true{% else %}false{% endif %}">
                         <label class="form-check-label border-bottom mt-2 mb-1" for="question{{ question.id }}_answer{{ answer.id }}" style="hyphens: auto;">
-                            {% if answer.has_image_alt %}
-                           {{answer.alternative}})<img src="{{ answer.answer_image }}" alt="">
-                            {% else %}
+                            {% if answer.answer_image %}
+                           {{answer.alternative}})<img src="{{ answer.answer_image.url }}" alt="" class="img-fluid img-answer d-block mx-auto" >
+                            {% else %} 
+                            {% if answer.count_alternatives != 2 %}                 
                             {{answer.alternative}})
+                            {% endif %}                      
+
+
                             {{ answer.text }}
                             {% endif %}
                             {% if answer.is_correct %}
@@ -123,10 +139,9 @@
         </div>
 
                 
-
     </form>
 {% if is_premium %}
-    <div class="pagination mt-4 d-flex justify-content-center align-items-center" id="pagination-buttons">
+    <div class="pagination mt-4 mb-2 d-flex justify-content-center align-items-center" id="pagination-buttons">
         {% if questions.has_previous %}
         <a href="?page=1" class="btn btn-outline-secondary mx-1" title="Primeira Página">&laquo;&laquo;</a>
         {% else %}
@@ -134,9 +149,9 @@
         {% endif %}
 
         {% if questions.has_previous %}
-        <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1" title="Página Anterior">&laquo;</a>
+        <a href="?page={{ questions.previous_page_number }}" class="btn btn-outline-secondary mx-1 btn-number" title="Página Anterior">&laquo;</a>
         {% else %}
-        <span class="btn btn-outline-secondary mx-1 disabled" title="Página Anterior">&laquo;</span>
+        <span class="btn btn-outline-secondary mx-1 disabled btn-number" title="Página Anterior">&laquo;</span>
         {% endif %}
 
         {% with current_page=questions.number %}
@@ -145,18 +160,18 @@
                 {% if num == current_page %}
                 <span class="btn btn-outline-primary mx-1">{{ num }}</span>
                 {% else %}
-                <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1">{{ num }}</a>
+                <a href="?page={{ num }}" class="btn btn-outline-secondary mx-1 btn-number">{{ num }}</a>
                 {% endif %}
             {% elif num == current_page|add:"-4" or num == current_page|add:"+4" %}
-                <span class="btn btn-outline-secondary mx-1 disabled">...</span>
+                <span class="btn btn-outline-secondary mx-1 disabled btn-number">...</span>
             {% endif %}
         {% endfor %}
         {% endwith %}
 
         {% if questions.has_next %}
-        <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1" title="Próxima Página">&raquo;</a>
+        <a href="?page={{ questions.next_page_number }}" class="btn btn-outline-secondary mx-1 btn-number" title="Próxima Página">&raquo;</a>
         {% else %}
-        <span class="btn btn-outline-secondary mx-1 disabled" title="Próxima Página">&raquo;</span>
+        <span class="btn btn-outline-secondary mx-1 disabled btn-number" title="Próxima Página">&raquo;</span>
         {% endif %}
 
 
@@ -170,6 +185,29 @@
 
     </div>
 </div>
+{% for question in questions %}
+{% if question.question_image %}
+<div class="modal fade" id="imageModal{{ question.id }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ question.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel{{ question.id }}">Imagem da questão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ question.question_image.url }}" alt="Imagem da Questão" class="img-fluid d-block mx-auto">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
 
 {% endblock %}
 

@@ -176,18 +176,16 @@ function renderPagination(currentPage, totalPages) {
         prevButton.appendChild(prevIcon)
     
     
-        if (parseInt(currentPage) > 1) {  // Garantir que currentPage seja um número inteiro
+        if (parseInt(currentPage) > 1) {  
             prevButton.addEventListener("click", function () {
                 performSearch(parseInt(currentPage) - 1);
             });
         } else {
             prevButton.disabled = true;
-            firstButton.disabled = true // Desabilita o botão se não houver página anterior
-        }
+            firstButton.disabled = true /
         paginationContainer.appendChild(prevButton);
     
-        // Páginas anteriores à atual (máximo 5)
-        for (let page = startPage; page < parseInt(currentPage); page++) {  // Garantir que currentPage seja um número inteiro
+        for (let page = startPage; page < parseInt(currentPage); page++) { 
             const pageButton = document.createElement("button");
             pageButton.classList.add("btn", "btn-sm", "mx-1", "btn-secondary", 'btn-number');
             pageButton.textContent = page;
